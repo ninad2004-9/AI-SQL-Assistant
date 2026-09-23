@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QueryMind — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/css/app.css"/>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <span class="brand-name">QueryMind</span>
+      </div>
+      <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">&#9776;</button>
+    </div>
+
+    <div class="user-card" id="user-card">
+      <div class="avatar" id="avatar">A</div>
+      <div class="user-info">
+        <p class="user-name" id="user-name">Loading…</p>
+        <p class="user-email" id="user-email"></p>
+      </div>
+    </div>
+
+    <nav class="nav-section">
+      <p class="nav-label">History</p>
+      <div id="history-list" class="history-list">
+        <p class="history-empty">No queries yet</p>
+      </div>
+    </nav>
+
+    <button class="btn-logout" onclick="doLogout()">↩ Sign out</button>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main" id="main">
+
+    <header class="top-bar">
+      <div>
+        <h1 class="page-title">SQL Generator</h1>
+        <p class="page-sub">Describe what you want — get production-ready SQL</p>
+      </div>
+      <div class="dialect-wrap">
+        <label>Dialect</label>
+        <select id="dialect">
+          <option>PostgreSQL</option>
+          <option>MySQL</option>
+          <option>SQLite</option>
+          <option>SQL Server</option>
+          <option>BigQuery</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- Schema input -->
+    <div class="card schema-card">
+      <div class="card-label">
+        <span>Schema</span>
+        <span class="badge">optional</span>
+      </div>
+      <textarea id="schema" rows="2"
+        placeholder="e.g.  customers(id, name, email, revenue),  orders(id, customer_id, amount, date)"></textarea>
+    </div>
+
+    <!-- Question input -->
+    <div class="card question-card">
+      <div class="card-label"><span>Your question</span></div>
+      <textarea id="question" rows="2"
+        placeholder='e.g.  "Show top 5 customers by revenue"'></textarea>
+      <div class="question-footer">
+        <span class="hint">Press <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to generate</span>
+        <button class="btn-generate" id="gen-btn" onclick="generateSQL()">
+          <span id="gen-text">⚡ Generate SQL</span>
+          <span id="gen-loader" class="loader hidden"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="card result-card hidden" id="result-card">
+      <div class="result-header">
+        <span class="card-label"><span>Generated SQL</span></span>
+        <div class="result-actions">
+          <button class="btn-icon" onclick="copySQL()" title="Copy SQL">📋 Copy</button>
+          <button class="btn-icon" onclick="clearResult()" title="Clear">✕</button>
+        </div>
+      </div>
+      <pre id="sql-output" class="sql-block"></pre>
+      <div class="explanation-box">
+        <span class="expl-label">💡 Explanation</span>
+        <p id="explanation-text"></p>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="error-card hidden" id="error-card">
+      <span>⚠️ </span><span id="error-text"></span>
+    </div>
+
+  </main>
+
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/bg.js"></script>
+</body>
+</html>

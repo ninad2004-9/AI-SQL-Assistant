@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QueryMind — AI SQL Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/css/auth.css"/>
+</head>
+<body>
+
+  <!-- Animated background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Floating code snippets -->
+  <div class="floating-code" id="floaters"></div>
+
+  <div class="page-wrap">
+
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand-icon">⚡</div>
+      <span class="brand-name">QueryMind</span>
+    </div>
+
+    <!-- Auth card -->
+    <div class="auth-card" id="auth-card">
+
+      <!-- Tab switcher -->
+      <div class="tab-bar">
+        <button class="tab active" id="tab-login" onclick="switchTab('login')">Sign in</button>
+        <button class="tab" id="tab-register" onclick="switchTab('register')">Create account</button>
+        <div class="tab-slider" id="tab-slider"></div>
+      </div>
+
+      <!-- Login form -->
+      <div class="form-panel" id="panel-login">
+        <p class="form-headline">Welcome back</p>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email"/>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/>
+        </div>
+        <div id="login-error" class="form-error hidden"></div>
+        <button class="btn-primary" id="login-btn" onclick="doLogin()">
+          <span class="btn-text">Sign in</span>
+          <span class="btn-loader hidden"></span>
+        </button>
+        <p class="switch-hint">No account? <a onclick="switchTab('register')">Create one free</a></p>
+      </div>
+
+      <!-- Register form -->
+      <div class="form-panel hidden" id="panel-register">
+        <p class="form-headline">Start querying smarter</p>
+        <div class="field">
+          <label>Full name</label>
+          <input type="text" id="reg-name" placeholder="Alex Johnson" autocomplete="name"/>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email"/>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="reg-password" placeholder="Min 6 characters" autocomplete="new-password"/>
+        </div>
+        <div id="reg-error" class="form-error hidden"></div>
+        <button class="btn-primary" id="reg-btn" onclick="doRegister()">
+          <span class="btn-text">Create account</span>
+          <span class="btn-loader hidden"></span>
+        </button>
+        <p class="switch-hint">Have an account? <a onclick="switchTab('login')">Sign in</a></p>
+      </div>
+
+    </div>
+
+    <!-- Feature pills -->
+    <div class="feature-pills">
+      <span class="pill">⚡ Groq-powered</span>
+      <span class="pill">🗄️ 5 SQL dialects</span>
+      <span class="pill">🔒 Secure auth</span>
+      <span class="pill">📋 Query history</span>
+    </div>
+
+  </div>
+
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/bg.js"></script>
+</body>
+</html>
