@@ -1,0 +1,1 @@
+# QueryMind AI SQL Assistant

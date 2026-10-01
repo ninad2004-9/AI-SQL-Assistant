@@ -1,113 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>QueryMind — Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/static/css/app.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueryMind - AI SQL Assistant</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/css/app.css">
 </head>
 <body>
+    <canvas id="bg-canvas"></canvas>
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="brand">
+                <span class="logo">⚡</span> QueryMind
+            </div>
+            
+            <div class="user-card">
+                <div class="avatar" id="avatar">👤</div>
+                <div class="user-info">
+                    <div class="user-name" id="user-name">User Name</div>
+                    <div class="user-email" id="user-email">user@example.com</div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="section-header">Database Connection</div>
+                <div class="db-status-container">
+                    <span class="status-indicator disconnected" id="db-status"></span>
+                    <span class="status-text" id="db-status-text">Disconnected</span>
+                </div>
+                <button class="btn btn-secondary w-100" id="btn-connect-db">Connect DB</button>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="section-header d-flex justify-between">
+                    <span>Schema Explorer</span>
+                    <button class="btn-icon" id="btn-view-er" title="View ER Diagram">📊</button>
+                </div>
+                <div class="schema-explorer" id="schema-explorer">
+                    <!-- Schema tables will be injected here -->
+                    <div class="empty-state text-muted small">Connect to a database to view schema.</div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section flex-1">
+                <div class="section-header">Conversation History</div>
+                <div class="history-list" id="history-list">
+                    <!-- History items will be injected here -->
+                </div>
+            </div>
+            
+            <button class="btn btn-danger w-100 mt-auto" id="btn-signout">Sign Out</button>
+        </nav>
 
-  <canvas id="bg-canvas"></canvas>
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <h1 class="page-title">SQL Generator</h1>
+                <div class="dialect-selector">
+                    <select id="dialect" class="form-control">
+                        <option value="postgresql">PostgreSQL</option>
+                        <option value="mysql">MySQL</option>
+                        <option value="sqlite">SQLite</option>
+                        <option value="sqlserver">SQL Server</option>
+                        <option value="bigquery">BigQuery</option>
+                    </select>
+                </div>
+            </header>
 
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-top">
-      <div class="brand">
-        <div class="brand-icon">⚡</div>
-        <span class="brand-name">QueryMind</span>
-      </div>
-      <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">&#9776;</button>
+            <!-- Schema Input Card (Optional) -->
+            <div class="card schema-card" style="display: none;">
+                <div class="card-header">Manual Schema (Optional)</div>
+                <textarea id="schema" class="form-control" rows="4" placeholder="CREATE TABLE ..."></textarea>
+            </div>
+
+            <!-- Question Input Card -->
+            <div class="card question-card">
+                <textarea id="question" class="form-control query-input" rows="3" placeholder="Ask a question about your data... (Ctrl+Enter to generate)"></textarea>
+                <div class="card-actions justify-end mt-3">
+                    <button id="gen-btn" class="btn btn-primary">
+                        <span id="gen-text">Generate SQL</span>
+                        <span id="gen-loader" class="loader hidden"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Card -->
+            <div id="error-card" class="card error-card hidden">
+                <div class="error-header">⚠️ Error</div>
+                <div id="error-text" class="error-text"></div>
+            </div>
+
+            <!-- Suggestions / Follow-ups -->
+            <div id="suggestions-panel" class="suggestions-panel hidden">
+                <div class="section-title text-sm text-muted mb-2">Suggested Queries</div>
+                <div id="suggestions-list" class="suggestions-list d-flex flex-wrap gap-2"></div>
+                <div id="followup-list" class="followup-list d-flex flex-wrap gap-2 mt-2 hidden"></div>
+            </div>
+
+            <!-- Result Card (SQL Output) -->
+            <div id="result-card" class="card result-card hidden">
+                <div class="sql-container">
+                    <pre><code id="sql-output" class="sql-code"></code></pre>
+                </div>
+                
+                <div class="action-buttons mt-3 d-flex flex-wrap gap-2">
+                    <button class="btn btn-icon-text" id="btn-copy">📋 Copy</button>
+                    <button class="btn btn-icon-text" id="btn-explain">🔍 Explain</button>
+                    <button class="btn btn-icon-text" id="btn-fix">🔧 Fix Errors</button>
+                    <button class="btn btn-icon-text" id="btn-optimize">⚡ Optimize</button>
+                    <button class="btn btn-icon-text" id="btn-translate">📝 SQL→English</button>
+                    <button class="btn btn-icon-text" id="btn-validate">✓ Validate</button>
+                    <button class="btn btn-primary ml-auto" id="btn-run-query">▶ Run Query</button>
+                </div>
+                
+                <div id="explanation-container" class="explanation-box hidden mt-3">
+                    <div id="explanation-text"></div>
+                </div>
+            </div>
+
+            <!-- AI Actions Panel -->
+            <div id="ai-panel" class="card ai-panel hidden mt-4">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="ai-explain">Explain</button>
+                    <button class="tab-btn" data-tab="ai-fix">Fix</button>
+                    <button class="tab-btn" data-tab="ai-optimize">Optimize</button>
+                    <button class="tab-btn" data-tab="ai-translate">Translate</button>
+                    <button class="tab-btn" data-tab="ai-validate">Validate</button>
+                </div>
+                <div id="ai-panel-content" class="tab-content mt-3 p-3">
+                    <!-- AI action results injected here -->
+                </div>
+            </div>
+
+            <!-- Query Results Section -->
+            <div id="results-section" class="card results-section hidden mt-4">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="tab-table">📊 Table</button>
+                    <button class="tab-btn" data-tab="tab-charts">📈 Charts</button>
+                    <button class="tab-btn" data-tab="tab-insights">🔍 Insights</button>
+                    <button class="tab-btn" data-tab="tab-stats">📋 Stats</button>
+                </div>
+                
+                <!-- Table Tab -->
+                <div id="tab-table" class="tab-pane active">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead id="results-table-head">
+                                <!-- Headers and filters injected here -->
+                                <tr id="results-filters" class="filters-row"></tr>
+                            </thead>
+                            <tbody id="results-table-body">
+                                <!-- Data rows injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination mt-3 d-flex justify-between align-center">
+                        <div id="pagination-info" class="text-sm text-muted">Showing 0 of 0</div>
+                        <div id="pagination-controls" class="d-flex gap-2">
+                            <button class="btn btn-sm btn-secondary" id="btn-prev-page">Previous</button>
+                            <span id="page-numbers" class="d-flex gap-1 align-center"></span>
+                            <button class="btn btn-sm btn-secondary" id="btn-next-page">Next</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Charts Tab -->
+                <div id="tab-charts" class="tab-pane hidden">
+                    <div class="chart-controls d-flex gap-3 mb-4 align-center">
+                        <select id="chart-type" class="form-control">
+                            <option value="bar">Bar Chart</option>
+                            <option value="line">Line Chart</option>
+                            <option value="pie">Pie/Donut</option>
+                        </select>
+                        <select id="chart-x" class="form-control">
+                            <option value="">Select X Axis</option>
+                        </select>
+                        <select id="chart-y" class="form-control">
+                            <option value="">Select Y Axis</option>
+                        </select>
+                        <button id="btn-generate-chart" class="btn btn-secondary">Generate Chart</button>
+                    </div>
+                    <div class="chart-container" style="position: relative; height:400px; width:100%">
+                        <canvas id="chart-canvas"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Insights Tab -->
+                <div id="tab-insights" class="tab-pane hidden">
+                    <div id="insights-content" class="insights-grid">
+                        <!-- AI Insights cards -->
+                    </div>
+                </div>
+                
+                <!-- Stats Tab -->
+                <div id="tab-stats" class="tab-pane hidden">
+                    <div id="stats-content" class="stats-container">
+                        <!-- Summary statistics -->
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <div class="user-card" id="user-card">
-      <div class="avatar" id="avatar">A</div>
-      <div class="user-info">
-        <p class="user-name" id="user-name">Loading…</p>
-        <p class="user-email" id="user-email"></p>
-      </div>
-    </div>
-
-    <nav class="nav-section">
-      <p class="nav-label">History</p>
-      <div id="history-list" class="history-list">
-        <p class="history-empty">No queries yet</p>
-      </div>
-    </nav>
-
-    <button class="btn-logout" onclick="doLogout()">↩ Sign out</button>
-  </aside>
-
-  <!-- Main content -->
-  <main class="main" id="main">
-
-    <header class="top-bar">
-      <div>
-        <h1 class="page-title">SQL Generator</h1>
-        <p class="page-sub">Describe what you want — get production-ready SQL</p>
-      </div>
-      <div class="dialect-wrap">
-        <label>Dialect</label>
-        <select id="dialect">
-          <option>PostgreSQL</option>
-          <option>MySQL</option>
-          <option>SQLite</option>
-          <option>SQL Server</option>
-          <option>BigQuery</option>
-        </select>
-      </div>
-    </header>
-
-    <!-- Schema input -->
-    <div class="card schema-card">
-      <div class="card-label">
-        <span>Schema</span>
-        <span class="badge">optional</span>
-      </div>
-      <textarea id="schema" rows="2"
-        placeholder="e.g.  customers(id, name, email, revenue),  orders(id, customer_id, amount, date)"></textarea>
-    </div>
-
-    <!-- Question input -->
-    <div class="card question-card">
-      <div class="card-label"><span>Your question</span></div>
-      <textarea id="question" rows="2"
-        placeholder='e.g.  "Show top 5 customers by revenue"'></textarea>
-      <div class="question-footer">
-        <span class="hint">Press <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to generate</span>
-        <button class="btn-generate" id="gen-btn" onclick="generateSQL()">
-          <span id="gen-text">⚡ Generate SQL</span>
-          <span id="gen-loader" class="loader hidden"></span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Result -->
-    <div class="card result-card hidden" id="result-card">
-      <div class="result-header">
-        <span class="card-label"><span>Generated SQL</span></span>
-        <div class="result-actions">
-          <button class="btn-icon" onclick="copySQL()" title="Copy SQL">📋 Copy</button>
-          <button class="btn-icon" onclick="clearResult()" title="Clear">✕</button>
+    <!-- Modals -->
+    <!-- DB Connect Modal -->
+    <div id="db-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h2 class="modal-title mb-4">Connect Database</h2>
+            <div id="db-modal-error" class="error-text hidden mb-3"></div>
+            
+            <div class="form-group mb-3">
+                <label>Database Type</label>
+                <select id="db-type-select" class="form-control">
+                    <option value="postgresql">PostgreSQL</option>
+                    <option value="mysql">MySQL</option>
+                    <option value="sqlite">SQLite</option>
+                </select>
+            </div>
+            
+            <div id="db-fields-network">
+                <div class="form-group mb-3">
+                    <label>Host</label>
+                    <input type="text" id="db-host" class="form-control" placeholder="localhost">
+                </div>
+                <div class="form-group mb-3">
+                    <label>Port</label>
+                    <input type="number" id="db-port" class="form-control">
+                </div>
+                <div class="form-group mb-3">
+                    <label>Username</label>
+                    <input type="text" id="db-user" class="form-control">
+                </div>
+                <div class="form-group mb-3">
+                    <label>Password</label>
+                    <input type="password" id="db-pass" class="form-control">
+                </div>
+            </div>
+            
+            <div class="form-group mb-4">
+                <label id="db-name-label">Database Name</label>
+                <input type="text" id="db-name" class="form-control" placeholder="dbname or filepath">
+            </div>
+            
+            <div class="modal-actions d-flex justify-end gap-2">
+                <button id="btn-cancel-db" class="btn btn-secondary">Cancel</button>
+                <button id="db-connect-btn" class="btn btn-primary">Connect</button>
+            </div>
         </div>
-      </div>
-      <pre id="sql-output" class="sql-block"></pre>
-      <div class="explanation-box">
-        <span class="expl-label">💡 Explanation</span>
-        <p id="explanation-text"></p>
-      </div>
     </div>
 
-    <!-- Error -->
-    <div class="error-card hidden" id="error-card">
-      <span>⚠️ </span><span id="error-text"></span>
+    <!-- ER Diagram Modal -->
+    <div id="er-modal" class="modal-overlay hidden fullscreen">
+        <div class="modal-card w-100 h-100 p-0 d-flex flex-col">
+            <div class="modal-header p-3 d-flex justify-between align-center border-bottom">
+                <h2 class="m-0">Entity-Relationship Diagram</h2>
+                <button id="btn-close-er" class="btn-icon">✖</button>
+            </div>
+            <div class="er-canvas-container flex-1 bg-surface" style="overflow: hidden; position: relative;">
+                <canvas id="er-canvas" width="1000" height="800"></canvas>
+            </div>
+        </div>
     </div>
 
-  </main>
-
-  <script src="/static/js/app.js"></script>
-  <script src="/static/js/bg.js"></script>
+    <!-- Scripts -->
+    <script src="/static/js/bg.js"></script>
+    <script src="/static/js/app.js"></script>
 </body>
 </html>
