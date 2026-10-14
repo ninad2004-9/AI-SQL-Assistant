@@ -171,19 +171,25 @@ def _get_row_count(engine: Engine, table_name: str) -> int:
 
 
 def _build_schema_text(tables: dict) -> str:
-    """Build a human-readable schema string for AI prompts."""
+    """Build a human-readable, beautifully indented schema string for AI prompts and UI display."""
     lines = []
     for table_name, info in tables.items():
-        cols = ", ".join(
-            f"{c['name']} {c['type']}" + (" PK" if c['name'] in info.get('primary_key', []) else "")
-            for c in info["columns"]
-        )
-        lines.append(f"{table_name}({cols})")
+        cols_formatted = []
+        pk_cols = info.get("primary_key", [])
+        for c in info["columns"]:
+            pk_mark = " PRIMARY KEY" if c["name"] in pk_cols else ""
+            cols_formatted.append(f"  {c['name']} {c['type']}{pk_mark}")
+
+        cols_block = ",\n".join(cols_formatted)
+        table_str = f"{table_name} (\n{cols_block}\n);"
+        lines.append(table_str)
+
         for fk in info.get("foreign_keys", []):
             lines.append(
-                f"  FK: {', '.join(fk['columns'])} -> {fk['referred_table']}({', '.join(fk['referred_columns'])})"
+                f"  -- Relationship: {', '.join(fk['columns'])} -> {fk['referred_table']}({', '.join(fk['referred_columns'])})"
             )
-    return "\n".join(lines)
+        lines.append("")
+    return "\n".join(lines).strip()
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -494,3 +500,143 @@ def _serialize(value: Any) -> Any:
         return str(value)
     except Exception:
         return repr(value)
+
+
+def init_sample_db(session_id: str) -> dict:
+    """Initialize a rich SQLite sample database and connect the session to it."""
+    db_path = os.path.join(os.getcwd(), "sample_store.db")
+    engine = create_engine(f"sqlite:///{db_path}")
+
+    with engine.begin() as conn:
+        conn.execute(text("PRAGMA foreign_keys = ON;"))
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS categories (
+                category_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                department TEXT NOT NULL
+            );
+        """))
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS customers (
+                customer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                country TEXT NOT NULL,
+                city TEXT NOT NULL,
+                created_at TEXT NOT NULL
+            );
+        """))
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS products (
+                product_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                category_id INTEGER,
+                price REAL NOT NULL,
+                stock_quantity INTEGER NOT NULL,
+                FOREIGN KEY (category_id) REFERENCES categories(category_id)
+            );
+        """))
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS orders (
+                order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                customer_id INTEGER,
+                order_date TEXT NOT NULL,
+                total_amount REAL NOT NULL,
+                status TEXT NOT NULL,
+                FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+            );
+        """))
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS order_items (
+                item_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                order_id INTEGER,
+                product_id INTEGER,
+                quantity INTEGER NOT NULL,
+                unit_price REAL NOT NULL,
+                FOREIGN KEY (order_id) REFERENCES orders(order_id),
+                FOREIGN KEY (product_id) REFERENCES products(product_id)
+            );
+        """))
+
+        cat_count = conn.execute(text("SELECT COUNT(*) FROM categories")).scalar()
+        if cat_count == 0:
+            conn.execute(text("""
+                INSERT INTO categories (name, department) VALUES
+                ('Laptops & PCs', 'Electronics'),
+                ('Smartphones', 'Electronics'),
+                ('Audio & Headphones', 'Electronics'),
+                ('Office Chairs', 'Furniture'),
+                ('Smart Lighting', 'Home Automation');
+            """))
+            conn.execute(text("""
+                INSERT INTO customers (name, email, country, city, created_at) VALUES
+                ('Alice Walker', 'alice@techcorp.com', 'United States', 'San Francisco', '2024-01-15'),
+                ('Bob Chen', 'bob.chen@quantum.io', 'Canada', 'Toronto', '2024-02-01'),
+                ('Carlos Diaz', 'carlos@madrid.es', 'Spain', 'Madrid', '2024-02-12'),
+                ('Diana Prince', 'diana@amazon.net', 'United States', 'Seattle', '2024-03-05'),
+                ('Ethan Hunt', 'ethan@imf.gov', 'United Kingdom', 'London', '2024-03-20'),
+                ('Fiona Gallagher', 'fiona@southside.org', 'United States', 'Chicago', '2024-04-02'),
+                ('George Miller', 'george@sydney.au', 'Australia', 'Sydney', '2024-04-14'),
+                ('Hanna Becker', 'hanna@berlin.de', 'Germany', 'Berlin', '2024-05-01');
+            """))
+            conn.execute(text("""
+                INSERT INTO products (name, category_id, price, stock_quantity) VALUES
+                ('ProBook X15 Laptop', 1, 1299.99, 45),
+                ('UltraMini PC', 1, 649.50, 20),
+                ('Apex Phone Pro', 2, 999.00, 80),
+                ('Nova Phone 5G', 2, 499.00, 110),
+                ('AcousticMax Headphones', 3, 199.99, 150),
+                ('BassBlast Earbuds', 3, 79.99, 200),
+                ('ErgoLux Executive Chair', 4, 349.00, 35),
+                ('MeshComfort Task Chair', 4, 189.00, 60),
+                ('Ambient Glow Smart Lamp', 5, 59.99, 90),
+                ('Smart RGB Light Strip', 5, 34.50, 140);
+            """))
+            conn.execute(text("""
+                INSERT INTO orders (customer_id, order_date, total_amount, status) VALUES
+                (1, '2024-06-01', 1499.98, 'completed'),
+                (2, '2024-06-05', 999.00, 'completed'),
+                (3, '2024-06-10', 548.99, 'completed'),
+                (4, '2024-06-15', 1848.98, 'completed'),
+                (5, '2024-06-20', 279.98, 'pending'),
+                (6, '2024-07-01', 729.49, 'completed'),
+                (7, '2024-07-04', 1299.99, 'shipped'),
+                (8, '2024-07-10', 443.49, 'completed'),
+                (1, '2024-07-15', 383.50, 'completed'),
+                (3, '2024-07-22', 999.00, 'shipped');
+            """))
+            conn.execute(text("""
+                INSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES
+                (1, 1, 1, 1299.99),
+                (1, 5, 1, 199.99),
+                (2, 3, 1, 999.00),
+                (3, 7, 1, 349.00),
+                (3, 5, 1, 199.99),
+                (4, 1, 1, 1299.99),
+                (4, 7, 1, 349.00),
+                (4, 6, 2, 79.99),
+                (5, 5, 1, 199.99),
+                (5, 6, 1, 79.99),
+                (6, 2, 1, 649.50),
+                (6, 6, 1, 79.99),
+                (7, 1, 1, 1299.99),
+                (8, 7, 1, 349.00),
+                (8, 10, 1, 34.50),
+                (8, 9, 1, 59.99),
+                (9, 7, 1, 349.00),
+                (9, 10, 1, 34.50),
+                (10, 3, 1, 999.00);
+            """))
+
+    _connections[session_id] = {
+        "engine": engine,
+        "db_type": "sqlite",
+        "db_name": "sample_store.db",
+    }
+    return {
+        "status": "connected",
+        "db_type": "sqlite",
+        "database": "sample_store.db",
+        "message": "Successfully connected to Sample Store database (SQLite).",
+    }
+

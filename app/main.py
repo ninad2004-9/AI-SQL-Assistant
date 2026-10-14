@@ -18,15 +18,11 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from typing import Optional
 
-from app import ai_service, db_manager
+from app import ai_service, db_manager, user_db
 
 app = FastAPI(title="AI SQL Assistant — QueryMind", version="3.0.0")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
-
-# Simple in-memory user store (replace with DB in production)
-users_db: dict = {}
-sessions_db: dict = {}
 
 
 # ── Request / Response Models ─────────────────────────────────────────────────
@@ -116,14 +112,16 @@ class ClearConversationRequest(BaseModel):
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
-def hash_password(password: str) -> str:
-    return hashlib.sha256(password.encode()).hexdigest()
+# ── Helpers ────────────────────────────────────────────────────────────────────
 
-def _require_auth(session_token: str) -> str:
-    """Validate session token and return email. Raises 401 if invalid."""
-    if not session_token or session_token not in sessions_db:
+def _require_auth(session_token: str) -> dict:
+    """Validate session token from backend DB and return user. Raises 401 if invalid."""
+    if not session_token:
         raise HTTPException(status_code=401, detail="Please sign in first.")
-    return sessions_db[session_token]
+    user = user_db.get_user_by_session(session_token)
+    if not user:
+        raise HTTPException(status_code=401, detail="Session expired or invalid. Please sign in again.")
+    return user
 
 
 # ── Pages ──────────────────────────────────────────────────────────────────────
@@ -137,46 +135,59 @@ async def sql_app(request: Request):
     return templates.TemplateResponse("app.html", {"request": request})
 
 
-# ── Auth Routes ────────────────────────────────────────────────────────────────
+# ── Auth Routes (Persistent Backend DB) ────────────────────────────────────────
 
 @app.post("/auth/register")
 async def register(req: RegisterRequest):
-    if req.email in users_db:
-        raise HTTPException(status_code=400, detail="Email already registered.")
-    user_id = str(uuid.uuid4())
-    users_db[req.email] = {
-        "id": user_id,
-        "name": req.name,
-        "email": req.email,
-        "password": hash_password(req.password),
-    }
-    token = str(uuid.uuid4())
-    sessions_db[token] = req.email
-    return {"token": token, "name": req.name, "email": req.email}
+    try:
+        user_info = user_db.register_user(req.name, req.email, req.password)
+        return user_info
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/auth/login")
 async def login(req: LoginRequest):
-    user = users_db.get(req.email)
-    if not user or user["password"] != hash_password(req.password):
-        raise HTTPException(status_code=401, detail="Invalid email or password.")
-    token = str(uuid.uuid4())
-    sessions_db[token] = req.email
-    return {"token": token, "name": user["name"], "email": req.email}
+    try:
+        user_info = user_db.authenticate_user(req.email, req.password)
+        return user_info
+    except ValueError as e:
+        raise HTTPException(status_code=401, detail=str(e))
 
 @app.post("/auth/logout")
 async def logout(body: dict):
     token = body.get("token", "")
-    sessions_db.pop(token, None)
+    user_db.delete_session(token)
     ai_service.clear_conversation(token)
     db_manager.disconnect_db(token)
     return {"status": "logged out"}
+
+@app.get("/auth/me")
+async def get_me(session_token: str = ""):
+    user = _require_auth(session_token)
+    return {"id": user["id"], "name": user["name"], "email": user["email"]}
+
+
+# ── Persistent Query History Routes ────────────────────────────────────────────
+
+@app.get("/history")
+async def get_query_history(session_token: str = ""):
+    user = _require_auth(session_token)
+    items = user_db.get_user_query_history(user["id"], limit=30)
+    return {"history": items}
+
+@app.post("/history/clear")
+async def clear_query_history(body: dict):
+    token = body.get("session_token", "")
+    user = _require_auth(token)
+    user_db.clear_user_query_history(user["id"])
+    return {"status": "cleared"}
 
 
 # ── Feature 4: Natural Language → SQL (Enhanced) ─────────────────────────────
 
 @app.post("/generate")
 async def generate_sql(req: SQLGenerateRequest):
-    _require_auth(req.session_token)
+    user = _require_auth(req.session_token)
 
     # If connected to a DB and no schema provided, use live schema
     schema = req.db_schema
@@ -192,6 +203,11 @@ async def generate_sql(req: SQLGenerateRequest):
     )
     if "error" in result:
         raise HTTPException(status_code=500, detail=result.get("raw", result["error"]))
+
+    # Save to user's persistent query history in SQLite backend
+    if "sql" in result and result["sql"]:
+        user_db.save_query_history(user["id"], req.question, result["sql"])
+
     return result
 
 
@@ -322,6 +338,13 @@ async def connect_db(req: DBConnectRequest):
     )
     if result.get("status") == "error":
         raise HTTPException(status_code=400, detail=result["message"])
+    return result
+
+@app.post("/db/sample")
+async def connect_sample_db(body: dict):
+    token = body.get("session_token", "")
+    _require_auth(token)
+    result = db_manager.init_sample_db(token)
     return result
 
 @app.post("/db/disconnect")

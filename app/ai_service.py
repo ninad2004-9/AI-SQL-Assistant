@@ -7,8 +7,23 @@ import json
 import os
 from groq import Groq
 
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-MODEL = "llama-3.3-70b-versatile"
+MODELS_TO_TRY = [
+    os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
+    "qwen/qwen3.8-27b",
+    "openai/gpt-oss-20b",
+]
+_client = None
+
+
+def _get_client() -> Groq:
+    global _client
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        raise ValueError("GROQ_API_KEY environment variable is missing. Please set it in your .env file.")
+    if _client is None:
+        _client = Groq(api_key=api_key)
+    return _client
+
 
 # ── Multi-turn conversation store (Feature 10) ──────────────────────────────────
 # session_token -> list of {role, content}
@@ -16,18 +31,36 @@ conversations: dict[str, list[dict]] = {}
 MAX_CONTEXT_MESSAGES = 20
 
 
+def _execute_chat(messages: list, temperature: float = 0.3, max_tokens: int = 2048) -> str:
+    """Execute chat completion with fallback across available Groq models."""
+    client = _get_client()
+    last_err = None
+    for model_name in MODELS_TO_TRY:
+        try:
+            response = client.chat.completions.create(
+                model=model_name,
+                messages=messages,
+                max_tokens=max_tokens,
+                temperature=temperature,
+            )
+            content = response.choices[0].message.content
+            if content and content.strip():
+                return content.strip()
+        except Exception as e:
+            last_err = e
+            continue
+    if last_err:
+        raise last_err
+    raise RuntimeError("No LLM model returned a response.")
+
+
 def _call_llm(system_prompt: str, user_message: str, temperature: float = 0.3) -> str:
     """Call Groq LLM and return raw text."""
-    response = client.chat.completions.create(
-        model=MODEL,
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_message},
-        ],
-        max_tokens=2048,
-        temperature=temperature,
-    )
-    return response.choices[0].message.content.strip()
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_message},
+    ]
+    return _execute_chat(messages, temperature=temperature)
 
 
 def _call_llm_with_context(
@@ -45,24 +78,26 @@ def _call_llm_with_context(
         messages.extend(history)
 
     messages.append({"role": "user", "content": user_message})
-
-    response = client.chat.completions.create(
-        model=MODEL,
-        messages=messages,
-        max_tokens=2048,
-        temperature=temperature,
-    )
-    return response.choices[0].message.content.strip()
+    return _execute_chat(messages, temperature=temperature)
 
 
 def _parse_json(raw: str) -> dict:
-    """Extract and parse JSON from LLM response, handling markdown fences."""
+    """Extract and parse JSON from LLM response, handling markdown fences and extra prose."""
     text = raw.strip()
     if "```json" in text:
         text = text.split("```json", 1)[1].split("```", 1)[0].strip()
     elif "```" in text:
         text = text.split("```", 1)[1].split("```", 1)[0].strip()
-    return json.loads(text)
+
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        # Extract the outermost JSON object if surrounding prose was returned
+        start = text.find("{")
+        end = text.rfind("}")
+        if start != -1 and end != -1 and end > start:
+            return json.loads(text[start:end+1])
+        raise
 
 
 def _safe_json_call(system_prompt: str, user_message: str, temperature: float = 0.3) -> dict:
