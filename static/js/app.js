@@ -200,8 +200,6 @@ function setupEventListeners() {
   document.getElementById('db-connect-btn')?.addEventListener('click', connectDatabase);
   document.getElementById('btn-modal-sample')?.addEventListener('click', connectSampleDatabase);
   document.getElementById('btn-connect-sample')?.addEventListener('click', connectSampleDatabase);
-  document.getElementById('btn-modal-cb')?.addEventListener('click', connectCustomerBehaviorDatabase);
-  document.getElementById('btn-connect-cb')?.addEventListener('click', connectCustomerBehaviorDatabase);
   document.getElementById('btn-disconnect-db')?.addEventListener('click', disconnectDatabase);
 
   // ER Diagram Modal
@@ -386,33 +384,6 @@ async function connectSampleDatabase() {
     showError(err.message || 'Failed to load sample database.');
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = origText; }
-  }
-}
-
-async function connectCustomerBehaviorDatabase() {
-  const btn1 = document.getElementById('btn-connect-cb');
-  const btn2 = document.getElementById('btn-modal-cb');
-  const orig1 = btn1 ? btn1.textContent : '';
-  const orig2 = btn2 ? btn2.textContent : '';
-  if (btn1) { btn1.disabled = true; btn1.textContent = 'Loading…'; }
-  if (btn2) { btn2.disabled = true; btn2.textContent = 'Loading…'; }
-
-  try {
-    const res = await apiCall('/db/customer-behavior', 'POST', {});
-    if (res && res.status === 'connected') {
-      updateDbStatusUI(true, res.db_type, res.database);
-      closeDbModal();
-      await loadSchema();
-      const qInput = document.getElementById('question');
-      if (qInput) {
-        qInput.value = 'What is the average purchase amount and total sales by item category?';
-      }
-    }
-  } catch (err) {
-    showError(err.message || 'Failed to load customer behavior database.');
-  } finally {
-    if (btn1) { btn1.disabled = false; btn1.textContent = orig1; }
-    if (btn2) { btn2.disabled = false; btn2.textContent = orig2; }
   }
 }
 

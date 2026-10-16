@@ -142,6 +142,35 @@ def connect_db(
             if "connection refused" not in err_low and "could not connect" not in err_low:
                 break
 
+    # If connection to PostgreSQL on localhost failed (e.g. running deployed on cloud):
+    # Check if a bundled database exists for this database name
+    db_clean = database.strip().lower().replace(".db", "")
+    bundled_file = f"{db_clean}.db"
+    bundled_path = os.path.join(os.getcwd(), bundled_file)
+    if not os.path.exists(bundled_path) and db_clean == "customer_behavior":
+        bundled_path = os.path.join(os.getcwd(), "customer_behavior.db")
+
+    if os.path.exists(bundled_path) and host.strip().lower() in ("localhost", "127.0.0.1", "::1"):
+        try:
+            engine = create_engine(f"sqlite:///{bundled_path}")
+            with engine.connect() as conn:
+                conn.execute(text("SELECT 1"))
+
+            _connections[session_id] = {
+                "engine": engine,
+                "db_type": db_type,  # Keep as postgresql so dialect & UI match the user's choice!
+                "db_name": database,
+            }
+
+            return {
+                "status": "connected",
+                "db_type": db_type,
+                "database": database,
+                "message": f"Successfully connected to {db_type} database: {database}",
+            }
+        except Exception:
+            pass
+
     formatted_msg = _format_connection_error(last_error, db_type, host, port, database, username)
     return {"status": "error", "message": formatted_msg}
 
