@@ -48,7 +48,12 @@ def _build_url(db_type: str, host: str, port: int, database: str, username: str,
     elif db_type == "mysql":
         return f"mysql+pymysql://{auth}{host}:{port}/{database}"
     elif db_type == "sqlite":
-        path = database if database else ":memory:"
+        if database.lower() in ("customer_behavior", "customer_behavior.db"):
+            path = os.path.join(os.getcwd(), "customer_behavior.db")
+        elif database.lower() in ("sample_store", "sample_store.db"):
+            path = os.path.join(os.getcwd(), "sample_store.db")
+        else:
+            path = database if database else ":memory:"
         return f"sqlite:///{path}"
     raise ValueError(f"Unsupported database type: {db_type}")
 
@@ -58,11 +63,18 @@ def _format_connection_error(e: Exception, db_type: str, host: str, port: int, d
     low = msg.lower()
     if "connection refused" in low or "is the server running" in low:
         is_local = host.strip().lower() in ("localhost", "127.0.0.1", "::1")
-        cloud_advice = (
-            "\n• If this app is deployed online (Render, Railway, Vercel, etc.): 'localhost' refers to the cloud server, NOT your laptop! Your local PostgreSQL cannot be reached at 'localhost' from the internet. Use a cloud database (like Neon or Supabase), or click '⚡ Use Demo DB'."
-            if is_local
-            else ""
-        )
+        if database.lower() in ("customer_behavior", "customer_behavior.db") and is_local:
+            cloud_advice = (
+                "\n\n⚡ Instant Fix: 'customer_behavior' is already bundled directly inside this project!"
+                "\n👉 Click the '⚡ Customer Behavior DB (3,900 Rows)' button in the modal to load it instantly on your deployed app!"
+            )
+        elif is_local:
+            cloud_advice = (
+                "\n• If this app is deployed online (Render, Railway, Vercel, etc.): 'localhost' refers to the cloud server, NOT your personal laptop! "
+                "Your local PostgreSQL cannot be reached at 'localhost' from the cloud. Use a cloud database (like Neon or Supabase), or click '⚡ Customer Behavior DB' / '⚡ Use Demo DB'."
+            )
+        else:
+            cloud_advice = ""
         return (
             f"Could not connect to {db_type} at {host}:{port} (Connection Refused).\n"
             f"The database server appears to be stopped or not accepting connections.\n"
@@ -707,4 +719,25 @@ def init_sample_db(session_id: str) -> dict:
         "database": "sample_store.db",
         "message": "Successfully connected to Sample Store database (SQLite).",
     }
+
+
+def init_customer_behavior_db(session_id: str) -> dict:
+    """Connect to the bundled customer_behavior SQLite database (3,900 rows)."""
+    db_path = os.path.join(os.getcwd(), "customer_behavior.db")
+    if not os.path.exists(db_path):
+        return {"status": "error", "message": "customer_behavior.db was not found on the server."}
+
+    engine = create_engine(f"sqlite:///{db_path}")
+    _connections[session_id] = {
+        "engine": engine,
+        "db_type": "sqlite",
+        "db_name": "customer_behavior",
+    }
+    return {
+        "status": "connected",
+        "db_type": "sqlite",
+        "database": "customer_behavior",
+        "message": "Successfully connected to Customer Behavior database (3,900 records)!",
+    }
+
 

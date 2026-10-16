@@ -347,6 +347,13 @@ async def connect_sample_db(body: dict):
     result = db_manager.init_sample_db(token)
     return result
 
+@app.post("/db/customer-behavior")
+async def connect_customer_behavior_db(body: dict):
+    token = body.get("session_token", "")
+    _require_auth(token)
+    result = db_manager.init_customer_behavior_db(token)
+    return result
+
 @app.post("/db/disconnect")
 async def disconnect_db(body: dict):
     token = body.get("session_token", "")

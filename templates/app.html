@@ -44,6 +44,7 @@
         </div>
         <div style="display:flex; flex-direction:column; gap:6px;">
           <button class="btn-sidebar" id="btn-open-db-modal">🔌 Connect Database</button>
+          <button class="btn-sidebar" id="btn-connect-cb" style="background: rgba(94, 234, 212, 0.12); border-color: rgba(94, 234, 212, 0.35); color: var(--accent2); font-weight: 500;" title="Customer Shopping Behavior (3,900 Records)">⚡ Customer Behavior DB</button>
           <button class="btn-sidebar" id="btn-connect-sample" title="Instant SQLite Store Demo">⚡ Load Demo Store DB</button>
           <button class="btn-sidebar hidden" id="btn-disconnect-db" style="color:var(--error); border-color:rgba(248,113,113,0.3);">⏏ Disconnect DB</button>
         </div>
@@ -310,9 +311,10 @@
 
       <div class="modal-error hidden" id="db-modal-error"></div>
 
-      <div class="modal-actions">
+      <div class="modal-actions" style="flex-wrap: wrap; gap: 8px;">
         <button class="btn-modal-cancel" id="btn-cancel-db">Cancel</button>
-        <button class="btn-secondary" id="btn-modal-sample" title="Instant SQLite Store with 5 tables">⚡ Use Demo DB</button>
+        <button class="btn-secondary" id="btn-modal-sample" title="Instant SQLite Store with 5 tables">⚡ Demo Store</button>
+        <button class="btn-secondary" id="btn-modal-cb" style="color: var(--accent2); border-color: rgba(94, 234, 212, 0.4); background: rgba(94, 234, 212, 0.1);" title="Bundled Customer Behavior DB (3,900 rows)">⚡ Customer Behavior DB (3,900 Rows)</button>
         <button class="btn-modal-primary" id="db-connect-btn">Connect</button>
       </div>
     </div>
