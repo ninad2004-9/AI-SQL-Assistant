@@ -17,6 +17,18 @@ _connections: dict[str, dict] = {}
 
 
 def _build_url(db_type: str, host: str, port: int, database: str, username: str, password: str) -> str:
+    # If the user pasted a complete connection URI into host or database:
+    candidate = host.strip() if ("://" in host) else (database.strip() if ("://" in database) else None)
+    if candidate:
+        if candidate.startswith("postgres://"):
+            return "postgresql+psycopg2://" + candidate[len("postgres://"):]
+        if candidate.startswith("postgresql://"):
+            return "postgresql+psycopg2://" + candidate[len("postgresql://"):]
+        if candidate.startswith("mysql://"):
+            return "mysql+pymysql://" + candidate[len("mysql://"):]
+        if candidate.startswith("sqlite://"):
+            return candidate
+
     user_part = quote_plus(username) if username else ""
     pass_part = quote_plus(password) if password else ""
     if user_part and pass_part:
@@ -27,7 +39,12 @@ def _build_url(db_type: str, host: str, port: int, database: str, username: str,
         auth = ""
 
     if db_type == "postgresql":
-        return f"postgresql+psycopg2://{auth}{host}:{port}/{database}"
+        is_local = host.strip().lower() in ("localhost", "127.0.0.1", "::1")
+        db_part = database
+        # Cloud PostgreSQL providers (Neon, Supabase, AWS RDS, Render, Railway) require SSL
+        if not is_local and db_part and ("?" not in db_part):
+            db_part = f"{db_part}?sslmode=require"
+        return f"postgresql+psycopg2://{auth}{host}:{port}/{db_part}"
     elif db_type == "mysql":
         return f"mysql+pymysql://{auth}{host}:{port}/{database}"
     elif db_type == "sqlite":
@@ -40,11 +57,16 @@ def _format_connection_error(e: Exception, db_type: str, host: str, port: int, d
     msg = str(e)
     low = msg.lower()
     if "connection refused" in low or "is the server running" in low:
+        is_local = host.strip().lower() in ("localhost", "127.0.0.1", "::1")
+        cloud_advice = (
+            "\n• If this app is deployed online (Render, Railway, Vercel, etc.): 'localhost' refers to the cloud server, NOT your laptop! Your local PostgreSQL cannot be reached at 'localhost' from the internet. Use a cloud database (like Neon or Supabase), or click '⚡ Use Demo DB'."
+            if is_local
+            else ""
+        )
         return (
             f"Could not connect to {db_type} at {host}:{port} (Connection Refused).\n"
             f"The database server appears to be stopped or not accepting connections.\n"
-            f"• If using PostgreSQL on Windows, open Services (services.msc) and ensure 'postgresql-x64-17' is Running.\n"
-            f"• Try using '127.0.0.1' instead of 'localhost'."
+            f"• If running locally on Windows: open Services (services.msc) and ensure 'postgresql-x64-17' is Running.{cloud_advice}"
         )
     if "password authentication failed" in low or "access denied" in low:
         return (
