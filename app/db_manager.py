@@ -7,12 +7,52 @@ Supports PostgreSQL, MySQL, and SQLite via SQLAlchemy.
 import os
 import math
 from typing import Any
+from urllib.parse import quote_plus
 from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.engine import Engine
 
 
 # ── Connection store: session_token -> {engine, db_type, db_name} ────────────
 _connections: dict[str, dict] = {}
+
+
+def _build_url(db_type: str, host: str, port: int, database: str, username: str, password: str) -> str:
+    user_part = quote_plus(username) if username else ""
+    pass_part = quote_plus(password) if password else ""
+    if user_part and pass_part:
+        auth = f"{user_part}:{pass_part}@"
+    elif user_part:
+        auth = f"{user_part}@"
+    else:
+        auth = ""
+
+    if db_type == "postgresql":
+        return f"postgresql+psycopg2://{auth}{host}:{port}/{database}"
+    elif db_type == "mysql":
+        return f"mysql+pymysql://{auth}{host}:{port}/{database}"
+    elif db_type == "sqlite":
+        path = database if database else ":memory:"
+        return f"sqlite:///{path}"
+    raise ValueError(f"Unsupported database type: {db_type}")
+
+
+def _format_connection_error(e: Exception, db_type: str, host: str, port: int, database: str, username: str) -> str:
+    msg = str(e)
+    low = msg.lower()
+    if "connection refused" in low or "is the server running" in low:
+        return (
+            f"Could not connect to {db_type} at {host}:{port} (Connection Refused).\n"
+            f"The database server appears to be stopped or not accepting connections.\n"
+            f"• If using PostgreSQL on Windows, open Services (services.msc) and ensure 'postgresql-x64-17' is Running.\n"
+            f"• Try using '127.0.0.1' instead of 'localhost'."
+        )
+    if "password authentication failed" in low or "access denied" in low:
+        return (
+            f"Authentication failed for user '{username}'. Please verify your username and password for database '{database}'."
+        )
+    if "database" in low and ("does not exist" in low or "unknown database" in low):
+        return f"Database '{database}' does not exist on {host}:{port}."
+    return msg
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -32,38 +72,44 @@ def connect_db(
     db_type: 'postgresql' | 'mysql' | 'sqlite'
     For SQLite, 'database' is the file path (or ':memory:').
     """
-    try:
-        if db_type == "postgresql":
-            url = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{database}"
-        elif db_type == "mysql":
-            url = f"mysql+pymysql://{username}:{password}@{host}:{port}/{database}"
-        elif db_type == "sqlite":
-            path = database if database else ":memory:"
-            url = f"sqlite:///{path}"
-        else:
-            return {"status": "error", "message": f"Unsupported database type: {db_type}"}
+    if db_type not in ("postgresql", "mysql", "sqlite"):
+        return {"status": "error", "message": f"Unsupported database type: {db_type}"}
 
-        engine = create_engine(url, pool_pre_ping=True)
+    hosts_to_try = [host]
+    if host.strip().lower() == "localhost":
+        hosts_to_try.append("127.0.0.1")
 
-        # Test the connection
-        with engine.connect() as conn:
-            conn.execute(text("SELECT 1"))
+    last_error = None
+    for h in hosts_to_try:
+        try:
+            url = _build_url(db_type, h, port, database, username, password)
+            engine = create_engine(url, pool_pre_ping=True)
 
-        _connections[session_id] = {
-            "engine": engine,
-            "db_type": db_type,
-            "db_name": database,
-        }
+            # Test the connection
+            with engine.connect() as conn:
+                conn.execute(text("SELECT 1"))
 
-        return {
-            "status": "connected",
-            "db_type": db_type,
-            "database": database,
-            "message": f"Successfully connected to {db_type} database: {database}",
-        }
+            _connections[session_id] = {
+                "engine": engine,
+                "db_type": db_type,
+                "db_name": database,
+            }
 
-    except Exception as e:
-        return {"status": "error", "message": str(e)}
+            return {
+                "status": "connected",
+                "db_type": db_type,
+                "database": database,
+                "message": f"Successfully connected to {db_type} database: {database}",
+            }
+        except Exception as e:
+            last_error = e
+            # Only fall back to next host if it was a network/connection refused error
+            err_low = str(e).lower()
+            if "connection refused" not in err_low and "could not connect" not in err_low:
+                break
+
+    formatted_msg = _format_connection_error(last_error, db_type, host, port, database, username)
+    return {"status": "error", "message": formatted_msg}
 
 
 def disconnect_db(session_id: str) -> dict:
