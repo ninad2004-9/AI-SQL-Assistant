@@ -1,14 +1,14 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// QueryMind — Authentication & Landing Page Interaction Logic
+// QueryMind — Authentication & Landing Page Interaction Logic (v3.0)
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Auth Modal Controls ──────────────────────────────────────────────────────
-function openAuthModal(tab = 'login') {
+function openAuthModal(tab) {
+  if (!tab) tab = 'login';
   const overlay = document.getElementById('auth-modal-overlay');
   if (overlay) {
     overlay.classList.remove('hidden');
     switchTab(tab);
-    // Focus the primary input
     setTimeout(() => {
       const input = tab === 'login'
         ? document.getElementById('login-email')
@@ -25,7 +25,7 @@ function closeAuthModal() {
 }
 
 function handleModalOverlayClick(e) {
-  if (e.target.id === 'auth-modal-overlay') {
+  if (e.target && e.target.id === 'auth-modal-overlay') {
     closeAuthModal();
   }
 }
@@ -42,7 +42,7 @@ function closeDemoModal() {
 }
 
 function handleDemoOverlayClick(e) {
-  if (e.target.id === 'demo-modal-overlay') {
+  if (e.target && e.target.id === 'demo-modal-overlay') {
     closeDemoModal();
   }
 }
@@ -78,13 +78,44 @@ function clearErrors() {
   document.getElementById('reg-error')?.classList.add('hidden');
 }
 
-function setLoading(btn, loading) {
+function setLoading(btn, loading, defaultText) {
   if (!btn) return;
-  const text = btn.querySelector('.btn-text');
-  const loader = btn.querySelector('.btn-loader');
   btn.disabled = loading;
-  if (text)   text.style.opacity = loading ? '0' : '1';
-  if (loader) loader.classList.toggle('hidden', !loading);
+  const text = btn.querySelector('.btn-text');
+  if (text) {
+    text.textContent = loading ? 'Authenticating...' : (defaultText || 'Submit');
+  }
+}
+
+// ── Instant Demo Login ───────────────────────────────────────────────────────
+async function doInstantDemo(btnEl) {
+  const btn = btnEl || document.getElementById('btn-demo-login');
+  const originalText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span>⚡ Signing in demo workspace...</span>';
+  }
+  try {
+    const res = await fetch('/auth/demo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({})
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      alert('Demo login failed: ' + (data.detail || 'Server error'));
+      return;
+    }
+    saveSession(data);
+    window.location.href = '/app';
+  } catch {
+    alert('Network error during demo login. Please try again.');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
+  }
 }
 
 // ── Register ───────────────────────────────────────────────────────────────────
@@ -104,7 +135,7 @@ async function doRegister() {
     return;
   }
 
-  setLoading(btn, true);
+  setLoading(btn, true, 'Create account');
   try {
     const res = await fetch('/auth/register', {
       method: 'POST',
@@ -121,7 +152,7 @@ async function doRegister() {
   } catch {
     showError(errBox, 'Network error. Please try again.');
   } finally {
-    setLoading(btn, false);
+    setLoading(btn, false, 'Create account');
   }
 }
 
@@ -133,11 +164,11 @@ async function doLogin() {
   const btn      = document.getElementById('login-btn');
 
   if (!email || !password) {
-    showError(errBox, 'Please fill in all fields.');
+    showError(errBox, 'Please enter both email and password.');
     return;
   }
 
-  setLoading(btn, true);
+  setLoading(btn, true, 'Sign in');
   try {
     const res = await fetch('/auth/login', {
       method: 'POST',
@@ -146,7 +177,7 @@ async function doLogin() {
     });
     const data = await res.json();
     if (!res.ok) {
-      showError(errBox, data.detail || 'Login failed.');
+      showError(errBox, data.detail || 'Invalid email or password.');
       return;
     }
     saveSession(data);
@@ -154,7 +185,7 @@ async function doLogin() {
   } catch {
     showError(errBox, 'Network error. Please try again.');
   } finally {
-    setLoading(btn, false);
+    setLoading(btn, false, 'Sign in');
   }
 }
 
@@ -162,10 +193,6 @@ function showError(box, msg) {
   if (!box) return;
   box.textContent = msg;
   box.classList.remove('hidden');
-  box.animate(
-    [{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }],
-    { duration: 250 }
-  );
 }
 
 function saveSession(data) {
@@ -178,7 +205,6 @@ function saveSession(data) {
 document.addEventListener('DOMContentLoaded', () => {
   const token = localStorage.getItem('qm_token');
   if (token) {
-    // If logged in, customize top actions so users can easily jump to workspace
     const signinBtn = document.getElementById('btn-nav-signin');
     const ctaBtn = document.getElementById('btn-nav-cta');
     if (signinBtn) {
@@ -192,7 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Check URL hash for modal trigger (e.g. #login or #register)
   if (window.location.hash === '#login') {
     openAuthModal('login');
   } else if (window.location.hash === '#register') {
@@ -202,14 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ── Keyboard shortcuts ─────────────────────────────────────────────────────────
 document.addEventListener('keydown', e => {
-  // ESC closes any open modal
   if (e.key === 'Escape') {
     closeAuthModal();
     closeDemoModal();
     return;
   }
 
-  // Enter key submits active modal form
   if (e.key === 'Enter') {
     const authOverlay = document.getElementById('auth-modal-overlay');
     if (authOverlay && !authOverlay.classList.contains('hidden')) {

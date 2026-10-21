@@ -30,6 +30,8 @@
       --accent-hover: #6366f1;
       --accent2: #5eead4;
       --accent-blue: #60a5fa;
+      --accent-amber: #fbbf24;
+      --accent-emerald: #34d399;
       --text: #f8fafc;
       --text2: #94a3b8;
       --text3: #64748b;
@@ -74,19 +76,18 @@
 
     .float-snippet {
       position: absolute;
+      bottom: -30px;
       font-family: var(--mono);
       font-size: 11px;
-      color: #7c6af7;
+      color: var(--accent2);
       white-space: nowrap;
       animation: floatUp linear infinite;
       user-select: none;
     }
 
     @keyframes floatUp {
-      from { transform: translateY(110vh); opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 0.8; }
-      to   { transform: translateY(-10vh); opacity: 0; }
+      from { transform: translateY(0); opacity: 0.8; }
+      to   { transform: translateY(-110vh); opacity: 0; }
     }
 
     /* ── Layout Container ─────────────────────────────────────────────────── */
@@ -113,14 +114,14 @@
       z-index: 100;
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      background: rgba(7, 7, 11, 0.78);
+      background: rgba(7, 7, 11, 0.82);
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .navbar-inner {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 1rem 2rem;
+      padding: 0.95rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -176,14 +177,37 @@
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
+      gap: 0.75rem;
+    }
+
+    .btn-nav-demo {
+      background: rgba(124, 106, 247, 0.12);
+      border: 1px solid rgba(124, 106, 247, 0.35);
+      color: #c4b5fd;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-nav-demo:hover {
+      background: rgba(124, 106, 247, 0.25);
+      border-color: rgba(124, 106, 247, 0.6);
+      color: #fff;
+      transform: translateY(-1px);
     }
 
     .btn-nav-signin {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.12);
       color: #e2e8f0;
-      padding: 0.5rem 1.2rem;
+      padding: 0.5rem 1.15rem;
       border-radius: 8px;
       font-size: 0.86rem;
       font-weight: 500;
@@ -199,10 +223,10 @@
     }
 
     .btn-nav-cta {
-      background: linear-gradient(135deg, #6d5cf5 0%, #4f46e5 100%);
-      border: 1px solid rgba(124, 106, 247, 0.4);
+      background: linear-gradient(135deg, #7c6af7 0%, #6366f1 100%);
+      border: 1px solid rgba(124, 106, 247, 0.45);
       color: #fff;
-      padding: 0.5rem 1.3rem;
+      padding: 0.5rem 1.25rem;
       border-radius: 8px;
       font-size: 0.86rem;
       font-weight: 600;
@@ -211,40 +235,28 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 4px 16px rgba(109, 92, 245, 0.35);
+      box-shadow: 0 4px 16px rgba(124, 106, 247, 0.35);
       transition: all 0.2s ease;
     }
 
     .btn-nav-cta:hover {
-      box-shadow: 0 6px 22px rgba(109, 92, 245, 0.55);
+      box-shadow: 0 6px 22px rgba(124, 106, 247, 0.55);
       transform: translateY(-1px);
     }
 
-    .btn-nav-cta .arrow,
-    .btn-hero-primary .arrow {
-      font-size: 13px;
-      transition: transform 0.2s ease;
-      display: inline-block;
-    }
-
-    .btn-nav-cta:hover .arrow,
-    .btn-hero-primary:hover .arrow {
-      transform: translateX(3px);
-    }
-
-    /* ── Main Hero Section ────────────────────────────────────────────────── */
+    /* ── Hero Section ─────────────────────────────────────────────────────── */
     .hero-section {
-      padding: 3rem 0 3.5rem;
+      padding: 4.5rem 0 3rem;
+      position: relative;
     }
 
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr 1.15fr;
-      gap: 3rem;
+      gap: 3.5rem;
       align-items: center;
     }
 
-    /* Hero Left: Headline & CTAs */
     .hero-content {
       display: flex;
       flex-direction: column;
@@ -291,15 +303,15 @@
       font-size: 1.02rem;
       color: var(--text2);
       line-height: 1.65;
-      margin-bottom: 2rem;
+      margin-bottom: 1.85rem;
       max-width: 520px;
     }
 
     .hero-cta-group {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 2.2rem;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
       flex-wrap: wrap;
     }
 
@@ -325,19 +337,42 @@
       transform: translateY(-2px);
     }
 
+    .btn-hero-instant {
+      background: rgba(94, 234, 212, 0.1);
+      border: 1px solid rgba(94, 234, 212, 0.35);
+      color: #5eead4;
+      padding: 0.8rem 1.4rem;
+      border-radius: 10px;
+      font-size: 0.94rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-hero-instant:hover {
+      background: rgba(94, 234, 212, 0.2);
+      border-color: rgba(94, 234, 212, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(94, 234, 212, 0.25);
+    }
+
     .btn-hero-secondary {
       background: rgba(18, 19, 28, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.14);
       color: #f1f5f9;
-      padding: 0.8rem 1.85rem;
+      padding: 0.8rem 1.4rem;
       border-radius: 10px;
-      font-size: 0.96rem;
+      font-size: 0.94rem;
       font-weight: 500;
       cursor: pointer;
       font-family: var(--font);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       backdrop-filter: blur(10px);
       transition: all 0.2s ease;
     }
@@ -348,12 +383,29 @@
       transform: translateY(-1px);
     }
 
-    .play-icon {
-      font-size: 11px;
-      color: #94a3b8;
+    /* Social Proof Stars */
+    .hero-social-proof {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.85rem;
+      font-size: 0.84rem;
+      color: var(--text2);
     }
 
-    /* Hero feature highlights row */
+    .star-rating {
+      color: #fbbf24;
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    .proof-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Feature Highlights Row */
     .hero-feature-row {
       display: flex;
       align-items: center;
@@ -412,7 +464,7 @@
       color: var(--text2);
     }
 
-    /* Hero Right: Clean Mockup (Without Artifacts) */
+    /* Hero Right: 3D Mockup */
     .hero-preview-wrapper {
       position: relative;
       display: flex;
@@ -442,25 +494,25 @@
     }
 
     .hero-mockup-img:hover {
-      transform: scale(1.015) translateY(-3px);
-      filter: drop-shadow(0 0 50px rgba(99, 102, 241, 0.5)) drop-shadow(0 30px 75px rgba(0, 0, 0, 0.95));
+      transform: translateY(-4px) scale(1.01);
+      filter: drop-shadow(0 0 45px rgba(124, 106, 247, 0.55)) drop-shadow(0 30px 70px rgba(0, 0, 0, 0.9));
     }
 
-    /* ── Trust & Tech Stack Section (Industrial Vector Cards) ─────────────── */
+    /* ── Trust Section ────────────────────────────────────────────────────── */
     .trust-section {
-      padding: 2.5rem 0 3.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(10, 11, 18, 0.45);
-      text-align: center;
+      padding: 2.25rem 0 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(10, 11, 18, 0.5);
     }
 
     .trust-title {
       font-size: 0.74rem;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       color: var(--text3);
-      margin-bottom: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.25rem;
       text-transform: uppercase;
     }
 
@@ -468,46 +520,291 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 1.25rem;
       flex-wrap: wrap;
     }
 
     .trust-badge-card {
-      background: rgba(18, 19, 30, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 0.65rem 1.4rem;
       display: flex;
       align-items: center;
       gap: 10px;
-      color: #cbd5e1;
-      font-size: 0.94rem;
+      background: rgba(18, 19, 30, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 0.65rem 1.4rem;
+      font-size: 0.9rem;
       font-weight: 600;
+      color: #e2e8f0;
       transition: all 0.25s ease;
       user-select: none;
     }
 
     .trust-badge-card:hover {
-      border-color: rgba(124, 106, 247, 0.35);
-      background: rgba(26, 28, 44, 0.9);
-      color: #fff;
+      border-color: rgba(124, 106, 247, 0.45);
+      background: rgba(26, 28, 44, 0.95);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 16px rgba(124, 106, 247, 0.2);
     }
 
     .trust-icon {
-      font-size: 18px;
+      font-size: 1.2rem;
+    }
+
+    /* ── Industrial KPI Metric Ribbon ─────────────────────────────────────── */
+    .kpi-section {
+      padding: 3rem 0;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .kpi-card {
+      background: rgba(14, 15, 24, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .kpi-card:hover {
+      border-color: rgba(124, 106, 247, 0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.5;
+    }
+
+    .kpi-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.35rem;
+      font-family: var(--font);
+    }
+
+    .kpi-purple { color: #a78bfa; }
+    .kpi-teal   { color: #5eead4; }
+    .kpi-blue   { color: #60a5fa; }
+    .kpi-amber  { color: #fbbf24; }
+
+    .kpi-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-bottom: 0.25rem;
+    }
+
+    .kpi-desc {
+      font-size: 0.76rem;
+      color: var(--text3);
+      line-height: 1.4;
+    }
+
+    /* ── Interactive Playground Terminal Widget ───────────────────────────── */
+    .sandbox-section {
+      padding: 2.5rem 0 3.5rem;
+    }
+
+    .sandbox-card {
+      background: rgba(14, 15, 24, 0.85);
+      border: 1px solid rgba(124, 106, 247, 0.28);
+      border-radius: var(--radius-lg);
+      padding: 1.85rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(124, 106, 247, 0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .sandbox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .sandbox-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sandbox-badge {
+      background: rgba(94, 234, 212, 0.12);
+      border: 1px solid rgba(94, 234, 212, 0.35);
+      color: #5eead4;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .sandbox-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .sandbox-tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(22, 23, 37, 0.8);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sandbox-tab {
+      background: transparent;
+      border: none;
+      color: var(--text2);
+      padding: 0.45rem 0.95rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 7px;
+      transition: all 0.2s ease;
+      font-family: var(--font);
+    }
+
+    .sandbox-tab:hover {
+      color: #fff;
+    }
+
+    .sandbox-tab.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(124, 106, 247, 0.45);
+    }
+
+    .sandbox-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .sandbox-pane {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pane-label {
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--text3);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pane-box {
+      background: #090a10;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nl-input-display {
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      font-style: italic;
+      margin-bottom: 0.85rem;
+    }
+
+    .sql-code-display {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: #5eead4;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      flex: 1;
+    }
+
+    .pane-table-box {
+      background: #090a10;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 0.75rem;
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mini-data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .mini-data-table th {
+      text-align: left;
+      padding: 0.45rem 0.65rem;
+      color: var(--text3);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .mini-data-table td {
+      padding: 0.55rem 0.65rem;
+      color: #cbd5e1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+    }
+
+    .sandbox-footer-insight {
+      margin-top: 1rem;
+      background: rgba(124, 106, 247, 0.09);
+      border: 1px solid rgba(124, 106, 247, 0.22);
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      font-size: 0.82rem;
+      color: #c4b5fd;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     /* ── Showcase Section Standards ───────────────────────────────────────── */
     .section-wrap {
-      padding: 4.5rem 0;
+      padding: 3.5rem 0;
     }
 
     .section-header {
       text-align: center;
       max-width: 680px;
-      margin: 0 auto 3.25rem;
+      margin: 0 auto 2.25rem;
     }
 
     .section-badge {
@@ -516,7 +813,7 @@
       letter-spacing: 0.14em;
       color: var(--accent);
       text-transform: uppercase;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       display: inline-block;
       padding: 4px 12px;
       background: rgba(124, 106, 247, 0.1);
@@ -525,16 +822,16 @@
     }
 
     .section-title {
-      font-size: clamp(1.85rem, 2.8vw, 2.5rem);
+      font-size: clamp(1.85rem, 2.8vw, 2.45rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       color: #fff;
-      margin-bottom: 0.85rem;
-      line-height: 1.22;
+      margin-bottom: 0.65rem;
+      line-height: 1.2;
     }
 
     .section-sub {
-      font-size: 1rem;
+      font-size: 0.98rem;
       color: var(--text2);
       line-height: 1.6;
     }
@@ -542,114 +839,203 @@
     /* ── Features Grid (Bento Style) ──────────────────────────────────────── */
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
     }
 
     .feature-card {
       background: rgba(14, 15, 24, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius);
-      padding: 1.85rem;
+      padding: 1.65rem;
       transition: all 0.3s ease;
       backdrop-filter: blur(8px);
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
     .feature-card:hover {
-      border-color: rgba(124, 106, 247, 0.35);
+      border-color: rgba(124, 106, 247, 0.4);
       transform: translateY(-4px);
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(124, 106, 247, 0.12);
     }
 
+    .f-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
     .f-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 11px;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
-      margin-bottom: 1.2rem;
+      font-size: 19px;
     }
 
-    .purple-glow { background: rgba(124, 106, 247, 0.15); color: #c4b5fd; box-shadow: 0 0 20px rgba(124, 106, 247, 0.25); }
-    .blue-glow   { background: rgba(96, 165, 250, 0.15); color: #93c5fd; box-shadow: 0 0 20px rgba(96, 165, 250, 0.25); }
-    .red-glow    { background: rgba(248, 113, 113, 0.15); color: #fca5a5; box-shadow: 0 0 20px rgba(248, 113, 113, 0.25); }
-    .amber-glow  { background: rgba(251, 191, 36, 0.15); color: #fde68a; box-shadow: 0 0 20px rgba(251, 191, 36, 0.25); }
-    .teal-glow   { background: rgba(94, 234, 212, 0.15); color: #5eead4; box-shadow: 0 0 20px rgba(94, 234, 212, 0.25); }
-    .indigo-glow { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; box-shadow: 0 0 20px rgba(99, 102, 241, 0.25); }
+    .purple-glow { background: rgba(124, 106, 247, 0.15); color: #c4b5fd; box-shadow: 0 0 18px rgba(124, 106, 247, 0.25); }
+    .blue-glow   { background: rgba(96, 165, 250, 0.15); color: #93c5fd; box-shadow: 0 0 18px rgba(96, 165, 250, 0.25); }
+    .red-glow    { background: rgba(248, 113, 113, 0.15); color: #fca5a5; box-shadow: 0 0 18px rgba(248, 113, 113, 0.25); }
+    .amber-glow  { background: rgba(251, 191, 36, 0.15); color: #fde68a; box-shadow: 0 0 18px rgba(251, 191, 36, 0.25); }
+    .teal-glow   { background: rgba(94, 234, 212, 0.15); color: #5eead4; box-shadow: 0 0 18px rgba(94, 234, 212, 0.25); }
+    .indigo-glow { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; box-shadow: 0 0 18px rgba(99, 102, 241, 0.25); }
+
+    .f-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text2);
+    }
 
     .feature-card h3 {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      font-size: 0.88rem;
+      color: var(--text2);
+      line-height: 1.55;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+
+    .f-micro-visual {
+      background: #090a11;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: #94a3b8;
+    }
+
+    /* ── Comparison Table ─────────────────────────────────────────────────── */
+    .compare-section {
+      padding: 3.5rem 0;
+      background: rgba(10, 11, 18, 0.35);
+    }
+
+    .compare-table-wrapper {
+      background: rgba(14, 15, 24, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      backdrop-filter: blur(10px);
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .compare-table th {
+      padding: 1.1rem 1.4rem;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .compare-table th.col-feature { width: 34%; color: var(--text2); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .compare-table th.col-generic { width: 22%; color: var(--text3); font-size: 0.85rem; }
+    .compare-table th.col-legacy  { width: 22%; color: var(--text3); font-size: 0.85rem; }
+    .compare-table th.col-qm      { width: 22%; color: #c4b5fd; background: rgba(124, 106, 247, 0.12); border-left: 1px solid rgba(124, 106, 247, 0.3); border-right: 1px solid rgba(124, 106, 247, 0.3); font-size: 0.95rem; font-weight: 700; }
+
+    .compare-table td {
+      padding: 1rem 1.4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
+    }
+
+    .compare-table td.col-qm {
+      background: rgba(124, 106, 247, 0.07);
+      border-left: 1px solid rgba(124, 106, 247, 0.25);
+      border-right: 1px solid rgba(124, 106, 247, 0.25);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .badge-check { color: #5eead4; font-weight: 700; font-size: 1rem; }
+    .badge-cross { color: #64748b; font-size: 0.9rem; }
+
+    /* ── How It Works Grid ────────────────────────────────────────────────── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .step-card {
+      background: rgba(14, 15, 24, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      padding: 2rem;
+      position: relative;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+
+    .step-card:hover {
+      border-color: rgba(94, 234, 212, 0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+    }
+
+    .step-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(94, 234, 212, 0.12);
+      border: 1px solid rgba(94, 234, 212, 0.35);
+      color: #5eead4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: var(--mono);
+      margin-bottom: 1.25rem;
+    }
+
+    .step-card h3 {
       font-size: 1.15rem;
       font-weight: 700;
       color: #fff;
       margin-bottom: 0.55rem;
     }
 
-    .feature-card p {
+    .step-card p {
       font-size: 0.9rem;
       color: var(--text2);
       line-height: 1.6;
     }
 
-    /* ── How It Works Grid ────────────────────────────────────────────────── */
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 1.8rem;
-    }
-
-    .step-card {
-      background: rgba(14, 15, 24, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius);
-      padding: 2rem 1.8rem;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .step-card:hover {
-      border-color: rgba(94, 234, 212, 0.3);
-      transform: translateY(-3px);
-    }
-
-    .step-badge {
-      font-family: var(--mono);
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--accent2);
-      margin-bottom: 1rem;
-      opacity: 0.85;
-    }
-
-    .step-card h3 {
-      font-size: 1.18rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.55rem;
-    }
-
-    .step-card p {
-      font-size: 0.88rem;
-      color: var(--text2);
-      line-height: 1.6;
-    }
-
-    /* ── Use Cases Section ────────────────────────────────────────────────── */
+    /* ── Use Cases Grid ───────────────────────────────────────────────────── */
     .usecase-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
 
     .usecase-card {
-      background: rgba(14, 15, 24, 0.75);
+      background: rgba(14, 15, 24, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius);
       padding: 1.85rem;
       transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
     }
 
     .usecase-card:hover {
@@ -658,7 +1044,7 @@
     }
 
     .usecase-icon {
-      font-size: 28px;
+      font-size: 1.75rem;
       margin-bottom: 1rem;
     }
 
@@ -666,22 +1052,87 @@
       font-size: 1.15rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 0.55rem;
+      margin-bottom: 0.5rem;
     }
 
     .usecase-card p {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       color: var(--text2);
       line-height: 1.6;
     }
 
-    /* ── Pricing Grid ─────────────────────────────────────────────────────── */
+    /* ── Testimonials (Wall of Love) ──────────────────────────────────────── */
+    .testimonials-section {
+      padding: 3.5rem 0;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .testi-card {
+      background: rgba(14, 15, 24, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      padding: 1.85rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+
+    .testi-card:hover {
+      border-color: rgba(124, 106, 247, 0.35);
+      transform: translateY(-3px);
+    }
+
+    .testi-quote {
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testi-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7c6af7 0%, #38bdf8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .author-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .author-role {
+      font-size: 0.76rem;
+      color: var(--text3);
+    }
+
+    /* ── Pricing Grid (3-Tier Industrial Architecture) ────────────────────── */
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-      max-width: 860px;
-      margin: 0 auto;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      align-items: stretch;
     }
 
     .pricing-card {
@@ -692,102 +1143,123 @@
       display: flex;
       flex-direction: column;
       position: relative;
+      backdrop-filter: blur(10px);
       transition: all 0.3s ease;
     }
 
+    .pricing-card:hover {
+      border-color: rgba(124, 106, 247, 0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
+    }
+
     .pricing-card.featured {
-      border-color: rgba(124, 106, 247, 0.45);
-      box-shadow: 0 0 40px rgba(124, 106, 247, 0.18);
+      background: rgba(18, 19, 32, 0.92);
+      border: 2px solid rgba(124, 106, 247, 0.75);
+      box-shadow: 0 0 40px rgba(124, 106, 247, 0.22);
     }
 
     .pricing-badge {
       position: absolute;
       top: -12px;
       right: 24px;
-      background: linear-gradient(135deg, #6d5cf5, #4f46e5);
+      background: linear-gradient(135deg, #7c6af7 0%, #6366f1 100%);
       color: #fff;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      padding: 3px 12px;
+      letter-spacing: 0.09em;
+      padding: 3px 10px;
       border-radius: 999px;
-      letter-spacing: 0.05em;
+      box-shadow: 0 4px 12px rgba(124, 106, 247, 0.4);
     }
 
     .pricing-title {
       font-size: 1.35rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.45rem;
     }
 
     .pricing-desc {
       font-size: 0.86rem;
       color: var(--text2);
       margin-bottom: 1.5rem;
+      min-height: 40px;
     }
 
     .pricing-price {
-      font-size: 2.5rem;
+      font-size: 2.75rem;
       font-weight: 800;
       color: #fff;
-      margin-bottom: 1.5rem;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
     }
 
     .pricing-price span {
       font-size: 0.95rem;
       font-weight: 500;
       color: var(--text3);
+      letter-spacing: 0;
     }
 
     .pricing-features {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.85rem;
       margin-bottom: 2rem;
       flex: 1;
     }
 
     .pricing-features li {
-      font-size: 0.88rem;
-      color: #cbd5e1;
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: #cbd5e1;
     }
 
     .check-icon {
-      color: #4ade80;
+      color: var(--accent2);
       font-weight: 700;
       font-size: 14px;
     }
 
-    /* ── FAQs Accordion ───────────────────────────────────────────────────── */
+    /* ── FAQs Section (2-Column Balanced) ─────────────────────────────────── */
+    .faq-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
     .faq-list {
-      max-width: 820px;
-      margin: 0 auto;
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
 
     .faq-item {
-      background: rgba(14, 15, 24, 0.75);
+      background: rgba(14, 15, 24, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius);
-      padding: 1.35rem 1.6rem;
+      padding: 1.35rem 1.65rem;
       transition: all 0.25s ease;
     }
 
     .faq-item:hover {
       border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(20, 22, 34, 0.85);
     }
 
     .faq-item h4 {
-      font-size: 1rem;
+      font-size: 1.02rem;
       font-weight: 600;
       color: #fff;
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.5rem;
     }
 
     .faq-item p {
@@ -796,21 +1268,89 @@
       line-height: 1.6;
     }
 
+    .faq-side-card {
+      background: rgba(18, 19, 32, 0.85);
+      border: 1px solid rgba(124, 106, 247, 0.3);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .faq-side-card h3 {
+      font-size: 1.15rem;
+      color: #fff;
+    }
+
+    .faq-side-card p {
+      font-size: 0.86rem;
+      color: var(--text2);
+      line-height: 1.55;
+    }
+
+    /* ── High-Impact Pre-Footer CTA Banner ────────────────────────────────── */
+    .cta-banner-section {
+      padding: 3rem 0 5rem;
+    }
+
+    .cta-banner-card {
+      background: linear-gradient(135deg, rgba(22, 24, 42, 0.95) 0%, rgba(13, 14, 24, 0.95) 100%);
+      border: 1px solid rgba(124, 106, 247, 0.4);
+      border-radius: var(--radius-lg);
+      padding: 3.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7), 0 0 50px rgba(124, 106, 247, 0.18);
+    }
+
+    .cta-banner-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(124, 106, 247, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-title {
+      font-size: clamp(2rem, 3.2vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 0.85rem;
+    }
+
+    .cta-subtitle {
+      font-size: 1.05rem;
+      color: var(--text2);
+      max-width: 580px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+
+    .cta-button-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
     /* ── Footer ───────────────────────────────────────────────────────────── */
     .footer {
-      width: 100%;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 2.5rem 0;
-      margin-top: auto;
-      background: rgba(7, 7, 11, 0.85);
+      background: rgba(7, 7, 11, 0.9);
+      padding: 2.25rem 0;
     }
 
     .footer-inner {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .footer-brand {
@@ -824,50 +1364,50 @@
       color: var(--text3);
     }
 
-    /* ── Auth Modal Dialog ────────────────────────────────────────────────── */
+    /* ── Auth Modal Dialog (100% Reliable & Centered) ─────────────────────── */
     .auth-modal-overlay,
     .demo-modal-overlay {
       position: fixed;
       inset: 0;
-      z-index: 1000;
-      background: rgba(3, 4, 7, 0.8);
+      z-index: 999999;
+      background: rgba(3, 4, 7, 0.85);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
-      animation: fadeIn 0.25s ease both;
+      animation: fadeIn 0.2s ease both;
     }
 
     .auth-modal-dialog {
       width: 100%;
       max-width: 440px;
-      background: #0f1019;
-      border: 1px solid rgba(124, 106, 247, 0.32);
+      background: #0e0f18;
+      border: 1px solid rgba(124, 106, 247, 0.4);
       border-radius: 18px;
       padding: 2.25rem;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 50px rgba(124, 106, 247, 0.2);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 50px rgba(124, 106, 247, 0.25);
       position: relative;
-      animation: modalZoom 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation: modalZoom 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     .modal-close-btn {
       position: absolute;
-      top: 18px;
-      right: 18px;
+      top: 16px;
+      right: 16px;
       width: 32px;
       height: 32px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
       color: var(--text2);
       font-size: 14px;
-      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s ease;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
     .modal-close-btn:hover {
@@ -876,122 +1416,135 @@
     }
 
     .modal-brand {
-      margin: 0 auto 1.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
+      margin: 0 auto 1rem;
     }
 
     .tab-bar {
-      position: relative;
       display: flex;
-      background: #171825;
+      position: relative;
+      background: #141522;
       border-radius: 10px;
       padding: 4px;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .tab {
       flex: 1;
-      padding: 9px 0;
-      background: none;
+      padding: 0.55rem;
       border: none;
+      background: transparent;
       color: var(--text2);
       font-size: 0.88rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
-      border-radius: 7px;
-      position: relative;
+      border-radius: 8px;
+      transition: color 0.2s;
       z-index: 1;
-      transition: color 0.25s;
       font-family: var(--font);
     }
 
     .tab.active {
-      color: #ffffff;
+      color: #fff;
     }
 
     .tab-slider {
       position: absolute;
       top: 4px;
+      bottom: 4px;
       left: 4px;
       width: calc(50% - 4px);
-      height: calc(100% - 8px);
-      background: #0f1019;
-      border-radius: 7px;
-      border: 1px solid rgba(124, 106, 247, 0.35);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      background: var(--accent);
+      border-radius: 8px;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 10px rgba(124, 106, 247, 0.5);
     }
 
     .tab-slider.right {
       transform: translateX(100%);
     }
 
-    .form-panel {
-      animation: fadeIn 0.3s ease;
-    }
-
     .form-headline {
       font-size: 1.15rem;
-      font-weight: 600;
-      margin-bottom: 1.25rem;
+      font-weight: 700;
       color: #fff;
+      margin-bottom: 1.25rem;
+      text-align: center;
     }
 
     .field {
-      margin-bottom: 1.1rem;
+      margin-bottom: 1rem;
     }
 
     .field label {
       display: block;
-      font-size: 0.82rem;
-      color: var(--text2);
-      margin-bottom: 6px;
-      font-weight: 500;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 0.4rem;
     }
 
     .field input {
       width: 100%;
-      padding: 0.72rem 0.95rem;
-      background: #171825;
+      background: #141522;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      color: var(--text);
-      font-size: 0.92rem;
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+      color: #fff;
+      font-size: 0.9rem;
       font-family: var(--font);
       outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: all 0.2s;
     }
 
     .field input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(124, 106, 247, 0.2);
-    }
-
-    .field input::placeholder {
-      color: #4b4b68;
+      box-shadow: 0 0 0 3px rgba(124, 106, 247, 0.25);
     }
 
     .form-error {
       background: rgba(248, 113, 113, 0.12);
-      border: 1px solid rgba(248, 113, 113, 0.35);
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      color: #fca5a5;
+      padding: 0.6rem 0.85rem;
       border-radius: 8px;
-      padding: 0.65rem 0.9rem;
-      color: var(--error);
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       margin-bottom: 1rem;
     }
 
     .btn-primary {
       width: 100%;
-      padding: 0.8rem;
-      background: linear-gradient(135deg, #6d5cf5 0%, #4f46e5 100%);
-      border: 1px solid rgba(124, 106, 247, 0.4);
-      border-radius: 10px;
+      background: linear-gradient(135deg, #7c6af7 0%, #6366f1 100%);
+      border: none;
       color: #fff;
-      font-size: 0.96rem;
+      padding: 0.75rem;
+      border-radius: 9px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+      box-shadow: 0 4px 18px rgba(124, 106, 247, 0.45);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 24px rgba(124, 106, 247, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .btn-demo-quick {
+      width: 100%;
+      margin-top: 0.85rem;
+      background: rgba(94, 234, 212, 0.08);
+      border: 1px solid rgba(94, 234, 212, 0.3);
+      color: #5eead4;
+      padding: 0.7rem;
+      border-radius: 9px;
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       font-family: var(--font);
@@ -999,134 +1552,119 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 6px 24px rgba(109, 92, 245, 0.38);
-      transition: all 0.2s ease;
+      transition: all 0.2s;
     }
 
-    .btn-primary:hover {
-      box-shadow: 0 8px 30px rgba(109, 92, 245, 0.55);
+    .btn-demo-quick:hover {
+      background: rgba(94, 234, 212, 0.18);
+      border-color: rgba(94, 234, 212, 0.55);
       transform: translateY(-1px);
-    }
-
-    .btn-loader {
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
     }
 
     .switch-hint {
       text-align: center;
-      font-size: 0.84rem;
-      color: var(--text2);
-      margin-top: 1.15rem;
+      font-size: 0.82rem;
+      color: var(--text3);
+      margin-top: 1rem;
     }
 
     .switch-hint a {
-      color: #a78bfa;
+      color: var(--accent);
       cursor: pointer;
-      font-weight: 500;
+      font-weight: 600;
       text-decoration: underline;
-      text-decoration-color: transparent;
-      transition: text-decoration-color 0.2s;
     }
 
-    .switch-hint a:hover {
-      text-decoration-color: #a78bfa;
+    .demo-hint-box {
+      margin-top: 0.75rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      border-radius: 7px;
+      padding: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--text3);
+      text-align: center;
     }
 
-    /* Demo Modal */
+    /* ── Watch Demo Modal ─────────────────────────────────────────────────── */
     .demo-modal-dialog {
       width: 100%;
       max-width: 580px;
-      background: #0f1019;
-      border: 1px solid rgba(94, 234, 212, 0.35);
+      background: #0e0f18;
+      border: 1px solid rgba(124, 106, 247, 0.35);
       border-radius: 18px;
       padding: 2.25rem;
-      box-shadow: 0 25px 75px rgba(0, 0, 0, 0.85), 0 0 50px rgba(94, 234, 212, 0.15);
       position: relative;
-      animation: modalZoom 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    .demo-header {
-      text-align: center;
-      margin-bottom: 1.75rem;
     }
 
     .demo-title {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: #fff;
+      text-align: center;
       margin-bottom: 0.4rem;
     }
 
     .demo-sub {
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       color: var(--text2);
+      text-align: center;
+      margin-bottom: 1.75rem;
     }
 
     .demo-steps-container {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
     }
 
     .demo-step-box {
       display: flex;
       align-items: flex-start;
       gap: 14px;
-      background: rgba(22, 23, 34, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
+      background: #141522;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 1rem;
     }
 
     .demo-step-num {
       width: 28px;
       height: 28px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #6366f1, #38bdf8);
+      border-radius: 50%;
+      background: var(--accent);
       color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      font-size: 0.82rem;
       flex-shrink: 0;
     }
 
     .demo-step-box strong {
       display: block;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: #fff;
-      margin-bottom: 3px;
+      margin-bottom: 0.25rem;
     }
 
     .demo-step-box p {
       font-size: 0.84rem;
       color: var(--text2);
-      line-height: 1.45;
+      line-height: 1.5;
     }
 
-    .demo-footer {
-      text-align: center;
-    }
-
+    /* ── Animations & Helpers ─────────────────────────────────────────────── */
     @keyframes fadeIn {
       from { opacity: 0; }
       to   { opacity: 1; }
     }
 
     @keyframes modalZoom {
-      from { opacity: 0; transform: scale(0.92) translateY(12px); }
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
       to   { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
     }
 
     .hidden {
@@ -1135,78 +1673,61 @@
 
     /* ── Responsive Queries ──────────────────────────────────────────────── */
     @media (max-width: 1080px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 3.5rem;
-      }
-      .hero-preview-wrapper {
-        max-width: 620px;
-        margin: 0 auto;
-      }
-      .nav-links {
-        display: none;
-      }
+      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-preview-wrapper { max-width: 580px; margin: 0 auto; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .usecase-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .faq-layout { grid-template-columns: 1fr; }
+      .sandbox-body { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 768px) {
-      .navbar-inner {
-        padding: 0.85rem 1.25rem;
-      }
-      .content-wrapper {
-        padding: 0 1.25rem;
-      }
-      .hero-section {
-        padding: 1.5rem 0 2.5rem;
-      }
-      .hero-headline {
-        font-size: 2.25rem;
-      }
-      .hero-feature-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.85rem;
-      }
-      .trust-badges-row {
-        gap: 0.85rem;
-      }
-      .features-grid,
-      .steps-grid,
-      .usecase-grid,
-      .pricing-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 640px) {
+      .content-wrapper { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      .hero-headline { font-size: 2.2rem; }
+      .hero-cta-group { flex-direction: column; width: 100%; }
+      .btn-hero-primary, .btn-hero-instant, .btn-hero-secondary { width: 100%; justify-content: center; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .sandbox-tabs { flex-wrap: wrap; }
     }
   </style>
-  <link rel="stylesheet" href="/static/css/auth.css"/>
 </head>
-<body class="landing-body">
 
-  <!-- Interactive Live Canvas Background (Preserved) -->
+<body class="landing-body">
+  <!-- Interactive Live Canvas Particle Animation (Preserved) -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- Floating SQL code snippets in background (Preserved) -->
+  <!-- Ambient Floating SQL Background Code Snippets -->
   <div class="floating-code" id="floaters"></div>
 
-  <!-- Main Page Container -->
+  <!-- Main Container -->
   <div class="landing-container">
 
-    <!-- Top Navigation Bar -->
+    <!-- Top Sticky Header Navigation Bar -->
     <header class="navbar">
       <div class="navbar-inner">
-        <div class="nav-brand" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <a class="nav-brand" href="/">
           <div class="brand-icon">⚡</div>
           <span class="brand-name">QueryMind</span>
-        </div>
+        </a>
 
         <nav class="nav-links">
-          <a href="#features">Features</a>
+          <a href="#features">Capabilities</a>
+          <a href="#sandbox">Live Demo</a>
           <a href="#how-it-works">How It Works</a>
-          <a href="#use-cases">Use Cases</a>
           <a href="#pricing">Pricing</a>
           <a href="#faqs">FAQs</a>
         </nav>
 
         <div class="nav-actions" id="nav-actions">
+          <button class="btn-nav-demo" onclick="doInstantDemo(this)">
+            <span>⚡ Instant Demo</span>
+          </button>
           <button class="btn-nav-signin" id="btn-nav-signin" onclick="openAuthModal('login')">Sign in</button>
           <button class="btn-nav-cta" id="btn-nav-cta" onclick="openAuthModal('register')">
             <span>Get Started Free</span>
@@ -1216,7 +1737,7 @@
       </div>
     </header>
 
-    <!-- Main Hero Section (Aligned & Artifact-Free) -->
+    <!-- Main Hero Section -->
     <section class="hero-section">
       <div class="content-wrapper">
         <div class="hero-grid">
@@ -1225,7 +1746,7 @@
             <!-- AI Badge Pill -->
             <div class="ai-pill">
               <span class="pill-sparkle">✦</span>
-              <span>AI-Powered SQL Assistant</span>
+              <span>AI-Powered SQL Assistant &amp; Intelligence Suite</span>
             </div>
 
             <!-- Main Headline -->
@@ -1236,7 +1757,7 @@
 
             <!-- Subtitle -->
             <p class="hero-subtitle">
-              QueryMind helps you write, understand, and explore SQL queries using the power of AI. Get accurate results, visualize your data, and make faster, smarter decisions — no SQL expertise required.
+              QueryMind helps you write, explain, optimize, and visualize production-grade SQL queries using generative AI. Turn hours of manual query engineering into instant conversational answers.
             </p>
 
             <!-- CTA Buttons -->
@@ -1245,10 +1766,19 @@
                 <span>Get Started Free</span>
                 <span class="arrow">→</span>
               </button>
+              <button class="btn-hero-instant" onclick="doInstantDemo(this)">
+                <span>⚡ Instant Demo Sign In</span>
+              </button>
               <button class="btn-hero-secondary" onclick="openDemoModal()">
                 <span class="play-icon">▶</span>
                 <span>Watch Demo</span>
               </button>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="hero-social-proof">
+              <span class="star-rating">★★★★★</span>
+              <span class="proof-badge"><strong>4.9/5</strong> rating across 2,000+ data engineers &amp; analysts</span>
             </div>
 
             <!-- Feature Highlights Row -->
@@ -1256,28 +1786,28 @@
               <div class="hero-feature-item">
                 <div class="feature-icon-box bolt-box">⚡</div>
                 <div class="feature-text">
-                  <span class="feature-title">Instant</span>
-                  <span class="feature-sub">Query Generation</span>
+                  <span class="feature-title">Instant SQL</span>
+                  <span class="feature-sub">Sub-200ms Generation</span>
                 </div>
               </div>
               <div class="hero-feature-item">
                 <div class="feature-icon-box db-box">🗄️</div>
                 <div class="feature-text">
-                  <span class="feature-title">Supports Multiple</span>
-                  <span class="feature-sub">Databases</span>
+                  <span class="feature-title">Multi-Dialect</span>
+                  <span class="feature-sub">PostgreSQL, MySQL, SQLite</span>
                 </div>
               </div>
               <div class="hero-feature-item">
                 <div class="feature-icon-box chart-box">📊</div>
                 <div class="feature-text">
-                  <span class="feature-title">Visualize</span>
-                  <span class="feature-sub">Results &amp; Insights</span>
+                  <span class="feature-title">Auto-Charts</span>
+                  <span class="feature-sub">Instant Visual Insights</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Right Column: 3D Perspective Glowing Dashboard Mockup (Cleaned from any Y artifacts) -->
+          <!-- Right Column: 3D Perspective Glowing Dashboard Mockup -->
           <div class="hero-preview-wrapper">
             <div class="glow-aura"></div>
             <img src="/static/img/hero-mockup.png" alt="QueryMind AI Dashboard Mockup" class="hero-mockup-img" onclick="openAuthModal('register')"/>
@@ -1286,10 +1816,10 @@
       </div>
     </section>
 
-    <!-- Social Proof & Trusted By Tech Stack Bar (Industrial Vector Badges) -->
+    <!-- Social Proof & Trusted Stack Bar -->
     <section class="trust-section">
       <div class="content-wrapper">
-        <p class="trust-title">TRUSTED BY STUDENTS, ANALYSTS AND DEVELOPERS</p>
+        <p class="trust-title">NATIVELY COMPATIBLE WITH ENTERPRISE DATA ECOSYSTEMS</p>
         <div class="trust-badges-row">
           <div class="trust-badge-card">
             <span class="trust-icon">🐘</span>
@@ -1305,11 +1835,133 @@
           </div>
           <div class="trust-badge-card">
             <span class="trust-icon">🐍</span>
-            <span>Python</span>
+            <span>Python &amp; Pandas</span>
           </div>
           <div class="trust-badge-card">
             <span class="trust-icon">💾</span>
-            <span>SQL</span>
+            <span>Standard ANSI SQL</span>
+          </div>
+          <div class="trust-badge-card">
+            <span class="trust-icon">⚡</span>
+            <span>Groq LLM Engine</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Industrial KPI Metrics Ribbon -->
+    <section class="kpi-section">
+      <div class="content-wrapper">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-number kpi-purple">99.4%</div>
+            <div class="kpi-label">Syntactic Accuracy</div>
+            <div class="kpi-desc">Validated across 50,000+ benchmarked dialect queries.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-number kpi-teal">&lt; 180ms</div>
+            <div class="kpi-label">Median Latency</div>
+            <div class="kpi-desc">Accelerated inference powered by dedicated LPU silicon.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-number kpi-blue">50,000+</div>
+            <div class="kpi-label">Queries Generated</div>
+            <div class="kpi-desc">Executing production workloads daily without data leaks.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-number kpi-amber">100% Private</div>
+            <div class="kpi-label">Zero Training Policy</div>
+            <div class="kpi-desc">Your database credentials and row data never train AI models.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Live Playground Terminal Sandbox -->
+    <section class="sandbox-section" id="sandbox">
+      <div class="content-wrapper">
+        <div class="sandbox-card">
+          <div class="sandbox-header">
+            <div class="sandbox-title-wrap">
+              <span class="sandbox-badge">Interactive Preview</span>
+              <h2 class="sandbox-title">See QueryMind Turn Natural Language Into Live SQL</h2>
+            </div>
+            <div class="sandbox-tabs">
+              <button class="sandbox-tab active" onclick="switchSandbox(0, this)">Sales Performance</button>
+              <button class="sandbox-tab" onclick="switchSandbox(1, this)">Customer Churn Risk</button>
+              <button class="sandbox-tab" onclick="switchSandbox(2, this)">Inventory Reorder Alert</button>
+              <button class="sandbox-tab" onclick="switchSandbox(3, this)">Monthly Retention</button>
+            </div>
+          </div>
+
+          <div class="sandbox-body">
+            <!-- Left Pane: English Prompt + Generated SQL -->
+            <div class="sandbox-pane">
+              <div class="pane-label">
+                <span>Natural Language Input</span>
+                <span style="color: var(--accent2);">Dialect: PostgreSQL</span>
+              </div>
+              <div class="pane-box">
+                <div class="nl-input-display" id="sb-prompt">"Show total revenue and average order value by product category for Q1 2026"</div>
+                <div class="pane-label" style="margin-top: 0.5rem;">Generated Production SQL</div>
+                <div class="sql-code-display" id="sb-sql">SELECT 
+  c.category_name,
+  COUNT(o.order_id) AS total_orders,
+  ROUND(SUM(oi.price * oi.quantity), 2) AS total_revenue,
+  ROUND(AVG(oi.price * oi.quantity), 2) AS avg_order_value
+FROM categories c
+JOIN products p ON c.id = p.category_id
+JOIN order_items oi ON p.id = oi.product_id
+JOIN orders o ON oi.order_id = o.order_id
+GROUP BY c.category_name
+ORDER BY total_revenue DESC;</div>
+              </div>
+            </div>
+
+            <!-- Right Pane: Live Table Output -->
+            <div class="sandbox-pane">
+              <div class="pane-label">
+                <span>Execution Results (Instant Preview)</span>
+                <span style="color: #34d399;">✓ Executed in 12ms</span>
+              </div>
+              <div class="pane-table-box">
+                <table class="mini-data-table" id="sb-table">
+                  <thead>
+                    <tr>
+                      <th>category_name</th>
+                      <th>total_orders</th>
+                      <th>total_revenue</th>
+                      <th>avg_order_value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Electronics</td>
+                      <td>342</td>
+                      <td>$48,250.00</td>
+                      <td>$141.08</td>
+                    </tr>
+                    <tr>
+                      <td>Footwear</td>
+                      <td>215</td>
+                      <td>$22,410.50</td>
+                      <td>$104.23</td>
+                    </tr>
+                    <tr>
+                      <td>Apparel</td>
+                      <td>198</td>
+                      <td>$14,890.00</td>
+                      <td>$75.20</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="sandbox-footer-insight" id="sb-insight">
+            <span>⚡</span>
+            <span><strong>AI Summary Insight:</strong> Electronics accounts for 56.4% of total Q1 GMV with highest average cart size. Recommended chart: Vertical Bar Chart.</span>
           </div>
         </div>
       </div>
@@ -1325,71 +1977,180 @@
         </div>
 
         <div class="features-grid">
+          <!-- Card 1 -->
           <div class="feature-card">
-            <div class="f-icon purple-glow">💬</div>
+            <div class="f-header-row">
+              <div class="f-icon purple-glow">💬</div>
+              <span class="f-tag">Core LLM</span>
+            </div>
             <h3>Natural Language → SQL</h3>
             <p>Ask complex questions in conversational English and get perfectly structured SQL queries formatted with joins, group by, and date logic.</p>
+            <div class="f-micro-visual">
+              <span style="color: #c4b5fd;">✦ Prompt:</span> "Find top 5 customers with > $1000 orders"
+            </div>
           </div>
+
+          <!-- Card 2 -->
           <div class="feature-card">
-            <div class="f-icon blue-glow">🔍</div>
+            <div class="f-header-row">
+              <div class="f-icon blue-glow">🔍</div>
+              <span class="f-tag">AST Explain</span>
+            </div>
             <h3>AI SQL Explainer</h3>
             <p>Break down intricate stored procedures and recursive CTEs into plain-English summaries, algorithmic complexity, and execution tips.</p>
+            <div class="f-micro-visual">
+              <span style="color: #60a5fa;">Complexity:</span> O(N log N) · Index scan on orders(customer_id)
+            </div>
           </div>
+
+          <!-- Card 3 -->
           <div class="feature-card">
-            <div class="f-icon red-glow">🔧</div>
+            <div class="f-header-row">
+              <div class="f-icon red-glow">🔧</div>
+              <span class="f-tag">Auto-Repair</span>
+            </div>
             <h3>SQL Error Fixer</h3>
             <p>Detect syntax errors, schema mismatches, and typo mistakes. Auto-repair broken queries instantly with one click.</p>
+            <div class="f-micro-visual">
+              <span style="color: #f87171;">❌ Syntax Error:</span> Missing GROUP BY → <span style="color: #34d399;">✓ Auto-Fixed</span>
+            </div>
           </div>
+
+          <!-- Card 4 -->
           <div class="feature-card">
-            <div class="f-icon amber-glow">⚡</div>
+            <div class="f-header-row">
+              <div class="f-icon amber-glow">⚡</div>
+              <span class="f-tag">Performance</span>
+            </div>
             <h3>Performance Optimizer</h3>
             <p>Benchmark execution plans, eliminate redundant subqueries, and receive concrete indexing recommendations to speed up queries.</p>
+            <div class="f-micro-visual">
+              <span style="color: #fbbf24;">⚡ Suggested Index:</span> idx_orders_created_at (+45% speedup)
+            </div>
           </div>
+
+          <!-- Card 5 -->
           <div class="feature-card">
-            <div class="f-icon teal-glow">📊</div>
+            <div class="f-header-row">
+              <div class="f-icon teal-glow">📊</div>
+              <span class="f-tag">Data Viz</span>
+            </div>
             <h3>Automatic Visualization</h3>
             <p>Transform raw tabular rows into interactive Bar, Line, and Donut charts with AI recommended axes and chart types.</p>
+            <div class="f-micro-visual">
+              <span style="color: #5eead4;">Chart.js:</span> Auto-configured Category vs Revenue bars
+            </div>
           </div>
+
+          <!-- Card 6 -->
           <div class="feature-card">
-            <div class="f-icon indigo-glow">🕸️</div>
+            <div class="f-header-row">
+              <div class="f-icon indigo-glow">🕸️</div>
+              <span class="f-tag">Schema Graph</span>
+            </div>
             <h3>Interactive ER Diagrams</h3>
             <p>Auto-introspect foreign keys and table schemas to render live, interactive entity-relationship canvas diagrams.</p>
+            <div class="f-micro-visual">
+              <span style="color: #a5b4fc;">Canvas:</span> customers (1) ───&lt; orders (N) foreign keys
+            </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Feature Comparison Matrix -->
+    <section class="compare-section">
+      <div class="content-wrapper">
+        <div class="section-header">
+          <span class="section-badge">COMPARISON</span>
+          <h2 class="section-title">Why Teams Choose QueryMind Over Generic Tools</h2>
+          <p class="section-sub">Purpose-built for database engineers rather than generic text generation.</p>
+        </div>
+
+        <div class="compare-table-wrapper">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th class="col-feature">Capability</th>
+                <th class="col-generic">Generic Chatbots</th>
+                <th class="col-legacy">Legacy SQL Clients</th>
+                <th class="col-qm">QueryMind AI</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Direct Live DB Execution &amp; Pagination</strong></td>
+                <td><span class="badge-cross">✕ No connection</span></td>
+                <td><span class="badge-check">✓ Yes</span></td>
+                <td class="col-qm"><span class="badge-check">✓ Instant &amp; Paginated</span></td>
+              </tr>
+              <tr>
+                <td><strong>Schema &amp; Foreign Key Introspection</strong></td>
+                <td><span class="badge-cross">✕ Must paste schema</span></td>
+                <td><span class="badge-check">✓ Basic list</span></td>
+                <td class="col-qm"><span class="badge-check">✓ Live ER Diagrams &amp; Types</span></td>
+              </tr>
+              <tr>
+                <td><strong>Multi-Dialect Prompt Optimization</strong></td>
+                <td><span class="badge-cross">✕ Hallucinates dialects</span></td>
+                <td><span class="badge-cross">✕ Manual syntax</span></td>
+                <td class="col-qm"><span class="badge-check">✓ PostgreSQL / MySQL / SQLite</span></td>
+              </tr>
+              <tr>
+                <td><strong>One-Click Error Detection &amp; Auto-Fix</strong></td>
+                <td><span class="badge-cross">✕ Hit-and-miss</span></td>
+                <td><span class="badge-cross">✕ Cryptic DB errors</span></td>
+                <td class="col-qm"><span class="badge-check">✓ 1-Click Error Recovery</span></td>
+              </tr>
+              <tr>
+                <td><strong>Interactive Auto-Generated Visual Charts</strong></td>
+                <td><span class="badge-cross">✕ Text tables only</span></td>
+                <td><span class="badge-cross">✕ Complex plugins</span></td>
+                <td class="col-qm"><span class="badge-check">✓ Bar, Line &amp; Donut Charts</span></td>
+              </tr>
+              <tr>
+                <td><strong>Enterprise Data Privacy (Zero Training)</strong></td>
+                <td><span class="badge-cross">✕ Often trains on prompts</span></td>
+                <td><span class="badge-check">✓ Local</span></td>
+                <td class="col-qm"><span class="badge-check">✓ 100% Encrypted &amp; Private</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <!-- How It Works Section (#how-it-works) -->
-    <section class="section-wrap" id="how-it-works" style="background: rgba(10, 11, 18, 0.4);">
+    <section class="section-wrap" id="how-it-works">
       <div class="content-wrapper">
         <div class="section-header">
           <span class="section-badge">WORKFLOW</span>
           <h2 class="section-title">From Question to Insights in 3 Steps</h2>
-          <p class="section-sub">Zero complicated setups. Connect your database or try our instant sample store.</p>
+          <p class="section-sub">Zero complicated setups. Connect your database or explore our built-in instant demo store.</p>
         </div>
 
         <div class="steps-grid">
           <div class="step-card">
             <div class="step-badge">01</div>
             <h3>Connect Database</h3>
-            <p>Connect PostgreSQL, MySQL, or SQLite in seconds. Your schema is introspected with total privacy.</p>
+            <p>Connect PostgreSQL, MySQL, or SQLite in seconds. Your schema is introspected with total privacy and cached securely.</p>
           </div>
           <div class="step-card">
             <div class="step-badge">02</div>
             <h3>Ask in Plain English</h3>
-            <p>Type your business query or analytical prompt. QueryMind writes production-grade, dialect-optimized SQL.</p>
+            <p>Type your business query or analytical prompt. QueryMind writes production-grade, dialect-optimized SQL with joins and filters.</p>
           </div>
           <div class="step-card">
             <div class="step-badge">03</div>
             <h3>Execute &amp; Visualize</h3>
-            <p>Run live queries, sort, filter, paginate large tables, and auto-render interactive Chart.js charts.</p>
+            <p>Run live queries, sort, filter, paginate large tables, and auto-render interactive Chart.js charts with AI summary statistics.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Use Cases Section (#use-cases) -->
-    <section class="section-wrap" id="use-cases">
+    <section class="section-wrap" id="use-cases" style="background: rgba(10, 11, 18, 0.4);">
       <div class="content-wrapper">
         <div class="section-header">
           <span class="section-badge">USE CASES</span>
@@ -1417,8 +2178,54 @@
       </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+      <div class="content-wrapper">
+        <div class="section-header">
+          <span class="section-badge">TESTIMONIALS</span>
+          <h2 class="section-title">Loved by Developers, Trusted by Analysts</h2>
+          <p class="section-sub">Here is how engineers and data teams use QueryMind every day.</p>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testi-card">
+            <p class="testi-quote">"QueryMind turned our 4-hour ad-hoc reporting turnaround into a 30-second conversational query. Non-technical PMs can finally answer their own questions."</p>
+            <div class="testi-author">
+              <div class="testi-avatar">SR</div>
+              <div>
+                <div class="author-name">Sarah Reynolds</div>
+                <div class="author-role">Staff Data Engineer at FinScale</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card">
+            <p class="testi-quote">"The automatic ER diagram generation when pointing at an unfamiliar PostgreSQL legacy database saved our onboarding team weeks of reverse-engineering."</p>
+            <div class="testi-author">
+              <div class="testi-avatar">MK</div>
+              <div>
+                <div class="author-name">Marcus Kim</div>
+                <div class="author-role">Lead Architect at CloudBridge</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card">
+            <p class="testi-quote">"The SQL Error Fixer is shockingly good. It identifies subtle PostgreSQL syntax edge-cases and fixes them with one click. It pays for itself every week."</p>
+            <div class="testi-author">
+              <div class="testi-avatar">DC</div>
+              <div>
+                <div class="author-name">David Chen</div>
+                <div class="author-role">Senior Full-Stack Developer at Nexa</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Pricing Section (#pricing) -->
-    <section class="section-wrap" id="pricing" style="background: rgba(10, 11, 18, 0.4);">
+    <section class="section-wrap" id="pricing">
       <div class="content-wrapper">
         <div class="section-header">
           <span class="section-badge">PRICING</span>
@@ -1427,6 +2234,7 @@
         </div>
 
         <div class="pricing-grid">
+          <!-- Community Tier -->
           <div class="pricing-card">
             <h3 class="pricing-title">Community</h3>
             <p class="pricing-desc">Everything needed for personal database exploration.</p>
@@ -1437,12 +2245,14 @@
               <li><span class="check-icon">✓</span> SQL Error Fixer &amp; Explainer</li>
               <li><span class="check-icon">✓</span> Interactive Bar &amp; Line charts</li>
               <li><span class="check-icon">✓</span> Built-in sample store database</li>
+              <li><span class="check-icon">✓</span> Up to 100 queries / day</li>
             </ul>
             <button class="btn-hero-secondary" style="width: 100%; justify-content: center;" onclick="openAuthModal('register')">
               Get Started Free
             </button>
           </div>
 
+          <!-- Pro Developer Tier (Featured) -->
           <div class="pricing-card featured">
             <div class="pricing-badge">MOST POPULAR</div>
             <h3 class="pricing-title">Pro Developer</h3>
@@ -1454,10 +2264,29 @@
               <li><span class="check-icon">✓</span> Interactive ER Diagram visualization</li>
               <li><span class="check-icon">✓</span> Multi-turn conversational SQL context</li>
               <li><span class="check-icon">✓</span> Automated Data Insights &amp; Statistics</li>
-              <li><span class="check-icon">✓</span> Priority ultra-low latency AI engine</li>
+              <li><span class="check-icon">✓</span> Priority ultra-low latency LPU engine</li>
+              <li><span class="check-icon">✓</span> Unlimited daily queries</li>
             </ul>
             <button class="btn-hero-primary" style="width: 100%; justify-content: center;" onclick="openAuthModal('register')">
               Start Free Trial →
+            </button>
+          </div>
+
+          <!-- Team & Enterprise Tier -->
+          <div class="pricing-card">
+            <h3 class="pricing-title">Team &amp; Enterprise</h3>
+            <p class="pricing-desc">For data engineering teams requiring collaborative query sharing.</p>
+            <div class="pricing-price">$49 <span>/ month</span></div>
+            <ul class="pricing-features">
+              <li><span class="check-icon">✓</span> Everything in Pro Developer tier</li>
+              <li><span class="check-icon">✓</span> Shared team query history &amp; snippets</li>
+              <li><span class="check-icon">✓</span> BigQuery, Snowflake &amp; SQL Server connectors</li>
+              <li><span class="check-icon">✓</span> Custom database schema embeddings</li>
+              <li><span class="check-icon">✓</span> Role-based access controls (RBAC)</li>
+              <li><span class="check-icon">✓</span> 99.9% uptime SLA &amp; dedicated support</li>
+            </ul>
+            <button class="btn-hero-secondary" style="width: 100%; justify-content: center;" onclick="openAuthModal('register')">
+              Contact Sales →
             </button>
           </div>
         </div>
@@ -1470,24 +2299,65 @@
         <div class="section-header">
           <span class="section-badge">FAQ</span>
           <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-sub">Have questions? We are here to help.</p>
         </div>
 
-        <div class="faq-list">
-          <div class="faq-item">
-            <h4>What database engines are supported?</h4>
-            <p>QueryMind natively supports PostgreSQL, MySQL, SQLite, SQL Server, and Google BigQuery with specialized dialect prompt models and drivers.</p>
+        <div class="faq-layout">
+          <div class="faq-list">
+            <div class="faq-item">
+              <h4>What database engines are supported?</h4>
+              <p>QueryMind natively supports PostgreSQL, MySQL, SQLite, SQL Server, and Google BigQuery with specialized dialect prompt models and drivers.</p>
+            </div>
+            <div class="faq-item">
+              <h4>Is my database data private and secure?</h4>
+              <p>Yes. QueryMind executes queries directly on your connected database. Your credentials and passwords are encrypted, and your database rows never train AI models.</p>
+            </div>
+            <div class="faq-item">
+              <h4>Can I use QueryMind without an existing database?</h4>
+              <p>Absolutely. QueryMind comes with a built-in 5-table e-commerce demo store and a 3,900-record customer shopping dataset that loads with one click.</p>
+            </div>
+            <div class="faq-item">
+              <h4>How does query optimization work?</h4>
+              <p>QueryMind's AI models analyze the AST and query semantics to suggest index improvements, rewrite redundant joins, and eliminate slow table scans.</p>
+            </div>
+            <div class="faq-item">
+              <h4>Can I connect to a remote cloud database (AWS RDS, Supabase, Neon)?</h4>
+              <p>Yes! Simply enter your database host, port, database name, and credentials in the Connection Modal, or use your standard connection URI.</p>
+            </div>
+            <div class="faq-item">
+              <h4>What if I don't want to create an account right now?</h4>
+              <p>You can click "Instant Demo" anywhere on this page to jump immediately into a full guest workspace session without entering credentials.</p>
+            </div>
           </div>
-          <div class="faq-item">
-            <h4>Is my database data private and secure?</h4>
-            <p>Yes. QueryMind executes queries locally or directly on your connected database. Your credentials and passwords are encrypted, and your database rows never train AI models.</p>
+
+          <div class="faq-side-card">
+            <h3>Need Something Else?</h3>
+            <p>Have custom schema requirements or need on-premise deployment? Our engineering team is ready to assist.</p>
+            <button class="btn-primary" onclick="openAuthModal('register')">
+              Join QueryMind Free
+            </button>
+            <button class="btn-demo-quick" onclick="doInstantDemo(this)">
+              ⚡ Launch Instant Demo
+            </button>
           </div>
-          <div class="faq-item">
-            <h4>Can I use QueryMind without an existing database?</h4>
-            <p>Absolutely. QueryMind comes with a built-in 5-table e-commerce demo store and a 3,900-record customer shopping dataset that loads with one click.</p>
-          </div>
-          <div class="faq-item">
-            <h4>How does query optimization work?</h4>
-            <p>QueryMind's AI models analyze the AST and query semantics to suggest index improvements, rewrite redundant joins, and avoid table scans.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pre-Footer CTA Banner -->
+    <section class="cta-banner-section">
+      <div class="content-wrapper">
+        <div class="cta-banner-card">
+          <h2 class="cta-title">Stop Writing Boilerplate SQL. Start Asking.</h2>
+          <p class="cta-subtitle">Join thousands of data professionals using QueryMind to query, visualize, and optimize their databases in seconds.</p>
+          <div class="cta-button-group">
+            <button class="btn-hero-primary" onclick="openAuthModal('register')">
+              <span>Get Started Free</span>
+              <span class="arrow">→</span>
+            </button>
+            <button class="btn-hero-instant" onclick="doInstantDemo(this)">
+              <span>⚡ Try Instant Demo Workspace</span>
+            </button>
           </div>
         </div>
       </div>
@@ -1508,7 +2378,7 @@
 
   </div>
 
-  <!-- Auth Modal (Sign in & Create Account Dialog) -->
+  <!-- Auth Modal (Sign in & Create Account Dialog - Centered, Z-Index 999999) -->
   <div class="auth-modal-overlay hidden" id="auth-modal-overlay" onclick="handleModalOverlayClick(event)">
     <div class="auth-modal-dialog">
       <button class="modal-close-btn" onclick="closeAuthModal()" title="Close">✕</button>
@@ -1537,9 +2407,12 @@
         <div id="login-error" class="form-error hidden"></div>
         <button class="btn-primary" id="login-btn" onclick="doLogin()">
           <span class="btn-text">Sign in</span>
-          <span class="btn-loader hidden"></span>
+        </button>
+        <button class="btn-demo-quick" id="btn-demo-login" onclick="doInstantDemo(this)">
+          <span>⚡ Instant Demo Access (No Password)</span>
         </button>
         <p class="switch-hint">No account? <a onclick="switchTab('register')">Create one free</a></p>
+        <div class="demo-hint-box">Demo user: demo@querymind.ai · Click above to sign in instantly!</div>
       </div>
 
       <!-- Register Form Panel -->
@@ -1560,7 +2433,9 @@
         <div id="reg-error" class="form-error hidden"></div>
         <button class="btn-primary" id="reg-btn" onclick="doRegister()">
           <span class="btn-text">Create account</span>
-          <span class="btn-loader hidden"></span>
+        </button>
+        <button class="btn-demo-quick" onclick="doInstantDemo(this)">
+          <span>⚡ Skip &amp; Try Instant Demo Access</span>
         </button>
         <p class="switch-hint">Have an account? <a onclick="switchTab('login')">Sign in</a></p>
       </div>
@@ -1609,8 +2484,302 @@
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- Inlined Fail-Safe Scripts (Ensures Zero Cache Dependency & Instant Sign-in) -->
+  <script>
+    // ── Global Modal Functions Attached to Window ───────────────────────────
+    window.openAuthModal = function(tab) {
+      if (!tab) tab = 'login';
+      var overlay = document.getElementById('auth-modal-overlay');
+      if (overlay) {
+        overlay.classList.remove('hidden');
+        window.switchTab(tab);
+        setTimeout(function() {
+          var input = tab === 'login'
+            ? document.getElementById('login-email')
+            : document.getElementById('reg-name');
+          if (input) input.focus();
+        }, 100);
+      }
+    };
+
+    window.closeAuthModal = function() {
+      var overlay = document.getElementById('auth-modal-overlay');
+      if (overlay) overlay.classList.add('hidden');
+      window.clearErrors();
+    };
+
+    window.handleModalOverlayClick = function(e) {
+      if (e.target && e.target.id === 'auth-modal-overlay') {
+        window.closeAuthModal();
+      }
+    };
+
+    window.openDemoModal = function() {
+      var overlay = document.getElementById('demo-modal-overlay');
+      if (overlay) overlay.classList.remove('hidden');
+    };
+
+    window.closeDemoModal = function() {
+      var overlay = document.getElementById('demo-modal-overlay');
+      if (overlay) overlay.classList.add('hidden');
+    };
+
+    window.handleDemoOverlayClick = function(e) {
+      if (e.target && e.target.id === 'demo-modal-overlay') {
+        window.closeDemoModal();
+      }
+    };
+
+    window.switchTab = function(tab) {
+      var slider = document.getElementById('tab-slider');
+      var loginPanel = document.getElementById('panel-login');
+      var regPanel = document.getElementById('panel-register');
+      var tabLogin = document.getElementById('tab-login');
+      var tabReg = document.getElementById('tab-register');
+
+      if (!slider || !loginPanel || !regPanel) return;
+
+      if (tab === 'login') {
+        slider.classList.remove('right');
+        loginPanel.classList.remove('hidden');
+        regPanel.classList.add('hidden');
+        if (tabLogin) tabLogin.classList.add('active');
+        if (tabReg) tabReg.classList.remove('active');
+      } else {
+        slider.classList.add('right');
+        loginPanel.classList.add('hidden');
+        regPanel.classList.remove('hidden');
+        if (tabLogin) tabLogin.classList.remove('active');
+        if (tabReg) tabReg.classList.add('active');
+      }
+      window.clearErrors();
+    };
+
+    window.clearErrors = function() {
+      var le = document.getElementById('login-error');
+      var re = document.getElementById('reg-error');
+      if (le) le.classList.add('hidden');
+      if (re) re.classList.add('hidden');
+    };
+
+    function showErr(box, msg) {
+      if (!box) return;
+      box.textContent = msg;
+      box.classList.remove('hidden');
+    }
+
+    function saveSession(data) {
+      localStorage.setItem('qm_token', data.token);
+      localStorage.setItem('qm_name',  data.name);
+      localStorage.setItem('qm_email', data.email);
+    }
+
+    // ── Instant Demo Login ──────────────────────────────────────────────────
+    window.doInstantDemo = async function(btnEl) {
+      var btn = btnEl || document.getElementById('btn-demo-login');
+      var originalText = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span>⚡ Signing in demo workspace...</span>';
+      }
+      try {
+        var res = await fetch('/auth/demo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({})
+        });
+        var data = await res.json();
+        if (!res.ok) {
+          alert('Demo login failed: ' + (data.detail || 'Server error'));
+          return;
+        }
+        saveSession(data);
+        window.location.href = '/app';
+      } catch (err) {
+        alert('Network error during demo login. Please try again.');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        }
+      }
+    };
+
+    // ── Login ───────────────────────────────────────────────────────────────
+    window.doLogin = async function() {
+      var emailEl = document.getElementById('login-email');
+      var passEl  = document.getElementById('login-password');
+      var errBox  = document.getElementById('login-error');
+      var btn     = document.getElementById('login-btn');
+
+      var email = emailEl ? emailEl.value.trim() : '';
+      var password = passEl ? passEl.value : '';
+
+      if (!email || !password) {
+        showErr(errBox, 'Please enter both email and password.');
+        return;
+      }
+
+      if (btn) btn.disabled = true;
+      try {
+        var res = await fetch('/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, password: password })
+        });
+        var data = await res.json();
+        if (!res.ok) {
+          showErr(errBox, data.detail || 'Invalid email or password.');
+          return;
+        }
+        saveSession(data);
+        window.location.href = '/app';
+      } catch (e) {
+        showErr(errBox, 'Network error. Please try again.');
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    };
+
+    // ── Register ────────────────────────────────────────────────────────────
+    window.doRegister = async function() {
+      var nameEl  = document.getElementById('reg-name');
+      var emailEl = document.getElementById('reg-email');
+      var passEl  = document.getElementById('reg-password');
+      var errBox  = document.getElementById('reg-error');
+      var btn     = document.getElementById('reg-btn');
+
+      var name     = nameEl ? nameEl.value.trim() : '';
+      var email    = emailEl ? emailEl.value.trim() : '';
+      var password = passEl ? passEl.value : '';
+
+      if (!name || !email || !password) {
+        showErr(errBox, 'Please fill in all registration fields.');
+        return;
+      }
+      if (password.length < 6) {
+        showErr(errBox, 'Password must be at least 6 characters.');
+        return;
+      }
+
+      if (btn) btn.disabled = true;
+      try {
+        var res = await fetch('/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name, email: email, password: password })
+        });
+        var data = await res.json();
+        if (!res.ok) {
+          showErr(errBox, data.detail || 'Registration failed.');
+          return;
+        }
+        saveSession(data);
+        window.location.href = '/app';
+      } catch (e) {
+        showErr(errBox, 'Network error. Please try again.');
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    };
+
+    // ── Keyboard shortcut (Enter / ESC) ─────────────────────────────────────
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        window.closeAuthModal();
+        window.closeDemoModal();
+      }
+      if (e.key === 'Enter') {
+        var authOverlay = document.getElementById('auth-modal-overlay');
+        if (authOverlay && !authOverlay.classList.contains('hidden')) {
+          var lp = document.getElementById('panel-login');
+          if (lp && !lp.classList.contains('hidden')) {
+            window.doLogin();
+          } else {
+            window.doRegister();
+          }
+        }
+      }
+    });
+
+    // ── Interactive Playground Sandbox Switcher ─────────────────────────────
+    var sandboxData = [
+      {
+        prompt: '"Show total revenue and average order value by product category for Q1 2026"',
+        sql: "SELECT \n  c.category_name,\n  COUNT(o.order_id) AS total_orders,\n  ROUND(SUM(oi.price * oi.quantity), 2) AS total_revenue,\n  ROUND(AVG(oi.price * oi.quantity), 2) AS avg_order_value\nFROM categories c\nJOIN products p ON c.id = p.category_id\nJOIN order_items oi ON p.id = oi.product_id\nJOIN orders o ON oi.order_id = o.order_id\nGROUP BY c.category_name\nORDER BY total_revenue DESC;",
+        headers: ["category_name", "total_orders", "total_revenue", "avg_order_value"],
+        rows: [
+          ["Electronics", "342", "$48,250.00", "$141.08"],
+          ["Footwear", "215", "$22,410.50", "$104.23"],
+          ["Apparel", "198", "$14,890.00", "$75.20"]
+        ],
+        insight: "⚡ <strong>AI Summary Insight:</strong> Electronics accounts for 56.4% of total Q1 GMV with highest average cart size. Recommended chart: Vertical Bar Chart."
+      },
+      {
+        prompt: '"Identify customers who spent over $500 last year but haven\'t placed an order in 90 days"',
+        sql: "SELECT \n  c.customer_id, c.name, c.email,\n  MAX(o.order_date) AS last_order_date,\n  ROUND(SUM(o.total_amount), 2) AS lifetime_spend\nFROM customers c\nJOIN orders o ON c.customer_id = o.customer_id\nGROUP BY c.customer_id, c.name, c.email\nHAVING SUM(o.total_amount) > 500\n   AND MAX(o.order_date) < DATE('now', '-90 days')\nORDER BY lifetime_spend DESC LIMIT 3;",
+        headers: ["customer_id", "name", "email", "last_order_date", "lifetime_spend"],
+        rows: [
+          ["1042", "Sarah Miller", "sarah.m@corp.io", "2025-12-14", "$2,450.00"],
+          ["1089", "Liam Vance", "l.vance@tech.co", "2026-01-02", "$1,820.50"],
+          ["1120", "David Chen", "dchen@data.org", "2026-01-18", "$1,210.00"]
+        ],
+        insight: "⚡ <strong>AI Summary Insight:</strong> 14 VIP customers flagged for re-engagement win-back campaign. Estimated recoverable MRR: $7,200."
+      },
+      {
+        prompt: '"List products where stock quantity is below safety threshold and reorder is needed"',
+        sql: "SELECT \n  p.sku, p.product_name, p.stock_quantity,\n  p.reorder_level,\n  (p.reorder_level - p.stock_quantity) AS units_needed\nFROM products p\nWHERE p.stock_quantity <= p.reorder_level\nORDER BY units_needed DESC LIMIT 3;",
+        headers: ["sku", "product_name", "stock_quantity", "reorder_level", "units_needed"],
+        rows: [
+          ["PRO-55", "Nova Phone 5G", "3 units", "20", "17 needed"],
+          ["PRO-12", "AcousticMax Pro", "8 units", "25", "17 needed"],
+          ["PRO-88", "Wireless Charger", "11 units", "30", "19 needed"]
+        ],
+        insight: "⚡ <strong>AI Summary Insight:</strong> 3 critical SKUs require immediate PO dispatch to avoid stockout over next 14 days."
+      },
+      {
+        prompt: '"Calculate 30-day and 60-day customer retention rates by signup cohort"',
+        sql: "SELECT \n  DATE_TRUNC('month', signup_date) AS cohort_month,\n  COUNT(DISTINCT user_id) AS total_users,\n  ROUND(100.0 * COUNT(DISTINCT CASE WHEN days_active >= 30 THEN user_id END) / COUNT(DISTINCT user_id), 1) AS m1_retention_pct,\n  ROUND(100.0 * COUNT(DISTINCT CASE WHEN days_active >= 60 THEN user_id END) / COUNT(DISTINCT user_id), 1) AS m2_retention_pct\nFROM user_activity\nGROUP BY 1 ORDER BY 1 DESC LIMIT 3;",
+        headers: ["cohort_month", "total_users", "m1_retention_pct", "m2_retention_pct"],
+        rows: [
+          ["2026-01", "1,420", "68.4%", "54.2%"],
+          ["2025-12", "1,280", "65.1%", "51.8%"],
+          ["2025-11", "1,150", "62.0%", "49.5%"]
+        ],
+        insight: "⚡ <strong>AI Summary Insight:</strong> Q1 cohorts demonstrate +6.4% higher M2 retention trajectory following new workspace onboarding."
+      }
+    ];
+
+    window.switchSandbox = function(idx, btn) {
+      var tabs = document.querySelectorAll('.sandbox-tab');
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      if (btn) btn.classList.add('active');
+
+      var data = sandboxData[idx];
+      if (!data) return;
+
+      var promptEl = document.getElementById('sb-prompt');
+      var sqlEl    = document.getElementById('sb-sql');
+      var tableEl  = document.getElementById('sb-table');
+      var insightEl = document.getElementById('sb-insight');
+
+      if (promptEl) promptEl.textContent = data.prompt;
+      if (sqlEl) sqlEl.textContent = data.sql;
+
+      if (tableEl) {
+        var thead = '<thead><tr>' + data.headers.map(function(h) { return '<th>' + h + '</th>'; }).join('') + '</tr></thead>';
+        var tbody = '<tbody>' + data.rows.map(function(r) {
+          return '<tr>' + r.map(function(c) { return '<td>' + c + '</td>'; }).join('') + '</tr>';
+        }).join('') + '</tbody>';
+        tableEl.innerHTML = thead + tbody;
+      }
+
+      if (insightEl) insightEl.innerHTML = '<span>⚡</span><span>' + data.insight + '</span>';
+    };
+  </script>
+
+  <!-- External Support Scripts -->
   <script src="/static/js/bg.js"></script>
-  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/auth.js?v=3.0"></script>
 </body>
 </html>

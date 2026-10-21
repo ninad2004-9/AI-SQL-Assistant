@@ -139,6 +139,36 @@ def authenticate_user(email: str, password: str) -> Dict[str, Any]:
     }
 
 
+def get_or_create_demo_user() -> Dict[str, Any]:
+    """Get or create demo guest user and return valid session token."""
+    demo_email = "demo@querymind.ai"
+    with get_db_connection() as conn:
+        cursor = conn.execute("SELECT id, name, email FROM users WHERE email = ?", (demo_email,))
+        row = cursor.fetchone()
+        if not row:
+            user_id = str(uuid.uuid4())
+            conn.execute(
+                "INSERT INTO users (id, name, email, password_hash) VALUES (?, ?, ?, ?)",
+                (user_id, "Demo Explorer", demo_email, hash_password("demo123456"))
+            )
+        else:
+            user_id = row["id"]
+
+        token = str(uuid.uuid4())
+        conn.execute(
+            "INSERT INTO sessions (token, user_id, email) VALUES (?, ?, ?)",
+            (token, user_id, demo_email)
+        )
+
+    return {
+        "id": user_id,
+        "token": token,
+        "name": "Demo Explorer",
+        "email": demo_email
+    }
+
+
+
 def get_user_by_session(token: str) -> Optional[Dict[str, Any]]:
     """Look up user information by session token."""
     if not token:

@@ -161,6 +161,14 @@ async def login(req: LoginRequest):
     except ValueError as e:
         raise HTTPException(status_code=401, detail=str(e))
 
+@app.post("/auth/demo")
+async def demo_auth():
+    try:
+        user_info = user_db.get_or_create_demo_user()
+        return user_info
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.post("/auth/logout")
 async def logout(body: dict):
     token = body.get("token", "")
