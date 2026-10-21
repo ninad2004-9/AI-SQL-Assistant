@@ -8,6 +8,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <!-- Chart.js CDN for data visualization -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <!-- Monaco Editor CDN (SQL syntax highlighting & autocomplete) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+  <!-- SheetJS CDN for Excel export -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="/static/css/app.css"/>
 </head>
 <body>
@@ -55,8 +59,11 @@
           <span>Schema Explorer</span>
           <button class="btn-icon-sm" id="btn-open-er" title="View Database ER Diagram">📊 ER Diagram</button>
         </div>
+        <div style="margin-bottom:6px;">
+          <input type="text" id="schema-search" placeholder="🔍 Search tables & columns…" style="width:100%; padding:5px 8px; background:var(--surface2); border:1px solid var(--border); border-radius:7px; color:var(--text); font-size:0.75rem; font-family:var(--font); outline:none;" oninput="filterSchema(this.value)"/>
+        </div>
         <div class="schema-list" id="schema-list">
-          <p class="history-empty">Connect a database to explore tables & columns</p>
+          <p class="history-empty">Connect a database to explore tables &amp; columns</p>
         </div>
       </div>
 
@@ -161,10 +168,17 @@
           <button class="btn-action" id="btn-translate" title="Convert SQL into human language (Feature 5)">📝 SQL → English</button>
           <button class="btn-action" id="btn-validate" title="Check if query matches question intention (Feature 9)">✓ Validate</button>
           <button class="btn-action run-btn" id="btn-run-query" title="Execute query on connected database (Feature 19)">▶ Run Live Query</button>
+          <button class="btn-action" id="btn-analyze-perf" title="AI Query Performance Analyzer — runs EXPLAIN ANALYZE">🔬 Analyze Performance</button>
           <button class="btn-action" id="btn-clear-result" title="Close result card">✕</button>
         </div>
       </div>
-      <pre class="sql-block"><code id="sql-output" contenteditable="true" spellcheck="false"></code></pre>
+      <div id="monaco-container" style="height:220px; border-radius:9px; border:1px solid var(--border); overflow:hidden; margin-bottom:0.65rem;"></div>
+      <!-- Fallback pre for copy/download access -->
+      <pre class="sql-block hidden" id="sql-output"><code></code></pre>
+      <div style="display:flex; gap:6px; margin-bottom:0.5rem;">
+        <button class="btn-action" id="btn-format-sql" title="Auto-format SQL (Alt+Shift+F)">✨ Format</button>
+        <button class="btn-action" id="btn-download-sql" title="Download as .sql file">⬇ Download .sql</button>
+      </div>
       <div class="explanation-box" id="explanation-box">
         <span class="expl-label">💡 Summary</span>
         <p id="explanation-text"></p>
@@ -187,8 +201,11 @@
           <span class="card-label" style="margin-bottom:2px;">Query Results & Visualizations</span>
           <span id="results-meta" class="hint">0 rows</span>
         </div>
-        <div style="display:flex; gap:6px;">
-          <button class="btn-icon-sm" id="btn-export-csv" title="Export current rows as CSV file">📥 Export CSV</button>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <input type="text" id="results-search" placeholder="🔍 Search results…" style="padding:4px 8px; background:var(--surface2); border:1px solid var(--border); border-radius:7px; color:var(--text); font-size:0.75rem; font-family:var(--font); outline:none; width:160px;" oninput="onResultsSearch(this.value)"/>
+          <button class="btn-icon-sm" id="btn-export-csv" title="Export as CSV">📥 CSV</button>
+          <button class="btn-icon-sm" id="btn-export-excel" title="Export as Excel (.xlsx)">📊 Excel</button>
+          <button class="btn-icon-sm" id="btn-export-json" title="Export as JSON">📋 JSON</button>
           <button class="btn-icon-sm" id="btn-close-results" title="Hide results panel">✕ Close</button>
         </div>
       </div>
@@ -233,6 +250,7 @@
               <option value="line">Line Chart</option>
               <option value="pie">Pie Chart</option>
               <option value="doughnut">Donut Chart</option>
+              <option value="scatter">Scatter Plot</option>
             </select>
           </div>
           <div class="chart-control">
@@ -245,6 +263,7 @@
           </div>
           <button class="btn-chart" id="btn-render-chart">Render Chart</button>
           <button class="btn-secondary" id="btn-auto-chart" title="Auto-select chart type and axes via AI insights">🪄 Auto Chart</button>
+          <button class="btn-secondary" id="btn-export-chart" title="Download chart as PNG image">🖼 Export PNG</button>
         </div>
         <div class="chart-wrap">
           <canvas id="chart-canvas" style="max-height:380px; width:100%;"></canvas>
@@ -337,5 +356,7 @@
   <!-- Scripts -->
   <script src="/static/js/app.js"></script>
   <script src="/static/js/bg.js"></script>
+  <!-- New Features: Monaco Editor, Performance Analyzer, Excel/JSON Export, Schema Search, AI Table Docs -->
+  <script src="/static/js/features.js"></script>
 </body>
 </html>

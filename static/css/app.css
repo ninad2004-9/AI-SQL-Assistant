@@ -727,3 +727,171 @@ kbd {
 }
 .ml-auto { margin-left: auto; }
 
+/* ── Monaco Editor Container ───────────────────────────────────────────────── */
+#monaco-container {
+  position: relative;
+  width: 100%;
+  border-radius: 9px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: border-color 0.2s;
+}
+#monaco-container:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(124,106,247,0.08);
+}
+/* Override Monaco's own scrollbar to match app theme */
+#monaco-container .monaco-editor .overflow-guard {
+  border-radius: 9px;
+}
+
+/* ── Constraint Badges (NOT NULL, DEFAULT, etc.) ───────────────────────────── */
+.constraint-badge {
+  display: inline-block;
+  padding: 0px 4px;
+  border-radius: 3px;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+.nn-badge {
+  background: rgba(251,191,36,0.12);
+  color: var(--warning);
+  border: 1px solid rgba(251,191,36,0.25);
+}
+.def-badge {
+  background: rgba(124,106,247,0.12);
+  color: var(--accent);
+  border: 1px solid rgba(124,106,247,0.2);
+}
+
+/* ── Table Documentation Box ───────────────────────────────────────────────── */
+.table-doc-box {
+  margin: 6px 0 4px 0;
+  padding: 8px 10px;
+  background: rgba(124,106,247,0.05);
+  border: 1px solid rgba(124,106,247,0.18);
+  border-radius: 8px;
+  animation: fadeUp 0.3s ease;
+}
+.table-doc-content { font-size: 0.75rem; }
+.doc-purpose {
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+.doc-context {
+  color: var(--text2);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  margin-bottom: 5px;
+}
+.doc-section-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  margin: 6px 0 3px 0;
+}
+.doc-col-row {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  font-size: 0.72rem;
+  color: var(--text2);
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(42,42,58,0.25);
+}
+.doc-col-row code {
+  color: var(--accent2);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  flex-shrink: 0;
+}
+.doc-query-pill {
+  display: inline-block;
+  margin: 2px 2px;
+  padding: 3px 8px;
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.68rem;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.doc-query-pill:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+/* ── Performance Analyzer Finding Cards ────────────────────────────────────── */
+.perf-finding {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+}
+.perf-finding.severity-high {
+  border-color: rgba(248,113,113,0.3);
+  background: rgba(248,113,113,0.05);
+}
+.perf-finding.severity-medium {
+  border-color: rgba(251,191,36,0.25);
+  background: rgba(251,191,36,0.04);
+}
+.perf-finding.severity-low {
+  border-color: rgba(94,234,212,0.2);
+}
+
+/* ── Schema Search Input ───────────────────────────────────────────────────── */
+#schema-search:focus {
+  border-color: var(--accent) !important;
+  outline: none;
+}
+#schema-search::placeholder {
+  color: var(--text3);
+}
+
+/* ── Results Search Input ──────────────────────────────────────────────────── */
+#results-search:focus {
+  border-color: var(--accent) !important;
+  outline: none;
+  width: 200px !important;
+  transition: width 0.2s;
+}
+
+/* ── Monaco schema doc button ──────────────────────────────────────────────── */
+.schema-doc-btn {
+  background: rgba(124,106,247,0.1);
+  border-color: rgba(124,106,247,0.25);
+  color: var(--accent);
+}
+.schema-doc-btn:hover {
+  background: rgba(124,106,247,0.2);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ── btn-primary (used in performance analyzer) ────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.45rem 1rem;
+  background: linear-gradient(135deg, var(--accent), #5b50d6);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+

@@ -353,3 +353,70 @@ def get_conversation_context(session_token: str) -> list:
 def clear_conversation(session_token: str) -> None:
     """Clear conversation history for a session."""
     conversations.pop(session_token, None)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Feature: AI Query Performance Analyzer
+# ──────────────────────────────────────────────────────────────────────────────
+def analyze_query_plan(sql: str, plan_raw: str, dialect: str = "postgresql") -> dict:
+    """Analyze a SQL query execution plan and provide actionable recommendations."""
+    system_prompt = f"""You are a {dialect} database performance expert. Analyze the provided SQL query and its EXPLAIN plan output.
+
+Identify:
+1. Expensive operations (Seq Scans on large tables, Hash Joins, Nested Loops with many rows)
+2. Missing indexes that would significantly improve performance
+3. Query structure issues that cause poor execution
+4. Estimated vs actual row count discrepancies (if available)
+
+Respond ONLY with a JSON object (no markdown, no backticks):
+{{
+  "overall_score": "good|fair|poor",
+  "summary": "One sentence performance summary",
+  "findings": [
+    {{
+      "severity": "high|medium|low",
+      "type": "seq_scan|missing_index|expensive_join|row_estimate|other",
+      "title": "Short finding title",
+      "description": "Detailed description of the issue",
+      "location": "Which part of the query/plan"
+    }}
+  ],
+  "index_recommendations": [
+    {{
+      "table": "table_name",
+      "columns": ["col1", "col2"],
+      "type": "btree|hash|gin|gist",
+      "sql": "CREATE INDEX idx_name ON table_name (col1, col2);",
+      "reason": "Why this index helps"
+    }}
+  ],
+  "rewrite_suggestion": "Optional: a rewritten query if beneficial, or empty string",
+  "estimated_improvement": "Description of expected performance gain after applying recommendations"
+}}"""
+
+    msg = f"SQL Query:\n{sql}\n\nEXPLAIN Plan Output:\n{plan_raw}"
+    return _safe_json_call(system_prompt, msg, temperature=0.2)
+
+
+def generate_table_documentation(table_name: str, columns: list, sample_data: list, row_count: int) -> dict:
+    """Generate human-readable documentation for a database table."""
+    col_desc = ", ".join(f"{c['name']} ({c['type']})" for c in columns[:20])
+    sample_str = str(sample_data[:3]) if sample_data else "No sample data"
+
+    system_prompt = """You are a technical documentation expert. Generate clear, useful documentation for a database table.
+
+Respond ONLY with a JSON object (no markdown, no backticks):
+{
+  "purpose": "One sentence describing what this table stores",
+  "business_context": "How this table is typically used in a business context",
+  "key_columns": [
+    {"name": "column_name", "description": "What this column represents"}
+  ],
+  "typical_queries": [
+    "A natural language query someone might run against this table"
+  ],
+  "relationships": "Brief description of how this table relates to others in the schema"
+}"""
+
+    msg = f"Table: {table_name}\nRow count: {row_count}\nColumns: {col_desc}\nSample data: {sample_str}"
+    return _safe_json_call(system_prompt, msg, temperature=0.4)

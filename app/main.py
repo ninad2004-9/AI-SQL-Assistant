@@ -109,6 +109,14 @@ class DBExecuteRequest(BaseModel):
 class ClearConversationRequest(BaseModel):
     session_token: str = ""
 
+class ExplainPlanRequest(BaseModel):
+    sql: str
+    session_token: str = ""
+
+class TableDocRequest(BaseModel):
+    table_name: str
+    session_token: str = ""
+
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -435,6 +443,44 @@ async def execute_query(req: DBExecuteRequest):
     if "error" in result:
         raise HTTPException(status_code=400, detail=result["error"])
     return result
+
+
+# ── Feature: AI Query Performance Analyzer ───────────────────────────────────
+
+@app.post("/db/explain-plan")
+async def explain_plan(req: ExplainPlanRequest):
+    _require_auth(req.session_token)
+    if not db_manager.is_connected(req.session_token):
+        raise HTTPException(status_code=400, detail="Connect to a database first to analyze query performance.")
+    # Get the raw EXPLAIN plan from the database
+    plan_result = db_manager.get_explain_plan(req.session_token, req.sql)
+    if "error" in plan_result:
+        raise HTTPException(status_code=400, detail=plan_result["error"])
+    # Feed the plan to AI for analysis
+    raw_text = plan_result.get("raw_text", str(plan_result.get("plan", "")))
+    analysis = ai_service.analyze_query_plan(
+        sql=req.sql,
+        plan_raw=raw_text,
+        dialect=plan_result.get("dialect", "postgresql"),
+    )
+    return {"plan": plan_result, "analysis": analysis}
+
+
+@app.post("/db/table-doc")
+async def get_table_doc(req: TableDocRequest):
+    _require_auth(req.session_token)
+    if not db_manager.is_connected(req.session_token):
+        raise HTTPException(status_code=400, detail="Connect to a database first.")
+    details = db_manager.get_table_details(req.session_token, req.table_name)
+    if "error" in details:
+        raise HTTPException(status_code=400, detail=details["error"])
+    doc = ai_service.generate_table_documentation(
+        table_name=req.table_name,
+        columns=details.get("columns", []),
+        sample_data=details.get("sample_data", []),
+        row_count=details.get("row_count", 0),
+    )
+    return doc
 
 
 # ── Health Check ─────────────────────────────────────────────────────────────

@@ -770,3 +770,65 @@ def init_customer_behavior_db(session_id: str) -> dict:
     }
 
 
+# ──────────────────────────────────────────────────────────────────────────────
+# Feature: Query Performance Analyzer — EXPLAIN plan execution
+# ──────────────────────────────────────────────────────────────────────────────
+def get_explain_plan(session_id: str, sql: str) -> dict:
+    """
+    Run EXPLAIN (or EXPLAIN ANALYZE) on a SQL query and return raw plan + parsed nodes.
+    Supports PostgreSQL, MySQL, SQLite.
+    """
+    conn_info = _connections.get(session_id)
+    if not conn_info:
+        return {"error": "Not connected to any database."}
+
+    engine: Engine = conn_info["engine"]
+    db_type = conn_info.get("db_type", "sqlite")
+
+    try:
+        with engine.connect() as conn:
+            if db_type == "postgresql":
+                try:
+                    result = conn.execute(text(f"EXPLAIN (ANALYZE, FORMAT JSON) {sql}"))
+                    rows = list(result)
+                    plan_json = rows[0][0] if rows else []
+                    return {
+                        "dialect": "postgresql",
+                        "format": "json",
+                        "plan": plan_json,
+                        "raw_text": str(plan_json),
+                    }
+                except Exception:
+                    # Fallback to plain EXPLAIN if ANALYZE fails (e.g. write queries)
+                    result = conn.execute(text(f"EXPLAIN {sql}"))
+                    lines = [str(row[0]) for row in result]
+                    return {
+                        "dialect": "postgresql",
+                        "format": "text",
+                        "plan": None,
+                        "raw_text": "\n".join(lines),
+                    }
+
+            elif db_type == "mysql":
+                result = conn.execute(text(f"EXPLAIN {sql}"))
+                cols = list(result.keys())
+                rows = [dict(zip(cols, [_serialize(v) for v in row])) for row in result]
+                return {
+                    "dialect": "mysql",
+                    "format": "table",
+                    "plan": rows,
+                    "raw_text": str(rows),
+                }
+
+            else:  # SQLite
+                result = conn.execute(text(f"EXPLAIN QUERY PLAN {sql}"))
+                cols = list(result.keys())
+                rows = [dict(zip(cols, [_serialize(v) for v in row])) for row in result]
+                return {
+                    "dialect": "sqlite",
+                    "format": "table",
+                    "plan": rows,
+                    "raw_text": "\n".join(str(r) for r in rows),
+                }
+    except Exception as e:
+        return {"error": str(e)}
