@@ -3,46 +3,479 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>QueryMind — AI SQL Assistant</title>
+  <title>QueryMind — Your Data. Just a Question Away.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/static/css/auth.css"/>
 </head>
-<body>
+<body class="landing-body">
 
-  <!-- Animated background -->
+  <!-- Interactive Live Canvas Background (Preserved & Enhanced) -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- Floating code snippets -->
+  <!-- Floating SQL code snippets in background -->
   <div class="floating-code" id="floaters"></div>
 
-  <div class="page-wrap">
+  <!-- Main Page Container -->
+  <div class="landing-container">
 
-    <!-- Brand -->
-    <div class="brand">
-      <div class="brand-icon">⚡</div>
-      <span class="brand-name">QueryMind</span>
-    </div>
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+      <div class="nav-brand" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <div class="brand-icon">⚡</div>
+        <span class="brand-name">QueryMind</span>
+      </div>
 
-    <!-- Auth card -->
-    <div class="auth-card" id="auth-card">
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#faqs">FAQs</a>
+      </nav>
 
-      <!-- Tab switcher -->
+      <div class="nav-actions" id="nav-actions">
+        <button class="btn-nav-signin" id="btn-nav-signin" onclick="openAuthModal('login')">Sign in</button>
+        <button class="btn-nav-cta" id="btn-nav-cta" onclick="openAuthModal('register')">
+          <span>Get Started Free</span>
+          <svg class="arrow-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Hero Section -->
+    <section class="hero-section">
+      <!-- Left Column: Copy & CTAs -->
+      <div class="hero-content">
+        <!-- AI Badge Pill -->
+        <div class="ai-pill">
+          <span class="pill-sparkle">✦</span>
+          <span>AI-Powered SQL Assistant</span>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="hero-headline">
+          Your Data.<br/>
+          Just a <span class="gradient-text">Question</span> Away.
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="hero-subtitle">
+          QueryMind helps you write, understand, and explore SQL queries using the power of AI. Get accurate results, visualize your data, and make faster, smarter decisions — no SQL expertise required.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="hero-cta-group">
+          <button class="btn-hero-primary" onclick="openAuthModal('register')">
+            <span>Get Started Free</span>
+            <svg class="arrow-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn-hero-secondary" onclick="openDemoModal()">
+            <span class="play-icon">▶</span>
+            <span>Watch Demo</span>
+          </button>
+        </div>
+
+        <!-- Feature Highlights Row -->
+        <div class="hero-feature-row">
+          <div class="hero-feature-item">
+            <div class="feature-icon-box bolt-box">⚡</div>
+            <div class="feature-text">
+              <span class="feature-title">Instant</span>
+              <span class="feature-sub">Query Generation</span>
+            </div>
+          </div>
+          <div class="hero-feature-item">
+            <div class="feature-icon-box db-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+              </svg>
+            </div>
+            <div class="feature-text">
+              <span class="feature-title">Supports Multiple</span>
+              <span class="feature-sub">Databases</span>
+            </div>
+          </div>
+          <div class="hero-feature-item">
+            <div class="feature-icon-box chart-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+            </div>
+            <div class="feature-text">
+              <span class="feature-title">Visualize</span>
+              <span class="feature-sub">Results &amp; Insights</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive 3D Perspective Dashboard Mockup -->
+      <div class="hero-preview-wrapper">
+        <!-- Ambient Backlight Glow -->
+        <div class="glow-aura"></div>
+
+        <!-- Floating Badge 1: Ask in Natural Language (Top Right) -->
+        <div class="floating-badge badge-top-right">
+          <div class="badge-icon-box bubble-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
+          </div>
+          <div class="badge-text">
+            <strong>Ask in</strong>
+            <span>Natural Language</span>
+          </div>
+        </div>
+
+        <!-- The Perspective Dashboard Mockup Card -->
+        <div class="dashboard-mockup">
+          <!-- Mockup Top Window Bar -->
+          <div class="mockup-topbar">
+            <div class="mockup-brand">
+              <div class="mockup-logo-sm">⚡</div>
+              <span class="mockup-title">QueryMind</span>
+            </div>
+            <div class="mockup-newchat-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>New Chat</span>
+            </div>
+          </div>
+
+          <div class="mockup-layout">
+            <!-- Mockup Mini Sidebar -->
+            <div class="mockup-mini-sidebar">
+              <div class="mockup-nav-item active"><span class="nav-ico">💬</span> History</div>
+              <div class="mockup-nav-item"><span class="nav-ico">🔖</span> Saved Queries</div>
+              <div class="mockup-nav-item"><span class="nav-ico">🗄️</span> Databases</div>
+              <div class="mockup-nav-item"><span class="nav-ico">⚙️</span> Settings</div>
+            </div>
+
+            <!-- Mockup Main Workspace -->
+            <div class="mockup-workspace">
+              <!-- Prompt Input Row -->
+              <div class="mockup-prompt-row">
+                <div class="mockup-prompt-input">
+                  <div class="prompt-icon-lightning">⚡</div>
+                  <span class="prompt-text">Show me total revenue by department for last quarter</span>
+                </div>
+                <div class="mockup-dialect-badge">
+                  <span class="dialect-dot"></span>
+                  <span>PostgreSQL</span>
+                  <span class="arrow-down">▾</span>
+                </div>
+              </div>
+
+              <!-- Generated SQL Box -->
+              <div class="mockup-sql-box">
+                <div class="sql-box-top">
+                  <span class="sql-box-title">Generated SQL</span>
+                  <div class="sql-copy-icon" title="Copy SQL">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  </div>
+                </div>
+                <pre class="sql-code-display"><code><span class="sql-kw">SELECT</span>
+  department,
+  <span class="sql-fn">SUM</span>(revenue) <span class="sql-kw">AS</span> total_revenue
+<span class="sql-kw">FROM</span> sales
+<span class="sql-kw">WHERE</span> date &gt;= <span class="sql-str">'2024-01-01'</span>
+  <span class="sql-kw">AND</span> date &lt; <span class="sql-str">'2024-04-01'</span>
+<span class="sql-kw">GROUP BY</span> department
+<span class="sql-kw">ORDER BY</span> total_revenue <span class="sql-kw">DESC</span>;</code></pre>
+                <div class="sql-box-footer">
+                  <button class="mockup-run-btn" onclick="openAuthModal('register')">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    <span>Run Query</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Results Split Pane (Table + Chart) -->
+              <div class="mockup-results-split">
+                <!-- Query Results Table -->
+                <div class="mockup-results-table-pane">
+                  <div class="pane-header">Query Results</div>
+                  <table class="mockup-data-table">
+                    <thead>
+                      <tr>
+                        <th>Department</th>
+                        <th style="text-align: right;">Total Revenue</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Electronics</td>
+                        <td style="text-align: right;">245,320</td>
+                      </tr>
+                      <tr>
+                        <td>Clothing</td>
+                        <td style="text-align: right;">190,450</td>
+                      </tr>
+                      <tr>
+                        <td>Home &amp; Kitchen</td>
+                        <td style="text-align: right;">175,880</td>
+                      </tr>
+                      <tr>
+                        <td>Sports</td>
+                        <td style="text-align: right;">132,210</td>
+                      </tr>
+                      <tr>
+                        <td>Books</td>
+                        <td style="text-align: right;">98,540</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Revenue by Department Bar Chart -->
+                <div class="mockup-chart-pane">
+                  <div class="pane-header">Revenue by Department</div>
+                  <div class="mockup-bar-chart">
+                    <div class="chart-col">
+                      <div class="chart-bar" style="height: 95%;"></div>
+                      <span class="chart-label">Electronics</span>
+                    </div>
+                    <div class="chart-col">
+                      <div class="chart-bar" style="height: 75%;"></div>
+                      <span class="chart-label">Clothing</span>
+                    </div>
+                    <div class="chart-col">
+                      <div class="chart-bar" style="height: 68%;"></div>
+                      <span class="chart-label">Home</span>
+                    </div>
+                    <div class="chart-col">
+                      <div class="chart-bar" style="height: 52%;"></div>
+                      <span class="chart-label">Sports</span>
+                    </div>
+                    <div class="chart-col">
+                      <div class="chart-bar" style="height: 38%;"></div>
+                      <span class="chart-label">Books</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating Badge 2: Works with Multiple DBs (Middle Right) -->
+        <div class="floating-badge badge-mid-right">
+          <div class="badge-icon-box db-purple-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+            </svg>
+          </div>
+          <div class="badge-text">
+            <strong>Works with</strong>
+            <span>PostgreSQL, MySQL, SQLite and more</span>
+          </div>
+        </div>
+
+        <!-- Floating Badge 3: Get Instant Insights (Bottom Right) -->
+        <div class="floating-badge badge-bot-right">
+          <div class="badge-icon-box teal-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </div>
+          <div class="badge-text">
+            <strong>Get Instant</strong>
+            <span>Insights</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Proof & Trusted By Tech Stack Bar -->
+    <section class="trust-section">
+      <p class="trust-title">TRUSTED BY STUDENTS, ANALYSTS AND DEVELOPERS</p>
+      <div class="trust-logos">
+        <div class="tech-item">
+          <!-- PostgreSQL Elephant SVG -->
+          <svg class="tech-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M19 14c1.5-1.5 2-4 1-6-1.5-3-5.5-4-9-4S4 5.5 3 8c-1 2.5 0 5 1.5 6.5C4 16 3 19 3 20h3c0-2 .5-3.5 1.5-4.5 1.5.5 3 .5 4.5 0 1 1 1.5 2.5 1.5 4.5h3c0-1-1-4-1.5-5.5.5-.2 1.4-.4 2-.5z"/>
+          </svg>
+          <span>PostgreSQL</span>
+        </div>
+        <div class="tech-item">
+          <!-- MySQL Dolphin SVG -->
+          <svg class="tech-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M4 14c2-4 6-6 10-6 2 0 4 .5 6 1.5-1.5 2-3.5 3-6 3-2 0-4-1-6-1-1 0-2 .5-4 2.5z"/>
+            <path d="M18 9.5c1.5 1 2.5 3 2.5 5.5 0 2-1 3.5-2.5 4-1 .5-2.5.5-4 0-1-.5-2-1.5-2.5-3"/>
+          </svg>
+          <span>MySQL</span>
+        </div>
+        <div class="tech-item">
+          <!-- SQLite Feather / Shield SVG -->
+          <svg class="tech-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+            <path d="M8 8h8M8 12h8M8 16h5"></path>
+          </svg>
+          <span>SQLite</span>
+        </div>
+        <div class="tech-item">
+          <!-- Python Snake SVG -->
+          <svg class="tech-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 2C8 2 6 3.5 6 6v3h6v1H4c-2 0-3 1.5-3 4s1 4 3 4h2v-2c0-2 1.5-3 3.5-3h5c1.5 0 2.5-.5 2.5-2V6c0-2.5-2-4-5-4zm-2 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            <path d="M12 22c4 0 6-1.5 6-4v-3h-6v-1h8c2 0 3-1.5 3-4s-1-4-3-4h-2v2c0 2-1.5 3-3.5 3h-5c-1.5 0-2.5.5-2.5 2v4c0 2.5 2 4 5 4zm2-2a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+          </svg>
+          <span>python</span>
+        </div>
+        <div class="tech-item">
+          <!-- SQL Database Disc SVG -->
+          <svg class="tech-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+          <span>SQL</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Features Section (#features) -->
+    <section class="section-container" id="features">
+      <div class="section-header">
+        <span class="section-badge">CAPABILITIES</span>
+        <h2 class="section-title">Everything You Need to Master Your Databases</h2>
+        <p class="section-sub">A full-spectrum AI intelligence suite designed for developers, analysts, and enterprise data teams.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="f-icon purple-glow">💬</div>
+          <h3>Natural Language → SQL</h3>
+          <p>Ask complex questions in conversational English and get perfectly structured SQL queries formatted with joins, group by, and date logic.</p>
+        </div>
+        <div class="feature-card">
+          <div class="f-icon blue-glow">🔍</div>
+          <h3>AI SQL Explainer</h3>
+          <p>Break down intricate stored procedures and recursive queries into plain-English summaries, algorithmic complexity, and execution tips.</p>
+        </div>
+        <div class="feature-card">
+          <div class="f-icon red-glow">🔧</div>
+          <h3>SQL Error Fixer</h3>
+          <p>Detect syntax errors, schema mismatches, and missing indexes. Auto-repair broken queries instantly with one click.</p>
+        </div>
+        <div class="feature-card">
+          <div class="f-icon amber-glow">⚡</div>
+          <h3>Performance Optimizer</h3>
+          <p>Benchmark execution plans, eliminate redundant subqueries, and receive concrete indexing recommendations to speed up queries 10x.</p>
+        </div>
+        <div class="feature-card">
+          <div class="f-icon teal-glow">📊</div>
+          <h3>Automatic Visualization</h3>
+          <p>Transform raw tabular rows into interactive Bar, Line, and Donut charts with AI recommended axes and chart types.</p>
+        </div>
+        <div class="feature-card">
+          <div class="f-icon indigo-glow">🕸️</div>
+          <h3>Interactive ER Diagrams</h3>
+          <p>Auto-introspect foreign keys and table schemas to render live, interactive entity-relationship canvas diagrams.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section (#how-it-works) -->
+    <section class="section-container" id="how-it-works">
+      <div class="section-header">
+        <span class="section-badge">WORKFLOW</span>
+        <h2 class="section-title">From Question to Insights in 3 Steps</h2>
+        <p class="section-sub">Zero complicated setups. Connect your database or try our instant sample store.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-badge">01</div>
+          <h3>Connect Database</h3>
+          <p>Connect PostgreSQL, MySQL, or SQLite in seconds. Your schema is introspected with total privacy.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">02</div>
+          <h3>Ask in Plain English</h3>
+          <p>Type your business query or analytical prompt. QueryMind writes production-grade, dialect-optimized SQL.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">03</div>
+          <h3>Execute &amp; Visualize</h3>
+          <p>Run live queries, sort, filter, paginate large tables, and auto-render interactive Chart.js charts.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQs Section (#faqs) -->
+    <section class="section-container" id="faqs">
+      <div class="section-header">
+        <span class="section-badge">FAQ</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <h4>What SQL dialects does QueryMind support?</h4>
+          <p>QueryMind natively supports PostgreSQL, MySQL, SQLite, SQL Server, and Google BigQuery with specialized dialect prompt models.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Is my database data private and secure?</h4>
+          <p>Yes. QueryMind executes queries locally or directly on your connected database. Your credentials and passwords are encrypted, and your database rows never train AI models.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I use QueryMind without an existing database?</h4>
+          <p>Absolutely. QueryMind comes with a built-in 5-table e-commerce demo store and a 3,900-record customer shopping dataset that loads with one click.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="brand-icon">⚡</div>
+          <span class="brand-name">QueryMind</span>
+        </div>
+        <p class="footer-copy">© 2026 QueryMind Inc. Built for high-velocity database intelligence.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Auth Modal (Sign in & Create Account Dialog) -->
+  <div class="auth-modal-overlay hidden" id="auth-modal-overlay" onclick="handleModalOverlayClick(event)">
+    <div class="auth-modal-dialog">
+      <button class="modal-close-btn" onclick="closeAuthModal()" title="Close">✕</button>
+
+      <!-- Brand in Modal -->
+      <div class="brand modal-brand">
+        <div class="brand-icon">⚡</div>
+        <span class="brand-name">QueryMind</span>
+      </div>
+
+      <!-- Tab Switcher -->
       <div class="tab-bar">
         <button class="tab active" id="tab-login" onclick="switchTab('login')">Sign in</button>
         <button class="tab" id="tab-register" onclick="switchTab('register')">Create account</button>
         <div class="tab-slider" id="tab-slider"></div>
       </div>
 
-      <!-- Login form -->
+      <!-- Login Form Panel -->
       <div class="form-panel" id="panel-login">
         <p class="form-headline">Welcome back</p>
         <div class="field">
-          <label>Email</label>
+          <label for="login-email">Email</label>
           <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email"/>
         </div>
         <div class="field">
-          <label>Password</label>
+          <label for="login-password">Password</label>
           <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/>
         </div>
         <div id="login-error" class="form-error hidden"></div>
@@ -53,19 +486,19 @@
         <p class="switch-hint">No account? <a onclick="switchTab('register')">Create one free</a></p>
       </div>
 
-      <!-- Register form -->
+      <!-- Register Form Panel -->
       <div class="form-panel hidden" id="panel-register">
         <p class="form-headline">Start querying smarter</p>
         <div class="field">
-          <label>Full name</label>
+          <label for="reg-name">Full name</label>
           <input type="text" id="reg-name" placeholder="Alex Johnson" autocomplete="name"/>
         </div>
         <div class="field">
-          <label>Email</label>
+          <label for="reg-email">Email</label>
           <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email"/>
         </div>
         <div class="field">
-          <label>Password</label>
+          <label for="reg-password">Password</label>
           <input type="password" id="reg-password" placeholder="Min 6 characters" autocomplete="new-password"/>
         </div>
         <div id="reg-error" class="form-error hidden"></div>
@@ -75,20 +508,53 @@
         </button>
         <p class="switch-hint">Have an account? <a onclick="switchTab('login')">Sign in</a></p>
       </div>
-
     </div>
-
-    <!-- Feature pills -->
-    <div class="feature-pills">
-      <span class="pill">⚡ Groq-powered</span>
-      <span class="pill">🗄️ 5 SQL dialects</span>
-      <span class="pill">🔒 Secure auth</span>
-      <span class="pill">📋 Query history</span>
-    </div>
-
   </div>
 
-  <script src="/static/js/auth.js"></script>
+  <!-- Watch Demo Modal -->
+  <div class="demo-modal-overlay hidden" id="demo-modal-overlay" onclick="handleDemoOverlayClick(event)">
+    <div class="demo-modal-dialog">
+      <button class="modal-close-btn" onclick="closeDemoModal()" title="Close">✕</button>
+      <div class="demo-header">
+        <div class="brand-icon" style="margin: 0 auto 12px;">⚡</div>
+        <h3 class="demo-title">QueryMind in Action</h3>
+        <p class="demo-sub">Write, optimize, execute, and visualize SQL queries with generative AI.</p>
+      </div>
+
+      <div class="demo-steps-container">
+        <div class="demo-step-box">
+          <span class="demo-step-num">1</span>
+          <div>
+            <strong>Ask in Natural English</strong>
+            <p>Tell QueryMind what data you need. It writes accurate SQL with joins, aggregations, and filters.</p>
+          </div>
+        </div>
+        <div class="demo-step-box">
+          <span class="demo-step-num">2</span>
+          <div>
+            <strong>Explain, Fix &amp; Optimize</strong>
+            <p>One-click explanations in plain English, automatic error recovery, and indexing optimization tips.</p>
+          </div>
+        </div>
+        <div class="demo-step-box">
+          <span class="demo-step-num">3</span>
+          <div>
+            <strong>Interactive Visualization &amp; Insights</strong>
+            <p>Auto-generate Bar, Line, and Donut charts with AI summary statistics and insights on your data.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-footer">
+        <button class="btn-primary" onclick="closeDemoModal(); openAuthModal('register');">
+          Launch QueryMind Free →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="/static/js/bg.js"></script>
+  <script src="/static/js/auth.js"></script>
 </body>
 </html>
