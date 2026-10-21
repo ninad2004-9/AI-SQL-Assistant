@@ -7,14 +7,1003 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  
+  <style>
+    /* ─────────────────────────────────────────────────────────────────────────
+       QueryMind — Hero Landing Page (Matches Image 3)
+       Self-contained styles ensuring 100% styling reliability without cache issues
+    ───────────────────────────────────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #07070b;
+      --surface: #0f1019;
+      --surface2: #161725;
+      --border: #232338;
+      --border-light: rgba(255, 255, 255, 0.1);
+      --accent: #7c6af7;
+      --accent-hover: #6366f1;
+      --accent2: #5eead4;
+      --accent-blue: #60a5fa;
+      --text: #f8fafc;
+      --text2: #94a3b8;
+      --text3: #64748b;
+      --error: #f87171;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body.landing-body {
+      min-height: 100vh;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      overflow-x: hidden;
+      position: relative;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Live Interactive Canvas Background (Preserved) ───────────────────── */
+    canvas#bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .floating-code {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      opacity: 0.16;
+    }
+
+    .float-snippet {
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #7c6af7;
+      white-space: nowrap;
+      animation: floatUp linear infinite;
+      user-select: none;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(110vh); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.8; }
+      to   { transform: translateY(-10vh); opacity: 0; }
+    }
+
+    /* ── Landing Page Main Container ─────────────────────────────────────── */
+    .landing-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── Top Navigation Bar ─────────────────────────────────────────────── */
+    .navbar {
+      width: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 1.1rem 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(7, 7, 11, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #38bdf8 0%, #7c6af7 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 18px rgba(124, 106, 247, 0.45);
+      color: #fff;
+    }
+
+    .brand-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .btn-nav-signin {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      padding: 0.52rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all 0.2s ease;
+    }
+
+    .btn-nav-signin:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+
+    .btn-nav-cta {
+      background: linear-gradient(135deg, #6d5cf5 0%, #4f46e5 100%);
+      border: 1px solid rgba(124, 106, 247, 0.4);
+      color: #fff;
+      padding: 0.52rem 1.35rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 18px rgba(109, 92, 245, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-nav-cta:hover {
+      box-shadow: 0 6px 24px rgba(109, 92, 245, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .btn-nav-cta .arrow,
+    .btn-hero-primary .arrow {
+      font-size: 13px;
+      transition: transform 0.2s ease;
+      display: inline-block;
+    }
+
+    .btn-nav-cta:hover .arrow,
+    .btn-hero-primary:hover .arrow {
+      transform: translateX(3px);
+    }
+
+    /* ── Main Hero Section (Matches Image 3) ─────────────────────────────── */
+    .hero-section {
+      width: 100%;
+      max-width: 1360px;
+      margin: 1.5rem auto 3rem;
+      padding: 0 2.2rem;
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    /* Hero Left: Headline & CTAs */
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ai-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(124, 106, 247, 0.1);
+      border: 1px solid rgba(124, 106, 247, 0.32);
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #c4b5fd;
+      width: fit-content;
+      margin-bottom: 1.25rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .pill-sparkle {
+      color: #a78bfa;
+      font-size: 12px;
+    }
+
+    .hero-headline {
+      font-size: clamp(2.6rem, 4vw, 3.75rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      color: #ffffff;
+      margin-bottom: 1.25rem;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa 0%, #818cf8 50%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline;
+    }
+
+    .hero-subtitle {
+      font-size: 1.04rem;
+      color: var(--text2);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      max-width: 520px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.4rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero-primary {
+      background: linear-gradient(135deg, #6d5cf5 0%, #4f46e5 100%);
+      border: 1px solid rgba(124, 106, 247, 0.45);
+      color: #fff;
+      padding: 0.8rem 1.85rem;
+      border-radius: 11px;
+      font-size: 0.98rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.45);
+      transition: all 0.2s ease;
+    }
+
+    .btn-hero-primary:hover {
+      box-shadow: 0 10px 36px rgba(99, 102, 241, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .btn-hero-secondary {
+      background: rgba(18, 19, 28, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #f1f5f9;
+      padding: 0.8rem 1.85rem;
+      border-radius: 11px;
+      font-size: 0.98rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+    }
+
+    .btn-hero-secondary:hover {
+      background: rgba(28, 30, 44, 0.95);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .play-icon {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    /* Hero feature highlights row */
+    .hero-feature-row {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .feature-icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+    }
+
+    .bolt-box {
+      background: rgba(124, 106, 247, 0.14);
+      border: 1px solid rgba(124, 106, 247, 0.35);
+      color: #a78bfa;
+    }
+
+    .db-box {
+      background: rgba(96, 165, 250, 0.14);
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      color: #60a5fa;
+    }
+
+    .chart-box {
+      background: rgba(94, 234, 212, 0.14);
+      border: 1px solid rgba(94, 234, 212, 0.35);
+      color: #5eead4;
+    }
+
+    .feature-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feature-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      line-height: 1.25;
+    }
+
+    .feature-sub {
+      font-size: 0.76rem;
+      color: var(--text2);
+    }
+
+    /* Hero Right: Perspective Mockup (Direct Image 3 Match) */
+    .hero-preview-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .glow-aura {
+      position: absolute;
+      inset: -25px;
+      background: radial-gradient(circle at 60% 45%, rgba(99, 102, 241, 0.35) 0%, rgba(56, 189, 248, 0.2) 35%, transparent 70%);
+      filter: blur(55px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-mockup-img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: auto;
+      max-width: 620px;
+      border-radius: 16px;
+      filter: drop-shadow(0 0 40px rgba(99, 102, 241, 0.35)) drop-shadow(0 25px 60px rgba(0, 0, 0, 0.85));
+      transition: transform 0.4s ease, filter 0.4s ease;
+      cursor: pointer;
+    }
+
+    .hero-mockup-img:hover {
+      transform: scale(1.015) translateY(-3px);
+      filter: drop-shadow(0 0 55px rgba(99, 102, 241, 0.5)) drop-shadow(0 30px 75px rgba(0, 0, 0, 0.95));
+    }
+
+    /* ── Trust & Tech Stack Section ──────────────────────────────────────── */
+    .trust-section {
+      width: 100%;
+      max-width: 1360px;
+      margin: 1.5rem auto 4.5rem;
+      padding: 2.2rem 2.2rem 0;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .trust-title {
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--text3);
+      margin-bottom: 1.6rem;
+      text-transform: uppercase;
+    }
+
+    .trust-banner-img {
+      max-width: 820px;
+      width: 100%;
+      height: auto;
+      opacity: 0.85;
+      transition: opacity 0.3s ease;
+    }
+
+    .trust-banner-img:hover {
+      opacity: 1;
+    }
+
+    /* ── Additional Showcase Sections ────────────────────────────────────── */
+    .section-container {
+      width: 100%;
+      max-width: 1360px;
+      margin: 3.5rem auto;
+      padding: 0 2.2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 3rem;
+    }
+
+    .section-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    .section-title {
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      font-size: 1.02rem;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: rgba(15, 16, 24, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .feature-card:hover {
+      border-color: rgba(124, 106, 247, 0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(124, 106, 247, 0.12);
+    }
+
+    .f-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 1.25rem;
+    }
+
+    .purple-glow { background: rgba(124, 106, 247, 0.15); color: #c4b5fd; box-shadow: 0 0 20px rgba(124, 106, 247, 0.25); }
+    .blue-glow   { background: rgba(96, 165, 250, 0.15); color: #93c5fd; box-shadow: 0 0 20px rgba(96, 165, 250, 0.25); }
+    .red-glow    { background: rgba(248, 113, 113, 0.15); color: #fca5a5; box-shadow: 0 0 20px rgba(248, 113, 113, 0.25); }
+    .amber-glow  { background: rgba(251, 191, 36, 0.15); color: #fde68a; box-shadow: 0 0 20px rgba(251, 191, 36, 0.25); }
+    .teal-glow   { background: rgba(94, 234, 212, 0.15); color: #5eead4; box-shadow: 0 0 20px rgba(94, 234, 212, 0.25); }
+    .indigo-glow { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; box-shadow: 0 0 20px rgba(99, 102, 241, 0.25); }
+
+    .feature-card h3 {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* Steps Grid */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .step-card {
+      background: rgba(15, 16, 24, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 2rem 1.8rem;
+      transition: all 0.3s ease;
+    }
+
+    .step-card:hover {
+      border-color: rgba(94, 234, 212, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .step-badge {
+      font-family: var(--mono);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent2);
+      margin-bottom: 1.1rem;
+      opacity: 0.85;
+    }
+
+    .step-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+
+    .step-card p {
+      font-size: 0.9rem;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* FAQs */
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    .faq-item {
+      background: rgba(15, 16, 24, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1.4rem 1.6rem;
+    }
+
+    .faq-item h4 {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.45rem;
+    }
+
+    .faq-item p {
+      font-size: 0.9rem;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .footer {
+      width: 100%;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 2.5rem 2.2rem;
+      margin-top: auto;
+      background: rgba(7, 7, 11, 0.85);
+    }
+
+    .footer-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-copy {
+      font-size: 0.84rem;
+      color: var(--text3);
+    }
+
+    /* ── Auth Modal Dialog ───────────────────────────────────────────────── */
+    .auth-modal-overlay,
+    .demo-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(3, 4, 7, 0.8);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      animation: fadeIn 0.25s ease both;
+    }
+
+    .auth-modal-dialog {
+      width: 100%;
+      max-width: 440px;
+      background: #0f1019;
+      border: 1px solid rgba(124, 106, 247, 0.32);
+      border-radius: 18px;
+      padding: 2.25rem;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 50px rgba(124, 106, 247, 0.2);
+      position: relative;
+      animation: modalZoom 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text2);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .modal-brand {
+      margin: 0 auto 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tab-bar {
+      position: relative;
+      display: flex;
+      background: #171825;
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 1.75rem;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 9px 0;
+      background: none;
+      border: none;
+      color: var(--text2);
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 7px;
+      position: relative;
+      z-index: 1;
+      transition: color 0.25s;
+      font-family: var(--font);
+    }
+
+    .tab.active {
+      color: #ffffff;
+    }
+
+    .tab-slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      height: calc(100% - 8px);
+      background: #0f1019;
+      border-radius: 7px;
+      border: 1px solid rgba(124, 106, 247, 0.35);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .tab-slider.right {
+      transform: translateX(100%);
+    }
+
+    .form-panel {
+      animation: fadeIn 0.3s ease;
+    }
+
+    .form-headline {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      color: #fff;
+    }
+
+    .field {
+      margin-bottom: 1.1rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--text2);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 0.72rem 0.95rem;
+      background: #171825;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 0.92rem;
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(124, 106, 247, 0.2);
+    }
+
+    .field input::placeholder {
+      color: #4b4b68;
+    }
+
+    .form-error {
+      background: rgba(248, 113, 113, 0.12);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+      color: var(--error);
+      font-size: 0.84rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 0.8rem;
+      background: linear-gradient(135deg, #6d5cf5 0%, #4f46e5 100%);
+      border: 1px solid rgba(124, 106, 247, 0.4);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.96rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 6px 24px rgba(109, 92, 245, 0.38);
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 30px rgba(109, 92, 245, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .btn-loader {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .switch-hint {
+      text-align: center;
+      font-size: 0.84rem;
+      color: var(--text2);
+      margin-top: 1.15rem;
+    }
+
+    .switch-hint a {
+      color: #a78bfa;
+      cursor: pointer;
+      font-weight: 500;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .switch-hint a:hover {
+      text-decoration-color: #a78bfa;
+    }
+
+    /* Demo Modal */
+    .demo-modal-dialog {
+      width: 100%;
+      max-width: 580px;
+      background: #0f1019;
+      border: 1px solid rgba(94, 234, 212, 0.35);
+      border-radius: 18px;
+      padding: 2.25rem;
+      box-shadow: 0 25px 75px rgba(0, 0, 0, 0.85), 0 0 50px rgba(94, 234, 212, 0.15);
+      position: relative;
+      animation: modalZoom 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .demo-header {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .demo-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .demo-sub {
+      font-size: 0.92rem;
+      color: var(--text2);
+    }
+
+    .demo-steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .demo-step-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: rgba(22, 23, 34, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+    }
+
+    .demo-step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #6366f1, #38bdf8);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.82rem;
+      flex-shrink: 0;
+    }
+
+    .demo-step-box strong {
+      display: block;
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+
+    .demo-step-box p {
+      font-size: 0.84rem;
+      color: var(--text2);
+      line-height: 1.45;
+    }
+
+    .demo-footer {
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes modalZoom {
+      from { opacity: 0; transform: scale(0.92) translateY(12px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ── Responsive Queries ──────────────────────────────────────────────── */
+    @media (max-width: 1080px) {
+      .hero-section {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+      }
+      .hero-preview-wrapper {
+        max-width: 650px;
+        margin: 0 auto;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem 1.25rem;
+      }
+      .hero-section {
+        padding: 0 1.25rem;
+      }
+      .hero-headline {
+        font-size: 2.35rem;
+      }
+      .hero-feature-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+    }
+  </style>
   <link rel="stylesheet" href="/static/css/auth.css"/>
 </head>
 <body class="landing-body">
 
-  <!-- Interactive Live Canvas Background (Preserved & Enhanced) -->
+  <!-- Interactive Live Canvas Background (Preserved) -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- Floating SQL code snippets in background -->
+  <!-- Floating SQL code snippets in background (Preserved) -->
   <div class="floating-code" id="floaters"></div>
 
   <!-- Main Page Container -->
@@ -40,12 +1029,12 @@
         <button class="btn-nav-signin" id="btn-nav-signin" onclick="openAuthModal('login')">Sign in</button>
         <button class="btn-nav-cta" id="btn-nav-cta" onclick="openAuthModal('register')">
           <span>Get Started Free</span>
-          <svg class="arrow-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="arrow">→</span>
         </button>
       </div>
     </header>
 
-    <!-- Main Hero Section -->
+    <!-- Main Hero Section (Matches Image 3) -->
     <section class="hero-section">
       <!-- Left Column: Copy & CTAs -->
       <div class="hero-content">
@@ -70,7 +1059,7 @@
         <div class="hero-cta-group">
           <button class="btn-hero-primary" onclick="openAuthModal('register')">
             <span>Get Started Free</span>
-            <svg class="arrow-icon" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="arrow">→</span>
           </button>
           <button class="btn-hero-secondary" onclick="openDemoModal()">
             <span class="play-icon">▶</span>
@@ -88,26 +1077,14 @@
             </div>
           </div>
           <div class="hero-feature-item">
-            <div class="feature-icon-box db-box">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-              </svg>
-            </div>
+            <div class="feature-icon-box db-box">🗄️</div>
             <div class="feature-text">
               <span class="feature-title">Supports Multiple</span>
               <span class="feature-sub">Databases</span>
             </div>
           </div>
           <div class="hero-feature-item">
-            <div class="feature-icon-box chart-box">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="20" x2="18" y2="10"></line>
-                <line x1="12" y1="20" x2="12" y2="4"></line>
-                <line x1="6" y1="20" x2="6" y2="14"></line>
-              </svg>
-            </div>
+            <div class="feature-icon-box chart-box">📊</div>
             <div class="feature-text">
               <span class="feature-title">Visualize</span>
               <span class="feature-sub">Results &amp; Insights</span>
@@ -116,232 +1093,17 @@
         </div>
       </div>
 
-      <!-- Right Column: Interactive 3D Perspective Dashboard Mockup -->
+      <!-- Right Column: 3D Perspective Glowing Dashboard Mockup (Direct from Image 3) -->
       <div class="hero-preview-wrapper">
-        <!-- Ambient Backlight Glow -->
         <div class="glow-aura"></div>
-
-        <!-- Floating Badge 1: Ask in Natural Language (Top Right) -->
-        <div class="floating-badge badge-top-right">
-          <div class="badge-icon-box bubble-box">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
-            </svg>
-          </div>
-          <div class="badge-text">
-            <strong>Ask in</strong>
-            <span>Natural Language</span>
-          </div>
-        </div>
-
-        <!-- The Perspective Dashboard Mockup Card -->
-        <div class="dashboard-mockup">
-          <!-- Mockup Top Window Bar -->
-          <div class="mockup-topbar">
-            <div class="mockup-brand">
-              <div class="mockup-logo-sm">⚡</div>
-              <span class="mockup-title">QueryMind</span>
-            </div>
-            <div class="mockup-newchat-pill">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              <span>New Chat</span>
-            </div>
-          </div>
-
-          <div class="mockup-layout">
-            <!-- Mockup Mini Sidebar -->
-            <div class="mockup-mini-sidebar">
-              <div class="mockup-nav-item active"><span class="nav-ico">💬</span> History</div>
-              <div class="mockup-nav-item"><span class="nav-ico">🔖</span> Saved Queries</div>
-              <div class="mockup-nav-item"><span class="nav-ico">🗄️</span> Databases</div>
-              <div class="mockup-nav-item"><span class="nav-ico">⚙️</span> Settings</div>
-            </div>
-
-            <!-- Mockup Main Workspace -->
-            <div class="mockup-workspace">
-              <!-- Prompt Input Row -->
-              <div class="mockup-prompt-row">
-                <div class="mockup-prompt-input">
-                  <div class="prompt-icon-lightning">⚡</div>
-                  <span class="prompt-text">Show me total revenue by department for last quarter</span>
-                </div>
-                <div class="mockup-dialect-badge">
-                  <span class="dialect-dot"></span>
-                  <span>PostgreSQL</span>
-                  <span class="arrow-down">▾</span>
-                </div>
-              </div>
-
-              <!-- Generated SQL Box -->
-              <div class="mockup-sql-box">
-                <div class="sql-box-top">
-                  <span class="sql-box-title">Generated SQL</span>
-                  <div class="sql-copy-icon" title="Copy SQL">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  </div>
-                </div>
-                <pre class="sql-code-display"><code><span class="sql-kw">SELECT</span>
-  department,
-  <span class="sql-fn">SUM</span>(revenue) <span class="sql-kw">AS</span> total_revenue
-<span class="sql-kw">FROM</span> sales
-<span class="sql-kw">WHERE</span> date &gt;= <span class="sql-str">'2024-01-01'</span>
-  <span class="sql-kw">AND</span> date &lt; <span class="sql-str">'2024-04-01'</span>
-<span class="sql-kw">GROUP BY</span> department
-<span class="sql-kw">ORDER BY</span> total_revenue <span class="sql-kw">DESC</span>;</code></pre>
-                <div class="sql-box-footer">
-                  <button class="mockup-run-btn" onclick="openAuthModal('register')">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                    <span>Run Query</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Results Split Pane (Table + Chart) -->
-              <div class="mockup-results-split">
-                <!-- Query Results Table -->
-                <div class="mockup-results-table-pane">
-                  <div class="pane-header">Query Results</div>
-                  <table class="mockup-data-table">
-                    <thead>
-                      <tr>
-                        <th>Department</th>
-                        <th style="text-align: right;">Total Revenue</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Electronics</td>
-                        <td style="text-align: right;">245,320</td>
-                      </tr>
-                      <tr>
-                        <td>Clothing</td>
-                        <td style="text-align: right;">190,450</td>
-                      </tr>
-                      <tr>
-                        <td>Home &amp; Kitchen</td>
-                        <td style="text-align: right;">175,880</td>
-                      </tr>
-                      <tr>
-                        <td>Sports</td>
-                        <td style="text-align: right;">132,210</td>
-                      </tr>
-                      <tr>
-                        <td>Books</td>
-                        <td style="text-align: right;">98,540</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <!-- Revenue by Department Bar Chart -->
-                <div class="mockup-chart-pane">
-                  <div class="pane-header">Revenue by Department</div>
-                  <div class="mockup-bar-chart">
-                    <div class="chart-col">
-                      <div class="chart-bar" style="height: 95%;"></div>
-                      <span class="chart-label">Electronics</span>
-                    </div>
-                    <div class="chart-col">
-                      <div class="chart-bar" style="height: 75%;"></div>
-                      <span class="chart-label">Clothing</span>
-                    </div>
-                    <div class="chart-col">
-                      <div class="chart-bar" style="height: 68%;"></div>
-                      <span class="chart-label">Home</span>
-                    </div>
-                    <div class="chart-col">
-                      <div class="chart-bar" style="height: 52%;"></div>
-                      <span class="chart-label">Sports</span>
-                    </div>
-                    <div class="chart-col">
-                      <div class="chart-bar" style="height: 38%;"></div>
-                      <span class="chart-label">Books</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- Floating Badge 2: Works with Multiple DBs (Middle Right) -->
-        <div class="floating-badge badge-mid-right">
-          <div class="badge-icon-box db-purple-box">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-            </svg>
-          </div>
-          <div class="badge-text">
-            <strong>Works with</strong>
-            <span>PostgreSQL, MySQL, SQLite and more</span>
-          </div>
-        </div>
-
-        <!-- Floating Badge 3: Get Instant Insights (Bottom Right) -->
-        <div class="floating-badge badge-bot-right">
-          <div class="badge-icon-box teal-box">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="20" x2="18" y2="10"></line>
-              <line x1="12" y1="20" x2="12" y2="4"></line>
-              <line x1="6" y1="20" x2="6" y2="14"></line>
-            </svg>
-          </div>
-          <div class="badge-text">
-            <strong>Get Instant</strong>
-            <span>Insights</span>
-          </div>
-        </div>
+        <img src="/static/img/hero-mockup.png" alt="QueryMind AI Dashboard Mockup" class="hero-mockup-img" onclick="openAuthModal('register')"/>
       </div>
     </section>
 
     <!-- Social Proof & Trusted By Tech Stack Bar -->
     <section class="trust-section">
       <p class="trust-title">TRUSTED BY STUDENTS, ANALYSTS AND DEVELOPERS</p>
-      <div class="trust-logos">
-        <div class="tech-item">
-          <!-- PostgreSQL Elephant SVG -->
-          <svg class="tech-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M19 14c1.5-1.5 2-4 1-6-1.5-3-5.5-4-9-4S4 5.5 3 8c-1 2.5 0 5 1.5 6.5C4 16 3 19 3 20h3c0-2 .5-3.5 1.5-4.5 1.5.5 3 .5 4.5 0 1 1 1.5 2.5 1.5 4.5h3c0-1-1-4-1.5-5.5.5-.2 1.4-.4 2-.5z"/>
-          </svg>
-          <span>PostgreSQL</span>
-        </div>
-        <div class="tech-item">
-          <!-- MySQL Dolphin SVG -->
-          <svg class="tech-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M4 14c2-4 6-6 10-6 2 0 4 .5 6 1.5-1.5 2-3.5 3-6 3-2 0-4-1-6-1-1 0-2 .5-4 2.5z"/>
-            <path d="M18 9.5c1.5 1 2.5 3 2.5 5.5 0 2-1 3.5-2.5 4-1 .5-2.5.5-4 0-1-.5-2-1.5-2.5-3"/>
-          </svg>
-          <span>MySQL</span>
-        </div>
-        <div class="tech-item">
-          <!-- SQLite Feather / Shield SVG -->
-          <svg class="tech-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <rect x="3" y="4" width="18" height="16" rx="3"></rect>
-            <path d="M8 8h8M8 12h8M8 16h5"></path>
-          </svg>
-          <span>SQLite</span>
-        </div>
-        <div class="tech-item">
-          <!-- Python Snake SVG -->
-          <svg class="tech-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M12 2C8 2 6 3.5 6 6v3h6v1H4c-2 0-3 1.5-3 4s1 4 3 4h2v-2c0-2 1.5-3 3.5-3h5c1.5 0 2.5-.5 2.5-2V6c0-2.5-2-4-5-4zm-2 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-            <path d="M12 22c4 0 6-1.5 6-4v-3h-6v-1h8c2 0 3-1.5 3-4s-1-4-3-4h-2v2c0 2-1.5 3-3.5 3h-5c-1.5 0-2.5.5-2.5 2v4c0 2.5 2 4 5 4zm2-2a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-          </svg>
-          <span>python</span>
-        </div>
-        <div class="tech-item">
-          <!-- SQL Database Disc SVG -->
-          <svg class="tech-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-          </svg>
-          <span>SQL</span>
-        </div>
-      </div>
+      <img src="/static/img/trusted-logos.png" alt="Trusted by PostgreSQL, MySQL, SQLite, Python, SQL" class="trust-banner-img"/>
     </section>
 
     <!-- Interactive Features Section (#features) -->
@@ -455,7 +1217,7 @@
       <button class="modal-close-btn" onclick="closeAuthModal()" title="Close">✕</button>
 
       <!-- Brand in Modal -->
-      <div class="brand modal-brand">
+      <div class="modal-brand">
         <div class="brand-icon">⚡</div>
         <span class="brand-name">QueryMind</span>
       </div>
