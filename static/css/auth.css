@@ -268,48 +268,81 @@ canvas#bg-canvas {
 .hero-cta-group {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 2.4rem;
-  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1.65rem;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
 .btn-hero-primary {
   background: linear-gradient(135deg, #6d5cf5 0%, #4f46e5 100%);
   border: 1px solid rgba(124, 106, 247, 0.45);
   color: #fff;
-  padding: 0.8rem 1.85rem;
-  border-radius: 11px;
-  font-size: 0.98rem;
+  padding: 0.72rem 1.1rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
   font-family: var(--font);
   display: flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.45);
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
   transition: all 0.2s ease;
+  white-space: nowrap;
+  flex: 1;
 }
 
 .btn-hero-primary:hover {
-  box-shadow: 0 10px 36px rgba(99, 102, 241, 0.6);
+  box-shadow: 0 8px 26px rgba(99, 102, 241, 0.55);
   transform: translateY(-2px);
+}
+
+.btn-hero-instant {
+  background: rgba(94, 234, 212, 0.1);
+  border: 1px solid rgba(94, 234, 212, 0.35);
+  color: #5eead4;
+  padding: 0.72rem 1rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.btn-hero-instant:hover {
+  background: rgba(94, 234, 212, 0.2);
+  border-color: rgba(94, 234, 212, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(94, 234, 212, 0.25);
 }
 
 .btn-hero-secondary {
   background: rgba(18, 19, 28, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.14);
   color: #f1f5f9;
-  padding: 0.8rem 1.85rem;
-  border-radius: 11px;
-  font-size: 0.98rem;
+  padding: 0.72rem 1rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
   font-weight: 500;
   cursor: pointer;
   font-family: var(--font);
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 6px;
   backdrop-filter: blur(10px);
   transition: all 0.2s ease;
+  white-space: nowrap;
+  flex: 1;
 }
 
 .btn-hero-secondary:hover {
@@ -319,27 +352,32 @@ canvas#bg-canvas {
 }
 
 .play-icon {
-  font-size: 11px;
+  font-size: 10px;
   color: #94a3b8;
 }
 
 .hero-feature-row {
-  display: flex;
-  align-items: center;
-  gap: 1.6rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
+  width: 100%;
 }
 
 .hero-feature-item {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 8px;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 9px;
+  padding: 0.55rem 0.65rem;
 }
 
 .feature-icon-box {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -114,14 +114,14 @@
       z-index: 100;
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      background: rgba(7, 7, 11, 0.82);
+      background: rgba(7, 7, 11, 0.85);
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .navbar-inner {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0.95rem 2rem;
+      padding: 0.85rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -184,7 +184,7 @@
       background: rgba(124, 106, 247, 0.12);
       border: 1px solid rgba(124, 106, 247, 0.35);
       color: #c4b5fd;
-      padding: 0.5rem 1rem;
+      padding: 0.45rem 0.95rem;
       border-radius: 8px;
       font-size: 0.84rem;
       font-weight: 600;
@@ -207,7 +207,7 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.12);
       color: #e2e8f0;
-      padding: 0.5rem 1.15rem;
+      padding: 0.45rem 1.1rem;
       border-radius: 8px;
       font-size: 0.86rem;
       font-weight: 500;
@@ -226,7 +226,7 @@
       background: linear-gradient(135deg, #7c6af7 0%, #6366f1 100%);
       border: 1px solid rgba(124, 106, 247, 0.45);
       color: #fff;
-      padding: 0.5rem 1.25rem;
+      padding: 0.45rem 1.2rem;
       border-radius: 8px;
       font-size: 0.86rem;
       font-weight: 600;
@@ -244,16 +244,16 @@
       transform: translateY(-1px);
     }
 
-    /* ── Hero Section ─────────────────────────────────────────────────────── */
+    /* ── Hero Section (Tight & Symmetrical) ────────────────────────────────── */
     .hero-section {
-      padding: 4.5rem 0 3rem;
+      padding: 3.25rem 0 2rem;
       position: relative;
     }
 
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr 1.15fr;
-      gap: 3.5rem;
+      gap: 3rem;
       align-items: center;
     }
 
@@ -269,27 +269,27 @@
       background: rgba(124, 106, 247, 0.1);
       border: 1px solid rgba(124, 106, 247, 0.32);
       border-radius: 999px;
-      padding: 5px 14px;
-      font-size: 0.8rem;
+      padding: 4px 12px;
+      font-size: 0.78rem;
       font-weight: 600;
       color: #c4b5fd;
       width: fit-content;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.9rem;
       backdrop-filter: blur(8px);
     }
 
     .pill-sparkle {
       color: #a78bfa;
-      font-size: 12px;
+      font-size: 11px;
     }
 
     .hero-headline {
-      font-size: clamp(2.5rem, 3.8vw, 3.65rem);
+      font-size: clamp(2.35rem, 3.6vw, 3.4rem);
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.12;
       letter-spacing: -0.035em;
       color: #ffffff;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
     }
 
     .gradient-text {
@@ -300,40 +300,45 @@
     }
 
     .hero-subtitle {
-      font-size: 1.02rem;
+      font-size: 0.98rem;
       color: var(--text2);
-      line-height: 1.65;
-      margin-bottom: 1.85rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
       max-width: 520px;
     }
 
+    /* 3 CTA Buttons in ONE SINGLE ROW */
     .hero-cta-group {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-bottom: 1.65rem;
+      flex-wrap: nowrap;
+      width: 100%;
     }
 
     .btn-hero-primary {
       background: linear-gradient(135deg, #6d5cf5 0%, #4f46e5 100%);
       border: 1px solid rgba(124, 106, 247, 0.45);
       color: #fff;
-      padding: 0.8rem 1.85rem;
+      padding: 0.72rem 1.1rem;
       border-radius: 10px;
-      font-size: 0.96rem;
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       font-family: var(--font);
       display: flex;
       align-items: center;
-      gap: 8px;
-      box-shadow: 0 8px 28px rgba(99, 102, 241, 0.45);
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
       transition: all 0.2s ease;
+      white-space: nowrap;
+      flex: 1;
     }
 
     .btn-hero-primary:hover {
-      box-shadow: 0 10px 34px rgba(99, 102, 241, 0.6);
+      box-shadow: 0 8px 26px rgba(99, 102, 241, 0.55);
       transform: translateY(-2px);
     }
 
@@ -341,40 +346,46 @@
       background: rgba(94, 234, 212, 0.1);
       border: 1px solid rgba(94, 234, 212, 0.35);
       color: #5eead4;
-      padding: 0.8rem 1.4rem;
+      padding: 0.72rem 1rem;
       border-radius: 10px;
-      font-size: 0.94rem;
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       font-family: var(--font);
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      gap: 6px;
       transition: all 0.2s ease;
+      white-space: nowrap;
+      flex: 1;
     }
 
     .btn-hero-instant:hover {
       background: rgba(94, 234, 212, 0.2);
       border-color: rgba(94, 234, 212, 0.6);
       transform: translateY(-2px);
-      box-shadow: 0 0 24px rgba(94, 234, 212, 0.25);
+      box-shadow: 0 0 20px rgba(94, 234, 212, 0.25);
     }
 
     .btn-hero-secondary {
       background: rgba(18, 19, 28, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.14);
       color: #f1f5f9;
-      padding: 0.8rem 1.4rem;
+      padding: 0.72rem 1rem;
       border-radius: 10px;
-      font-size: 0.94rem;
+      font-size: 0.88rem;
       font-weight: 500;
       cursor: pointer;
       font-family: var(--font);
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      gap: 6px;
       backdrop-filter: blur(10px);
       transition: all 0.2s ease;
+      white-space: nowrap;
+      flex: 1;
     }
 
     .btn-hero-secondary:hover {
@@ -383,50 +394,45 @@
       transform: translateY(-1px);
     }
 
-    /* Social Proof Stars */
-    .hero-social-proof {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 1.85rem;
-      font-size: 0.84rem;
-      color: var(--text2);
+    .play-icon {
+      font-size: 10px;
+      color: #94a3b8;
     }
 
-    .star-rating {
-      color: #fbbf24;
-      font-size: 13px;
-      letter-spacing: 2px;
-    }
-
-    .proof-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Feature Highlights Row */
+    /* 3 Feature Highlight items in ONE SINGLE ROW */
     .hero-feature-row {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      width: 100%;
     }
 
     .hero-feature-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      min-width: 0;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 9px;
+      padding: 0.55rem 0.65rem;
+      transition: all 0.2s ease;
+    }
+
+    .hero-feature-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.12);
     }
 
     .feature-icon-box {
-      width: 36px;
-      height: 36px;
-      border-radius: 9px;
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
+      font-size: 13px;
+      flex-shrink: 0;
     }
 
     .bolt-box {
@@ -450,18 +456,21 @@
     .feature-text {
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     .feature-title {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 600;
       color: #f1f5f9;
-      line-height: 1.25;
+      line-height: 1.2;
+      white-space: nowrap;
     }
 
     .feature-sub {
-      font-size: 0.75rem;
+      font-size: 0.68rem;
       color: var(--text2);
+      white-space: nowrap;
     }
 
     /* Hero Right: 3D Mockup */
@@ -494,25 +503,25 @@
     }
 
     .hero-mockup-img:hover {
-      transform: translateY(-4px) scale(1.01);
+      transform: translateY(-3px) scale(1.01);
       filter: drop-shadow(0 0 45px rgba(124, 106, 247, 0.55)) drop-shadow(0 30px 70px rgba(0, 0, 0, 0.9));
     }
 
     /* ── Trust Section ────────────────────────────────────────────────────── */
     .trust-section {
-      padding: 2.25rem 0 1.5rem;
+      padding: 1.75rem 0;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       background: rgba(10, 11, 18, 0.5);
     }
 
     .trust-title {
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       color: var(--text3);
       text-align: center;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
       text-transform: uppercase;
     }
 
@@ -520,19 +529,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1.25rem;
+      gap: 1.1rem;
       flex-wrap: wrap;
     }
 
     .trust-badge-card {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
       background: rgba(18, 19, 30, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 10px;
-      padding: 0.65rem 1.4rem;
-      font-size: 0.9rem;
+      padding: 0.55rem 1.25rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: #e2e8f0;
       transition: all 0.25s ease;
@@ -547,25 +556,25 @@
     }
 
     .trust-icon {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
     }
 
     /* ── Industrial KPI Metric Ribbon ─────────────────────────────────────── */
     .kpi-section {
-      padding: 3rem 0;
+      padding: 2.25rem 0 1.5rem;
     }
 
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
+      gap: 1.15rem;
     }
 
     .kpi-card {
       background: rgba(14, 15, 24, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius);
-      padding: 1.5rem;
+      padding: 1.35rem 1.4rem;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -592,11 +601,11 @@
     }
 
     .kpi-number {
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.1;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.3rem;
       font-family: var(--font);
     }
 
@@ -606,28 +615,28 @@
     .kpi-amber  { color: #fbbf24; }
 
     .kpi-label {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 600;
       color: #f1f5f9;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
 
     .kpi-desc {
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       color: var(--text3);
       line-height: 1.4;
     }
 
     /* ── Interactive Playground Terminal Widget ───────────────────────────── */
     .sandbox-section {
-      padding: 2.5rem 0 3.5rem;
+      padding: 1.75rem 0 2.5rem;
     }
 
     .sandbox-card {
       background: rgba(14, 15, 24, 0.85);
       border: 1px solid rgba(124, 106, 247, 0.28);
       border-radius: var(--radius-lg);
-      padding: 1.85rem;
+      padding: 1.65rem 1.85rem;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(124, 106, 247, 0.12);
       backdrop-filter: blur(14px);
     }
@@ -636,7 +645,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.15rem;
       flex-wrap: wrap;
       gap: 1rem;
     }
@@ -668,7 +677,7 @@
     .sandbox-tabs {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: rgba(22, 23, 37, 0.8);
       padding: 4px;
       border-radius: 10px;
@@ -679,7 +688,7 @@
       background: transparent;
       border: none;
       color: var(--text2);
-      padding: 0.45rem 0.95rem;
+      padding: 0.42rem 0.9rem;
       font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
@@ -701,7 +710,7 @@
     .sandbox-body {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      gap: 1.35rem;
     }
 
     .sandbox-pane {
@@ -715,7 +724,7 @@
       letter-spacing: 0.1em;
       color: var(--text3);
       text-transform: uppercase;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -725,18 +734,18 @@
       background: #090a10;
       border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 10px;
-      padding: 1rem 1.25rem;
-      min-height: 190px;
+      padding: 0.95rem 1.15rem;
+      min-height: 185px;
       display: flex;
       flex-direction: column;
     }
 
     .nl-input-display {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: #e2e8f0;
       line-height: 1.5;
       font-style: italic;
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.75rem;
     }
 
     .sql-code-display {
@@ -753,8 +762,8 @@
       background: #090a10;
       border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 10px;
-      padding: 0.75rem;
-      min-height: 190px;
+      padding: 0.7rem;
+      min-height: 185px;
       display: flex;
       flex-direction: column;
     }
@@ -776,7 +785,7 @@
     }
 
     .mini-data-table td {
-      padding: 0.55rem 0.65rem;
+      padding: 0.5rem 0.65rem;
       color: #cbd5e1;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       font-family: var(--mono);
@@ -784,11 +793,11 @@
     }
 
     .sandbox-footer-insight {
-      margin-top: 1rem;
+      margin-top: 0.85rem;
       background: rgba(124, 106, 247, 0.09);
       border: 1px solid rgba(124, 106, 247, 0.22);
       border-radius: 8px;
-      padding: 0.6rem 1rem;
+      padding: 0.55rem 0.95rem;
       font-size: 0.82rem;
       color: #c4b5fd;
       display: flex;
@@ -796,15 +805,15 @@
       gap: 8px;
     }
 
-    /* ── Showcase Section Standards ───────────────────────────────────────── */
+    /* ── Showcase Section Standards (No Blank Space) ──────────────────────── */
     .section-wrap {
-      padding: 3.5rem 0;
+      padding: 2.75rem 0;
     }
 
     .section-header {
       text-align: center;
       max-width: 680px;
-      margin: 0 auto 2.25rem;
+      margin: 0 auto 1.65rem;
     }
 
     .section-badge {
@@ -813,41 +822,41 @@
       letter-spacing: 0.14em;
       color: var(--accent);
       text-transform: uppercase;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
       display: inline-block;
-      padding: 4px 12px;
+      padding: 3px 11px;
       background: rgba(124, 106, 247, 0.1);
       border: 1px solid rgba(124, 106, 247, 0.25);
       border-radius: 999px;
     }
 
     .section-title {
-      font-size: clamp(1.85rem, 2.8vw, 2.45rem);
+      font-size: clamp(1.8rem, 2.7vw, 2.35rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       color: #fff;
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.55rem;
       line-height: 1.2;
     }
 
     .section-sub {
-      font-size: 0.98rem;
+      font-size: 0.95rem;
       color: var(--text2);
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
     /* ── Features Grid (Bento Style) ──────────────────────────────────────── */
     .features-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+      gap: 1.2rem;
     }
 
     .feature-card {
       background: rgba(14, 15, 24, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius);
-      padding: 1.65rem;
+      padding: 1.55rem;
       transition: all 0.3s ease;
       backdrop-filter: blur(8px);
       display: flex;
@@ -857,7 +866,7 @@
 
     .feature-card:hover {
       border-color: rgba(124, 106, 247, 0.4);
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(124, 106, 247, 0.12);
     }
 
@@ -865,17 +874,17 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
     }
 
     .f-icon {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 19px;
+      font-size: 18px;
     }
 
     .purple-glow { background: rgba(124, 106, 247, 0.15); color: #c4b5fd; box-shadow: 0 0 18px rgba(124, 106, 247, 0.25); }
@@ -897,17 +906,17 @@
     }
 
     .feature-card h3 {
-      font-size: 1.12rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
     }
 
     .feature-card p {
       font-size: 0.88rem;
       color: var(--text2);
       line-height: 1.55;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.15rem;
       flex: 1;
     }
 
@@ -915,73 +924,24 @@
       background: #090a11;
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 8px;
-      padding: 0.65rem 0.85rem;
+      padding: 0.6rem 0.8rem;
       font-family: var(--mono);
       font-size: 0.74rem;
       color: #94a3b8;
     }
 
-    /* ── Comparison Table ─────────────────────────────────────────────────── */
-    .compare-section {
-      padding: 3.5rem 0;
-      background: rgba(10, 11, 18, 0.35);
-    }
-
-    .compare-table-wrapper {
-      background: rgba(14, 15, 24, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius);
-      overflow-x: auto;
-      backdrop-filter: blur(10px);
-    }
-
-    .compare-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
-
-    .compare-table th {
-      padding: 1.1rem 1.4rem;
-      text-align: left;
-      font-weight: 600;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .compare-table th.col-feature { width: 34%; color: var(--text2); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; }
-    .compare-table th.col-generic { width: 22%; color: var(--text3); font-size: 0.85rem; }
-    .compare-table th.col-legacy  { width: 22%; color: var(--text3); font-size: 0.85rem; }
-    .compare-table th.col-qm      { width: 22%; color: #c4b5fd; background: rgba(124, 106, 247, 0.12); border-left: 1px solid rgba(124, 106, 247, 0.3); border-right: 1px solid rgba(124, 106, 247, 0.3); font-size: 0.95rem; font-weight: 700; }
-
-    .compare-table td {
-      padding: 1rem 1.4rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      color: #cbd5e1;
-    }
-
-    .compare-table td.col-qm {
-      background: rgba(124, 106, 247, 0.07);
-      border-left: 1px solid rgba(124, 106, 247, 0.25);
-      border-right: 1px solid rgba(124, 106, 247, 0.25);
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .badge-check { color: #5eead4; font-weight: 700; font-size: 1rem; }
-    .badge-cross { color: #64748b; font-size: 0.9rem; }
-
     /* ── How It Works Grid ────────────────────────────────────────────────── */
     .steps-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 1.35rem;
     }
 
     .step-card {
       background: rgba(14, 15, 24, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius);
-      padding: 2rem;
+      padding: 1.75rem;
       position: relative;
       backdrop-filter: blur(8px);
       transition: all 0.3s ease;
@@ -994,46 +954,46 @@
     }
 
     .step-badge {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
       background: rgba(94, 234, 212, 0.12);
       border: 1px solid rgba(94, 234, 212, 0.35);
       color: #5eead4;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       font-family: var(--mono);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.1rem;
     }
 
     .step-card h3 {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 0.55rem;
+      margin-bottom: 0.45rem;
     }
 
     .step-card p {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text2);
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
     /* ── Use Cases Grid ───────────────────────────────────────────────────── */
     .usecase-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 1.35rem;
     }
 
     .usecase-card {
       background: rgba(14, 15, 24, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius);
-      padding: 1.85rem;
+      padding: 1.65rem;
       transition: all 0.3s ease;
       backdrop-filter: blur(8px);
     }
@@ -1044,39 +1004,39 @@
     }
 
     .usecase-icon {
-      font-size: 1.75rem;
-      margin-bottom: 1rem;
+      font-size: 1.65rem;
+      margin-bottom: 0.85rem;
     }
 
     .usecase-card h3 {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
     }
 
     .usecase-card p {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text2);
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
     /* ── Testimonials (Wall of Love) ──────────────────────────────────────── */
     .testimonials-section {
-      padding: 3.5rem 0;
+      padding: 2.75rem 0;
     }
 
     .testimonials-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 1.35rem;
     }
 
     .testi-card {
       background: rgba(14, 15, 24, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius);
-      padding: 1.85rem;
+      padding: 1.65rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -1090,40 +1050,40 @@
     }
 
     .testi-quote {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: #e2e8f0;
       line-height: 1.6;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.35rem;
     }
 
     .testi-author {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 11px;
     }
 
     .testi-avatar {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background: linear-gradient(135deg, #7c6af7 0%, #38bdf8 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #fff;
     }
 
     .author-name {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 600;
       color: #fff;
       line-height: 1.2;
     }
 
     .author-role {
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       color: var(--text3);
     }
 
@@ -1131,15 +1091,17 @@
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 1.35rem;
       align-items: stretch;
+      max-width: 1160px;
+      margin: 0 auto;
     }
 
     .pricing-card {
       background: rgba(14, 15, 24, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-lg);
-      padding: 2.25rem 2rem;
+      padding: 2rem 1.85rem;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -1149,7 +1111,7 @@
 
     .pricing-card:hover {
       border-color: rgba(124, 106, 247, 0.35);
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
     }
 
@@ -1162,44 +1124,44 @@
     .pricing-badge {
       position: absolute;
       top: -12px;
-      right: 24px;
+      right: 20px;
       background: linear-gradient(135deg, #7c6af7 0%, #6366f1 100%);
       color: #fff;
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       font-weight: 700;
       letter-spacing: 0.09em;
-      padding: 3px 10px;
+      padding: 3px 9px;
       border-radius: 999px;
       box-shadow: 0 4px 12px rgba(124, 106, 247, 0.4);
     }
 
     .pricing-title {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.35rem;
     }
 
     .pricing-desc {
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       color: var(--text2);
-      margin-bottom: 1.5rem;
-      min-height: 40px;
+      margin-bottom: 1.25rem;
+      min-height: 38px;
     }
 
     .pricing-price {
-      font-size: 2.75rem;
+      font-size: 2.6rem;
       font-weight: 800;
       color: #fff;
       letter-spacing: -0.04em;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: baseline;
       gap: 6px;
     }
 
     .pricing-price span {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 500;
       color: var(--text3);
       letter-spacing: 0;
@@ -1209,97 +1171,103 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
-      margin-bottom: 2rem;
+      gap: 0.75rem;
+      margin-bottom: 1.85rem;
       flex: 1;
     }
 
     .pricing-features li {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 0.88rem;
+      gap: 9px;
+      font-size: 0.86rem;
       color: #cbd5e1;
     }
 
     .check-icon {
       color: var(--accent2);
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
     }
 
-    /* ── FAQs Section (2-Column Balanced) ─────────────────────────────────── */
-    .faq-layout {
+    /* ── FAQs Section (Balanced 2-Column Grid) ────────────────────────────── */
+    .faq-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-
-    .faq-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.15rem;
+      margin-bottom: 1.75rem;
     }
 
     .faq-item {
       background: rgba(14, 15, 24, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius);
-      padding: 1.35rem 1.65rem;
+      padding: 1.25rem 1.5rem;
       transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
     }
 
     .faq-item:hover {
       border-color: rgba(255, 255, 255, 0.16);
       background: rgba(20, 22, 34, 0.85);
+      transform: translateY(-2px);
     }
 
     .faq-item h4 {
-      font-size: 1.02rem;
+      font-size: 1rem;
       font-weight: 600;
       color: #fff;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
     }
 
     .faq-item p {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--text2);
       line-height: 1.6;
     }
 
-    .faq-side-card {
+    .faq-bottom-banner {
       background: rgba(18, 19, 32, 0.85);
       border: 1px solid rgba(124, 106, 247, 0.3);
       border-radius: var(--radius);
-      padding: 1.75rem;
+      padding: 1.35rem 1.85rem;
       display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
       backdrop-filter: blur(10px);
     }
 
-    .faq-side-card h3 {
-      font-size: 1.15rem;
+    .faq-bottom-banner strong {
+      font-size: 1rem;
       color: #fff;
+      display: block;
+      margin-bottom: 0.2rem;
     }
 
-    .faq-side-card p {
-      font-size: 0.86rem;
+    .faq-bottom-banner p {
+      font-size: 0.84rem;
       color: var(--text2);
-      line-height: 1.55;
+    }
+
+    .faq-bottom-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
 
     /* ── High-Impact Pre-Footer CTA Banner ────────────────────────────────── */
     .cta-banner-section {
-      padding: 3rem 0 5rem;
+      padding: 2.5rem 0 4rem;
     }
 
     .cta-banner-card {
       background: linear-gradient(135deg, rgba(22, 24, 42, 0.95) 0%, rgba(13, 14, 24, 0.95) 100%);
       border: 1px solid rgba(124, 106, 247, 0.4);
       border-radius: var(--radius-lg);
-      padding: 3.5rem 2rem;
+      padding: 3rem 2rem;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -1315,18 +1283,18 @@
     }
 
     .cta-title {
-      font-size: clamp(2rem, 3.2vw, 2.75rem);
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       color: #fff;
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.75rem;
     }
 
     .cta-subtitle {
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: var(--text2);
       max-width: 580px;
-      margin: 0 auto 2rem;
+      margin: 0 auto 1.85rem;
       line-height: 1.6;
     }
 
@@ -1342,7 +1310,7 @@
     .footer {
       border-top: 1px solid rgba(255, 255, 255, 0.06);
       background: rgba(7, 7, 11, 0.9);
-      padding: 2.25rem 0;
+      padding: 2rem 0;
     }
 
     .footer-inner {
@@ -1673,7 +1641,7 @@
 
     /* ── Responsive Queries ──────────────────────────────────────────────── */
     @media (max-width: 1080px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .hero-preview-wrapper { max-width: 580px; margin: 0 auto; }
       .kpi-grid { grid-template-columns: repeat(2, 1fr); }
       .features-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1681,18 +1649,22 @@
       .steps-grid { grid-template-columns: 1fr; }
       .usecase-grid { grid-template-columns: 1fr; }
       .testimonials-grid { grid-template-columns: 1fr; }
-      .faq-layout { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
       .sandbox-body { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
       .content-wrapper { padding: 0 1.25rem; }
       .nav-links { display: none; }
-      .hero-headline { font-size: 2.2rem; }
-      .hero-cta-group { flex-direction: column; width: 100%; }
-      .btn-hero-primary, .btn-hero-instant, .btn-hero-secondary { width: 100%; justify-content: center; }
+      .hero-headline { font-size: 2.1rem; }
+      .hero-cta-group { flex-direction: column; width: 100%; gap: 0.5rem; }
+      .hero-feature-row { grid-template-columns: 1fr; }
       .kpi-grid { grid-template-columns: 1fr; }
       .features-grid { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .faq-bottom-banner { flex-direction: column; align-items: flex-start; }
+      .faq-bottom-actions { width: 100%; flex-direction: column; }
+      .faq-bottom-actions button { width: 100%; justify-content: center; }
       .sandbox-tabs { flex-wrap: wrap; }
     }
   </style>
@@ -1760,14 +1732,14 @@
               QueryMind helps you write, explain, optimize, and visualize production-grade SQL queries using generative AI. Turn hours of manual query engineering into instant conversational answers.
             </p>
 
-            <!-- CTA Buttons -->
+            <!-- 3 CTA Buttons in ONE SINGLE ROW (User Requirement 2) -->
             <div class="hero-cta-group">
               <button class="btn-hero-primary" onclick="openAuthModal('register')">
                 <span>Get Started Free</span>
                 <span class="arrow">→</span>
               </button>
               <button class="btn-hero-instant" onclick="doInstantDemo(this)">
-                <span>⚡ Instant Demo Sign In</span>
+                <span>⚡ Instant Demo</span>
               </button>
               <button class="btn-hero-secondary" onclick="openDemoModal()">
                 <span class="play-icon">▶</span>
@@ -1775,33 +1747,27 @@
               </button>
             </div>
 
-            <!-- Social Proof -->
-            <div class="hero-social-proof">
-              <span class="star-rating">★★★★★</span>
-              <span class="proof-badge"><strong>4.9/5</strong> rating across 2,000+ data engineers &amp; analysts</span>
-            </div>
-
-            <!-- Feature Highlights Row -->
+            <!-- 3 Feature Highlight Items in ONE SINGLE ROW (User Requirement 2) -->
             <div class="hero-feature-row">
               <div class="hero-feature-item">
                 <div class="feature-icon-box bolt-box">⚡</div>
                 <div class="feature-text">
                   <span class="feature-title">Instant SQL</span>
-                  <span class="feature-sub">Sub-200ms Generation</span>
+                  <span class="feature-sub">&lt; 200ms Speed</span>
                 </div>
               </div>
               <div class="hero-feature-item">
                 <div class="feature-icon-box db-box">🗄️</div>
                 <div class="feature-text">
                   <span class="feature-title">Multi-Dialect</span>
-                  <span class="feature-sub">PostgreSQL, MySQL, SQLite</span>
+                  <span class="feature-sub">Postgres, MySQL</span>
                 </div>
               </div>
               <div class="hero-feature-item">
                 <div class="feature-icon-box chart-box">📊</div>
                 <div class="feature-text">
                   <span class="feature-title">Auto-Charts</span>
-                  <span class="feature-sub">Instant Visual Insights</span>
+                  <span class="feature-sub">Visual Insights</span>
                 </div>
               </div>
             </div>
@@ -2058,70 +2024,8 @@ ORDER BY total_revenue DESC;</div>
       </div>
     </section>
 
-    <!-- Feature Comparison Matrix -->
-    <section class="compare-section">
-      <div class="content-wrapper">
-        <div class="section-header">
-          <span class="section-badge">COMPARISON</span>
-          <h2 class="section-title">Why Teams Choose QueryMind Over Generic Tools</h2>
-          <p class="section-sub">Purpose-built for database engineers rather than generic text generation.</p>
-        </div>
-
-        <div class="compare-table-wrapper">
-          <table class="compare-table">
-            <thead>
-              <tr>
-                <th class="col-feature">Capability</th>
-                <th class="col-generic">Generic Chatbots</th>
-                <th class="col-legacy">Legacy SQL Clients</th>
-                <th class="col-qm">QueryMind AI</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Direct Live DB Execution &amp; Pagination</strong></td>
-                <td><span class="badge-cross">✕ No connection</span></td>
-                <td><span class="badge-check">✓ Yes</span></td>
-                <td class="col-qm"><span class="badge-check">✓ Instant &amp; Paginated</span></td>
-              </tr>
-              <tr>
-                <td><strong>Schema &amp; Foreign Key Introspection</strong></td>
-                <td><span class="badge-cross">✕ Must paste schema</span></td>
-                <td><span class="badge-check">✓ Basic list</span></td>
-                <td class="col-qm"><span class="badge-check">✓ Live ER Diagrams &amp; Types</span></td>
-              </tr>
-              <tr>
-                <td><strong>Multi-Dialect Prompt Optimization</strong></td>
-                <td><span class="badge-cross">✕ Hallucinates dialects</span></td>
-                <td><span class="badge-cross">✕ Manual syntax</span></td>
-                <td class="col-qm"><span class="badge-check">✓ PostgreSQL / MySQL / SQLite</span></td>
-              </tr>
-              <tr>
-                <td><strong>One-Click Error Detection &amp; Auto-Fix</strong></td>
-                <td><span class="badge-cross">✕ Hit-and-miss</span></td>
-                <td><span class="badge-cross">✕ Cryptic DB errors</span></td>
-                <td class="col-qm"><span class="badge-check">✓ 1-Click Error Recovery</span></td>
-              </tr>
-              <tr>
-                <td><strong>Interactive Auto-Generated Visual Charts</strong></td>
-                <td><span class="badge-cross">✕ Text tables only</span></td>
-                <td><span class="badge-cross">✕ Complex plugins</span></td>
-                <td class="col-qm"><span class="badge-check">✓ Bar, Line &amp; Donut Charts</span></td>
-              </tr>
-              <tr>
-                <td><strong>Enterprise Data Privacy (Zero Training)</strong></td>
-                <td><span class="badge-cross">✕ Often trains on prompts</span></td>
-                <td><span class="badge-check">✓ Local</span></td>
-                <td class="col-qm"><span class="badge-check">✓ 100% Encrypted &amp; Private</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
     <!-- How It Works Section (#how-it-works) -->
-    <section class="section-wrap" id="how-it-works">
+    <section class="section-wrap" id="how-it-works" style="background: rgba(10, 11, 18, 0.45); border-top: 1px solid rgba(255, 255, 255, 0.04); border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
       <div class="content-wrapper">
         <div class="section-header">
           <span class="section-badge">WORKFLOW</span>
@@ -2150,7 +2054,7 @@ ORDER BY total_revenue DESC;</div>
     </section>
 
     <!-- Use Cases Section (#use-cases) -->
-    <section class="section-wrap" id="use-cases" style="background: rgba(10, 11, 18, 0.4);">
+    <section class="section-wrap" id="use-cases">
       <div class="content-wrapper">
         <div class="section-header">
           <span class="section-badge">USE CASES</span>
@@ -2179,7 +2083,7 @@ ORDER BY total_revenue DESC;</div>
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials-section">
+    <section class="testimonials-section" style="background: rgba(10, 11, 18, 0.45); border-top: 1px solid rgba(255, 255, 255, 0.04); border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
       <div class="content-wrapper">
         <div class="section-header">
           <span class="section-badge">TESTIMONIALS</span>
@@ -2293,7 +2197,7 @@ ORDER BY total_revenue DESC;</div>
       </div>
     </section>
 
-    <!-- FAQs Section (#faqs) -->
+    <!-- FAQs Section (Balanced 2-Column Grid - Zero Blank Space) -->
     <section class="section-wrap" id="faqs">
       <div class="content-wrapper">
         <div class="section-header">
@@ -2302,43 +2206,41 @@ ORDER BY total_revenue DESC;</div>
           <p class="section-sub">Have questions? We are here to help.</p>
         </div>
 
-        <div class="faq-layout">
-          <div class="faq-list">
-            <div class="faq-item">
-              <h4>What database engines are supported?</h4>
-              <p>QueryMind natively supports PostgreSQL, MySQL, SQLite, SQL Server, and Google BigQuery with specialized dialect prompt models and drivers.</p>
-            </div>
-            <div class="faq-item">
-              <h4>Is my database data private and secure?</h4>
-              <p>Yes. QueryMind executes queries directly on your connected database. Your credentials and passwords are encrypted, and your database rows never train AI models.</p>
-            </div>
-            <div class="faq-item">
-              <h4>Can I use QueryMind without an existing database?</h4>
-              <p>Absolutely. QueryMind comes with a built-in 5-table e-commerce demo store and a 3,900-record customer shopping dataset that loads with one click.</p>
-            </div>
-            <div class="faq-item">
-              <h4>How does query optimization work?</h4>
-              <p>QueryMind's AI models analyze the AST and query semantics to suggest index improvements, rewrite redundant joins, and eliminate slow table scans.</p>
-            </div>
-            <div class="faq-item">
-              <h4>Can I connect to a remote cloud database (AWS RDS, Supabase, Neon)?</h4>
-              <p>Yes! Simply enter your database host, port, database name, and credentials in the Connection Modal, or use your standard connection URI.</p>
-            </div>
-            <div class="faq-item">
-              <h4>What if I don't want to create an account right now?</h4>
-              <p>You can click "Instant Demo" anywhere on this page to jump immediately into a full guest workspace session without entering credentials.</p>
-            </div>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h4>What database engines are supported?</h4>
+            <p>QueryMind natively supports PostgreSQL, MySQL, SQLite, SQL Server, and Google BigQuery with specialized dialect prompt models and drivers.</p>
           </div>
+          <div class="faq-item">
+            <h4>Is my database data private and secure?</h4>
+            <p>Yes. QueryMind executes queries directly on your connected database. Your credentials and passwords are encrypted, and your database rows never train AI models.</p>
+          </div>
+          <div class="faq-item">
+            <h4>Can I use QueryMind without an existing database?</h4>
+            <p>Absolutely. QueryMind comes with a built-in 5-table e-commerce demo store and a 3,900-record customer shopping dataset that loads with one click.</p>
+          </div>
+          <div class="faq-item">
+            <h4>How does query optimization work?</h4>
+            <p>QueryMind's AI models analyze the AST and query semantics to suggest index improvements, rewrite redundant joins, and eliminate slow table scans.</p>
+          </div>
+          <div class="faq-item">
+            <h4>Can I connect to a remote cloud database (AWS RDS, Supabase, Neon)?</h4>
+            <p>Yes! Simply enter your database host, port, database name, and credentials in the Connection Modal, or use your standard connection URI.</p>
+          </div>
+          <div class="faq-item">
+            <h4>What if I don't want to create an account right now?</h4>
+            <p>You can click "Instant Demo" anywhere on this page to jump immediately into a full guest workspace session without entering credentials.</p>
+          </div>
+        </div>
 
-          <div class="faq-side-card">
-            <h3>Need Something Else?</h3>
-            <p>Have custom schema requirements or need on-premise deployment? Our engineering team is ready to assist.</p>
-            <button class="btn-primary" onclick="openAuthModal('register')">
-              Join QueryMind Free
-            </button>
-            <button class="btn-demo-quick" onclick="doInstantDemo(this)">
-              ⚡ Launch Instant Demo
-            </button>
+        <div class="faq-bottom-banner">
+          <div>
+            <strong>Still have questions or custom schema requirements?</strong>
+            <p>Our engineering team can assist with enterprise deployments, custom dialect models, and VPC peering.</p>
+          </div>
+          <div class="faq-bottom-actions">
+            <button class="btn-hero-primary" onclick="openAuthModal('register')">Get Started Free →</button>
+            <button class="btn-hero-instant" onclick="doInstantDemo(this)">⚡ Launch Instant Demo</button>
           </div>
         </div>
       </div>
@@ -2780,6 +2682,6 @@ ORDER BY total_revenue DESC;</div>
 
   <!-- External Support Scripts -->
   <script src="/static/js/bg.js"></script>
-  <script src="/static/js/auth.js?v=3.0"></script>
+  <script src="/static/js/auth.js?v=3.1"></script>
 </body>
 </html>
